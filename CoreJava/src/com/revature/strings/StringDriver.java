@@ -1,4 +1,4 @@
-package com.revature.types;
+package com.revature.strings;
 
 public class StringDriver {
 
