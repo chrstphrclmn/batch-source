@@ -1,3 +1,7 @@
+package com.secondserve.hello.world;
+
+
+
 public class MyClass{
 
     public static void main(String[] args){
