@@ -43,6 +43,28 @@ public abstract class Food implements Edible{
 	}
 	
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + numOfFoodItems;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Food other = (Food) obj;
+		if (numOfFoodItems != other.numOfFoodItems)
+			return false;
+		return true;
+	}
+
 	/*
 	 * Here I am declaring rotSomewhere abstract which means we don't care how it happens,
 	 * just that it does in the child class, an example of abstraction.
