@@ -7,7 +7,7 @@ public class Rectangle extends Shape implements Drawable, Calculatable {
 
 	public Rectangle() {
 		super();
-		setNumSides(4);
+		//setNumSides(4);
 	}
 
 	public Rectangle(int height, int width) {
