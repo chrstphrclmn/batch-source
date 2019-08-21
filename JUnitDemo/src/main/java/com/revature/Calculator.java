@@ -24,13 +24,7 @@ public class Calculator {
 			sum += Integer.parseInt(s);
 		}
 		return sum;
-		/*
-		 * if (values.length == 1) { if (values[0].matches("^\\d+$")) { return
-		 * Integer.parseInt(values[0]); } else return -1; } else { if (values.length ==
-		 * 2) { if (values[0].matches("^\\d+$") && values[1].matches("^\\d+$")) { return
-		 * Integer.parseInt(values[0]) + Integer.parseInt(values[1]); } else return -1;
-		 * } else return -1; }
-		 */
+		
 	}
 
 }
