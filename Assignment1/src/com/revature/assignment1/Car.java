@@ -50,7 +50,8 @@ public abstract class Car implements Drivable {
 	public void wheelException() {
 		System.out.println("Please enter number of wheels.");
 		String userIn = sc.nextLine();
-			if(userIn != "4") {
+		int carWheel = Integer.parseInt(userIn);
+			if(carWheel != 4) {
 				throw new NumOfWheelsException("Not a Car!");
 		} 
 	}}
