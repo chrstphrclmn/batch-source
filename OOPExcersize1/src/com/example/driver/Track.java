@@ -1,8 +1,6 @@
 package com.example.driver;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+
 import java.util.concurrent.TimeUnit;
 
 import com.example.exceptions.NotDistinctException;
@@ -20,7 +18,6 @@ public class Track {
 		Vehicle b = new Motercycle();
 		Vehicle c = new SportsCar();
 		Vehicle[] vehics = { a, b, c};
-
 		Go(vehics);
 	}
 
