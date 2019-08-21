@@ -1,5 +1,8 @@
 package com.revature.oopexercise;
 
+
+// Inheretence Example
+// Pawn inherits from abstract class Piece as well as the interface Movable. Thus, pawn will be both a Movable type and a Piece object
 public class Pawn extends Piece{
 
 	public Pawn() {
@@ -20,8 +23,10 @@ public class Pawn extends Piece{
 		}
 		
 		this.color = ctype;
+		this.id = xpos + ypos + ctype + this.label;
 	}
 	
+	// Implement specific verification technique as required by superclass
 	public boolean verify(int[] pos) {
 		
 		if((pos[0] < 0 || pos[0] >= 8 ) || (pos[1] < 0 || pos[1] >= 8) ) {

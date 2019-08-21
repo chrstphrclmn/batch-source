@@ -1,5 +1,7 @@
 package com.revature.oopexercise;
 
+//Class that similarly inherits from the Piece class like Pawn
+
 public class Rook extends Piece{
 	
 	public Rook() {
@@ -20,6 +22,7 @@ public class Rook extends Piece{
 		}
 
 		this.color = ctype;
+		this.id = xpos + ypos + ctype + this.label;
 	}
 	
 	public boolean verify(int[] pos) {

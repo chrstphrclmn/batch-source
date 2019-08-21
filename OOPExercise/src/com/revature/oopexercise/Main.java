@@ -23,6 +23,7 @@ public class Main {
 		pieces.add(new Pawn(3, 4, 0));
 		pieces.add(new Rook(7, 6, 1));
 		pieces.add(new Queen(1, 2, 1));
+		pieces.add(new Queen(5, 1, 1));
 		
 		//Invalid Creation / Error Catching #1
 		try {
@@ -55,5 +56,12 @@ public class Main {
 			
 			System.out.printf("Attempt to move Piece to invalid ending position\n");
 		}
+		
+		//Equals
+		pieces.get(2).equals(pieces.get(3));
+		
+		//Hashcode
+		System.out.printf("%d", pieces.get(2).hashCode());
+		
 	}
 }
