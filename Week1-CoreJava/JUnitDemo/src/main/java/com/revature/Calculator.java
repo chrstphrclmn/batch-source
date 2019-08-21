@@ -16,29 +16,46 @@ public class Calculator {
 	 */
 	
 	public static int add(String input) {
+		
 		if(input == null) {
+			
 			return -1;
 		}
-		if("".equals(input)) {
+		
+		if(input == "") {
+			
 			return 0;
 		}
 		
-		String[] values = input.trim().split(",");
-		if(values.length==1) {
-			if(values[0].matches("^\\d+$")) {
-				return Integer.parseInt(values[0]);
-			} else {
+		String[] values = input.replaceAll("[^-a-z0-9]", " ").trim().replaceAll(" +", " ").split(" ");
+		
+		int ret = 0;
+		int temp = 0;
+		
+		for (String s : values) {
+			
+			try {
+				
+				temp = Integer.parseInt(s.trim());
+				if(temp < 1000) {
+					
+					ret += temp;
+				}
+			}
+			catch (IllegalArgumentException e) {
+				
 				return -1;
 			}
-		}
-		
-		if(values.length==2) {
-			if(values[0].matches("^\\d+$") && values[1].matches("^\\d+$")) {
-				return (Integer.parseInt(values[0])+Integer.parseInt(values[1]));
+			
+			if (temp < 0) {
+				
+				throw new IllegalArgumentException();
 			}
+
 		}
+
 		
-		return -1;
+		return ret;
 	}
 
 }
