@@ -1,3 +1,8 @@
+/* Example of Inheritance
+ * defined an Oil Well that inherits from a "general" well type.
+ * Similarly for other types of wells
+ */
+
 package well;
 
 public class OilWell extends WellType {
@@ -14,7 +19,10 @@ public class OilWell extends WellType {
 		return  this.getMarketFactor() * this.getBaseVal() * this.getEfficiency();
 	}
 	
-//	Overloading "calculatedValue" method. It just changes the baseval of the well
+/*	Polymorphism is demonstrated here. Overloading "calculatedValue" method. 
+*	We just get a different baseVal of the well and now we have a different
+*	value of the well
+*/
 	
 	public double calculatedValue(int changedBaseVal) {
 		setBaseVal(changedBaseVal);

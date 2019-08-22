@@ -1,3 +1,10 @@
+/*
+ * Abstract class to define well type
+ * each well will have a drill permission, market factor, 
+ * base value (can be based on lot of different factors) and 
+ * an extraction efficiency
+ */
+
 package well;
 
 import com.revature.exceptions.NegativeSidesException;
@@ -13,6 +20,8 @@ public abstract class WellType implements CalculateValue {
 	
 	private double efficiency;
 	
+	
+//	getter and setter methods for variables
 	
 	
 	public double getEfficiency() {
@@ -31,8 +40,10 @@ public abstract class WellType implements CalculateValue {
 		this.baseVal = baseVal;
 	}
 
+//	
 	public void setMarketFactor(double d) {
 		if(d < 0) {
+//			exception thrown if market factor is set to negative  
 			throw new NegativeSidesException("Market value cannot be negative");
 		}else {
 			this.marketFactor = d;
@@ -55,9 +66,7 @@ public abstract class WellType implements CalculateValue {
 		return drillPermission;
 	}
 	
-	public void drilling() {
-		System.out.println("Drilling a well");
-	}
+	
 	
 
 	
