@@ -80,6 +80,12 @@ public class Book implements Comparable<Book>{
 		return "Book [id=" + id + ", author=" + author + ", title=" + title + "]";
 	}
 
+	/*
+	 * compareTo returns an integer result
+	 * if it returns a negative number "this" is considered to be of lesser value 
+	 * if it returns a positive number "this" is considered to be of greater value
+	 * if it returns 0, the two objects are considered to be of equal value
+	 */
 	@Override
 	public int compareTo(Book otherBook) {
 		return this.getAuthor().compareTo(otherBook.getAuthor());

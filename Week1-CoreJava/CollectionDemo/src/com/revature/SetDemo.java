@@ -84,12 +84,19 @@ public class SetDemo {
 		tSet2.add("echo");
 		System.out.println(tSet2);
 		
+		
+		/*
+		 * we discovered here that if we start adding 
+		 * a particular type, that type will be used 
+		 * and additional elements will be cast to that 
+		 * element's type
+		 */
 //		TreeSet tSet3 = new TreeSet();
 //		tSet3.add("alpha");
 //		tSet3.add("bravo");
 //		tSet3.add("charlie");
 //		tSet3.add("delta");
-//		tSet3.add("5");
+//		tSet3.add(5);
 //		System.out.println(tSet3);
 		
 		HashSet<String> hSet2 = new HashSet<>();
@@ -100,6 +107,14 @@ public class SetDemo {
 		hSet2.add("echo");
 		System.out.println(hSet2);
 		
+		/*
+		 * We used a comparator here which allowed us
+		 * to include an independent means of comparison.
+		 * Without a comparator provided as a parameter 
+		 * to the TreeSet, the ordering is determined by
+		 * the implementation of the Comparable interface.
+		 * 
+		 */
 		Comparator<Book> idCompare = new BookIdComparator();
 		TreeSet<Book> tSet4 = new TreeSet<>(idCompare);
 		tSet4.add(new Book(35, "Split Infinity", "Piers Anthony"));
