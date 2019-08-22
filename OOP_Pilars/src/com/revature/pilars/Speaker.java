@@ -1,12 +1,52 @@
 package com.revature.pilars;
 
-public class Speaker extends Device {
+import javax.management.RuntimeErrorException;
+
+public class Speaker extends Device {//Inheritance speaker Inherit device
 	
 	
 	
+	public Speaker(boolean on_off, boolean wifi, double batteryLife, String brand, int volume) {
+		super(on_off, wifi, batteryLife, brand, volume);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + bassLevel;
+		result = prime * result + middleLevel;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Speaker other = (Speaker) obj;
+		if (bassLevel != other.bassLevel)
+			return false;
+		if (middleLevel != other.middleLevel)
+			return false;
+		return true;
+	}
+
 	public Speaker() {
 		super();
 	}
+	
+	public Speaker(int bassLevel, int middleLevel) { //Static Polymorphism 
+		
+		this.bassLevel = bassLevel;
+		this.middleLevel = middleLevel; 
+		
+	}
+	
 	
 	private int bassLevel;
 	private int middleLevel;
@@ -73,8 +113,7 @@ public class Speaker extends Device {
 
 	@Override
 	public void takePhoto() {
-		System.out.println("Speaker cannot take photo");
-		
+		throw new IllegalArgumentException("Speaker cannot take photos");
 	}
 
 	@Override

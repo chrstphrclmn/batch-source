@@ -11,6 +11,39 @@ Push this project to your github branch
 Upload to your GitHub branch by 22 August (Thursday) by 9am
 */
 
-public class Aplication {
+public class Aplication extends IllegalArgumentException{
+	
+	
+	
+	public static void main(String[] args) {
+		
+		CellPhone samsung = new CellPhone("At&t", false, false,0.0,"samsung",50);
+		
+		samsung.charging();
+		samsung.turnOn();
+		samsung.volumeUp();
+		
+		
+		LapTop msi = new LapTop("Wndows10");
+		Speaker bose = new Speaker();
+		
+		try {
+			bose.takePhoto();
+			
+		}catch(Exception e){
+			
+		}
+		
+		PortableConsole psp = new PortableConsole();
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 
 }
