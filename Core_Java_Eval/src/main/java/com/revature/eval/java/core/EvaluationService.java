@@ -1,6 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -193,8 +194,16 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+			if(string.contains(".")) {
+				string = string.replaceAll("[\\s.]", "");
+			} else if(string.contains(" ")) {
+				string = string.replaceAll("[^\\d]", "");
+			} else if(string.length()>11) {
+				throw new IllegalArgumentException();
+			} else {
+				throw new IllegalArgumentException();
+			}
+		return string;
 	}
 
 	/**
@@ -207,8 +216,17 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		//value = 1;
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		String[] strArr = string.split("[\\s,]+");
+		for(int i=0;i<=strArr.length-1;i++) {
+			if(map.containsKey(strArr[i])) {
+				map.put(strArr[i],map.get(strArr[i])+1);
+			} else {
+				map.put(strArr[i], 1);
+			}
+		}
+		return map;
 	}
 
 	/**
