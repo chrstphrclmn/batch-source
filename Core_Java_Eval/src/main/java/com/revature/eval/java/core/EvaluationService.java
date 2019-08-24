@@ -138,8 +138,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		string = string.toLowerCase();
+		int scrabScore = 0;
+		String[] strArr = string.split("");
+		for(int i=0;i<=strArr.length-1;i++) {
+			if(strArr[i].equals("a")||strArr[i].equals("e")||strArr[i].equals("i")||strArr[i].equals("o")||strArr[i].equals("u")||strArr[i].equals("l")||strArr[i].equals("n")||strArr[i].equals("r")||strArr[i].equals("s")||strArr[i].equals("t")) {
+				scrabScore = scrabScore +1;
+			} else if(strArr[i].equals("d")||strArr[i].equals("g")) {
+				scrabScore = scrabScore +2;
+			} else if(strArr[i].equals("b")||strArr[i].equals("c")||strArr[i].equals("m")||strArr[i].equals("p")){
+				scrabScore = scrabScore +3;
+			} else if(strArr[i].equals("f")||strArr[i].equals("h")||strArr[i].equals("v")||strArr[i].equals("w")||strArr[i].equals("y")) {
+				scrabScore = scrabScore +4;
+			} else if(strArr[i].equals("k")) {
+				scrabScore = scrabScore +5;
+			} else if(strArr[i].equals("j")||strArr[i].equals("x")) {
+				scrabScore =scrabScore +8;
+			} else if(strArr[i].equals("q")||strArr[i].equals("z")) {
+				scrabScore =scrabScore +10;
+			}
+		}
+		return scrabScore;
 	}
 
 	/**
