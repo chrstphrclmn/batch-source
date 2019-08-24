@@ -31,8 +31,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		phrase.toUpperCase();
+		String[] strArr = phrase.split("[-\\s]");
+		String str = "";
+		for(int i=0;i<strArr.length;i++) {
+			str = str + strArr[i].substring(0,1);
+		}
+		str = str.toUpperCase();
+		return str;
 	}
 
 	/**
