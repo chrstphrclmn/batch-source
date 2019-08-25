@@ -1,7 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -268,12 +268,8 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			int arrIndex = 0;
-			List<T> binSearch = new ArrayList<T>();
-			if(binSearch.contains(t)) {
-				arrIndex = binSearch.indexOf(t);
-			} 
-			return arrIndex;
+		
+			return Collections.binarySearch(sortedList,t,Collections.reverseOrder(Collections.reverseOrder()));
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -533,8 +529,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		
+		boolean isValid = false;
+		return isValid;
 	}
 
 	/**
