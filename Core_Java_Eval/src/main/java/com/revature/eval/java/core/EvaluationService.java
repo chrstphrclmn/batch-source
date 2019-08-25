@@ -310,46 +310,44 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		string = string.toLowerCase();
-		String arrStr= string;
-		String firstLetter;
-		String firstArrLetter;
+		String firstLetter = "";
 		String str = "";
-		String secStr = "";
 		boolean loop = false;
-		boolean secondLoop = false;
+		String secString = "";
 		
 	while(loop == false) {
 		if(!string.contains(" ")) {
-			if(string.substring(0,1).equals("a")||string.substring(0,1).equals("e")||string.substring(0,1).equals("i")||string.substring(0,1).equals("o")||string.substring(0,1).equals("u")) {
+			if(string.substring(0,1).equals("a")||string.substring(0,1).equals("e")||string.substring(0,1).equals("i")||string.substring(0,1).equals("o")) {
 				str = string + "ay";
 				loop = true;
 			} else {
 				firstLetter = string.substring(0,1);
 				string = string.replaceFirst(firstLetter, "");
 				string = string + firstLetter;
-		}
-		}else 	if(string.contains(" ")) {
-			String[] strArr = arrStr.split(" ");
-			for (int i = 0;i<=strArr.length-1;i++) {
-				while(loop == false) {
-					if(strArr[i].substring(0,1).equals("a")||strArr[i].substring(0,1).equals("e")||strArr[i].substring(0,1).equals("i")||strArr[i].substring(0,1).equals("o")||strArr[i].substring(0,1).equals("u")) {
-						strArr[i] = strArr[i] + "ay";
-						secStr = secStr + strArr[i];
-						if(i==strArr.length-1) {
-							secondLoop = true;
-						}
-					} else {
-						firstArrLetter = strArr[i].substring(0,1);
-						strArr[i] = strArr[i].replaceFirst(firstArrLetter,"");
-						secStr = secStr + firstArrLetter;				
-					}
-				}
-				str = secStr;
+		}}else if(string.contains(" ")) {
+			firstLetter = "";
+			str = "";
+			String[] strArr = string.split(" ");
+			
+			for(int i = 0;i<=strArr.length-1;i++) {
+				if(strArr[i].substring(0,1).equals("a")||strArr[i].substring(0,1).equals("e")||strArr[i].substring(0,1).equals("i")||strArr[i].substring(0,1).equals("o")) {
+					strArr[i] = strArr[i] + "ay";
+				} else {
+					firstLetter = strArr[i].substring(0,1);
+					strArr[i] = strArr[i].replaceFirst(firstLetter, "");
+					strArr[i] = strArr[i] + firstLetter;
+					strArr[i] = strArr[i] + "ay";
 			}
 		}
-}
-
-		return str;
+			for(int i=0;i<=strArr.length-1;i++) {
+				secString = secString +" "+ strArr[i];
+			}
+			str = secString.trim();
+			loop = true;
+	}
+	}
+	
+	return str;
 	}
 
 	/**
@@ -634,8 +632,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		boolean isLuhn = true;
+		Integer num = 0;
+		Integer secondNum = 0;
+		String luhnNum = "";
+		
+		if (string.matches(".*[a-zA-Z]+.*")||string.contains("-")) {
+			isLuhn = false;
+		} else if(string.contains(" ")) {
+			 string = string.replaceAll(" ", "");
+			 String[] strNum = string.split("");
+			 for(int i=strNum.length-2;i>=0;i-=2) {
+				 num = (Integer.parseInt(strNum[i]))*2;
+				 if(num>9) {
+					 num = num -9;
+				 }
+				 strNum[i] = num.toString();
+			 }
+			 for (int i=0;i<=strNum.length-1;i++) {
+				 luhnNum = luhnNum + strNum[i];
+			 }
+			 String luhnArr[] = luhnNum.split("");
+			 for(int i=0;i<=luhnNum.length()-1;i++) {
+				 secondNum = secondNum + Integer.parseInt(luhnArr[i]);
+			 }
+			 if((secondNum%10)==0) {
+				 isLuhn = true;
+			 } else {
+				 isLuhn = false;
+			 }
+		} 
+		return isLuhn;
 	}
 
 	/**
