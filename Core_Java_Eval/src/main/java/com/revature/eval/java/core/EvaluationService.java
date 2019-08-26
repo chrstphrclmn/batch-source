@@ -428,14 +428,26 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
+			int tempKey = key;
+			int num =0;
+			String[] letter = string.split("");
+			String str = "";
 			String alphabet = "abcdefghijklmnopqrstuvwxyz";
 			String[] alphabetArr = alphabet.split("");
 			
-			for(int i=0;i<=string.length()-1;i++) {
-				
-				string = string.replace(string.substring(i,i+1), alphabetArr[key+1]);
+			for(int i=0;i<string.length();i++) {
+				num = alphabet.indexOf(letter[i]);
+				if((num+1)+tempKey>26) {
+					tempKey = ((num+1)+(tempKey))- alphabetArr.length;
+					str = str + alphabetArr[tempKey-1];
+					tempKey = key;
+				} else {
+					tempKey = ((num+1)+(tempKey));
+					str = str + alphabetArr[tempKey-1];	
+					tempKey = key;
+				}
 			}
-			return string.toUpperCase();
+			return str.toUpperCase();
 		}
 
 	}
@@ -490,8 +502,14 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String backAlpha = "zyxwvutsrqponmlkjihgfedcba";
+			String[] letter = string.split("");
+			String str = "";
+			for (int i=0;i<string.length();i++) {
+				str = str + backAlpha.indexOf(alphabet.indexOf(letter[i]));
+			}
+			return str;
 		}
 
 		/**
@@ -529,10 +547,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		
+		string = string.replaceAll("-", "");
 		boolean isValid = false;
+		int num = 0;
+		if(string.contains("A")||string.contains("K")) {
+			isValid = false;
+			string = null;
+		} else if (string.substring(9,10).equals("X")) {
+			String[] strArr = string.split("");
+			string = string.substring(0,9);
+			strArr = string.split("");
+			for(int i = 0;i<=strArr.length-1;i++) {
+				int mult = 10 - i;
+				num = num + (Integer.parseInt(strArr[i])*mult);
+			}
+			num +=10;
+			if(num%11==0) {
+				isValid = true;
+			}
+		} else {
+			String[] strArr = string.split("");
+			for(int i = 0;i<=strArr.length-1;i++) {
+				int mult = 10 - i;
+				num = num + (Integer.parseInt(strArr[i])*mult);
+			}
+			if(num%11==0) {
+				isValid = true;
+			}
+		}
 		return isValid;
 	}
+		
 
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
