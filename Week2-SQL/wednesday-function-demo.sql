@@ -290,11 +290,13 @@ begin
 	
    
     loop 
-      	exit when counter = n ; 
+      	exit when counter = n; 
       	counter := counter + 1 ; 
+      
       	placeholder := num1;
 		num1 := num1+num2;
 		num2 := placeholder;
+	
     end loop ; 
    
    return num1;
@@ -304,14 +306,14 @@ $$
 select fib1(3);
 
 
-CREATE OR REPLACE FUNCTION fib2(n INTEGER) 
-   RETURNS INTEGER 
-   LANGUAGE plpgsql AS $$ 
-DECLARE
+create or replace function fib2(n integer) 
+   returns integer 
+   language plpgsql as $$ 
+declare
   num1 integer := 0; 
   num2 integer := 1;
   placeholder integer;
-BEGIN
+begin
  
 	if n=0 then
 		return 0;
@@ -325,8 +327,37 @@ BEGIN
 		num2 := placeholder;
    	end loop;
    
-   RETURN num1;
-END ; 
+   return num1;
+end ; 
 $$ 
 
-select fibonacci_2(5);
+insert into department values (1,'new dept',500);
+
+
+create or replace function check_dept_id_uniqueness()
+returns trigger
+language plpgsql as 
+$$
+declare
+	id_count integer;
+begin
+	select count(dept_id) into id_count
+	from department
+	where dept_id = new.dept_id;
+	
+	if id_count>0 then 
+		new.dept_id := nextval('department_dept_id_seq'::regclass);
+	end if;	
+	
+	return new;
+end;
+$$
+
+create trigger assure_dept_id_uniquness
+before insert 
+on department
+for each row
+execute procedure check_dept_id_uniqueness();
+
+
+
