@@ -18,7 +18,8 @@ import com.revature.bankingapp.sysoutgui.views.HomeView;
 
 public class HomeController {
 
-	private static boolean exit;
+	private boolean exit;
+	private String indicator = "E";
 
 	private UserService userService = new UserServiceImpl();
 	private AccountService accountService = new AccountServiceImpl();
@@ -30,9 +31,10 @@ public class HomeController {
 		return loggedinAccount;
 	}
 
-	public void launch() {
+	public String launch() {
 		System.out.println("Launching Home page");
 		home(SingletonScanner.getScannerInstance());
+		return indicator;
 	}
 
 	private void home(Scanner reader) {
@@ -66,6 +68,7 @@ public class HomeController {
 				if (submitLogin(reader)) {
 					exit = true;
 					System.out.println("Leaving Home Screen");
+					indicator ="L";
 					break Outer;
 				} else {
 					break;

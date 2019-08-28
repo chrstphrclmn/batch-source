@@ -11,7 +11,8 @@ import com.revature.bankingapp.sysoutgui.views.AccountView;
 public class AccountController {
 
 	private SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
-	private static boolean exit;
+	private boolean exit;
+	private String indicator = "E";
 	private Account loggedinAccount;
 
 	public AccountController() {
@@ -27,10 +28,11 @@ public class AccountController {
 		this.loggedinAccount = loggedinAccount;
 	}
 
-	public void launch() {
+	public String launch() {
 		System.out.println("Login Successful");
 		System.out.println("Launching Login page");
 		account(SingletonScanner.getScannerInstance());
+		return indicator;
 	}
 
 	private void account(Scanner reader) {
@@ -42,7 +44,8 @@ public class AccountController {
 				createSubAccount(reader);
 				break;
 			case "L":
-				break;
+				indicator = "L";
+				break Outer;
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");

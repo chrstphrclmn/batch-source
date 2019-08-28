@@ -23,15 +23,22 @@ public class BankingAppApplication {
 		
 		//See Singleton Scanner for explanation
 		try (Scanner reader = SingletonScanner.getScannerInstance()) {
-			System.out.println("App is running");
-			HomeController homeController = new HomeController();
-			homeController.launch();
-			System.out.println("Logged in successfull");
-			AccountController accountController = new AccountController(homeController.getLoggedinAccount());
-			accountController.launch();
+			while(run().equalsIgnoreCase("L"));		
 		} catch (Exception e) {
 			System.out.println("An error occured in class " + e.getClass() + ": " + e + "\n Exiting application...");
 		}
+	}
+	
+	private static String run() {
+		System.out.println("App is running");
+		HomeController homeController = new HomeController();
+		String indicator = homeController.launch();
+		if(indicator.equalsIgnoreCase("L")) {
+			System.out.println("Logged in successfull");
+			AccountController accountController = new AccountController(homeController.getLoggedinAccount());
+			indicator = accountController.launch();
+		}
+		return indicator;
 	}
 }
 
