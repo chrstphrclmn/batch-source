@@ -271,5 +271,62 @@ select assess_raise(13,200);
 
 
 
+   
+create or replace function fib1(n integer) 
+   returns integer 
+   language plpgsql as $$ 
+declare
+  num1 integer := 0; 
+  num2 integer := 1;
+  placeholder integer;
+  counter integer :=0;
+begin
+ 
+	if n=0 then
+		return 0;
+	elseif n=1 then
+		return 1;
+	end if;
+	
+   
+    loop 
+      	exit when counter = n ; 
+      	counter := counter + 1 ; 
+      	placeholder := num1;
+		num1 := num1+num2;
+		num2 := placeholder;
+    end loop ; 
+   
+   return num1;
+end ; 
+$$ 
+
+select fib1(3);
 
 
+CREATE OR REPLACE FUNCTION fib2(n INTEGER) 
+   RETURNS INTEGER 
+   LANGUAGE plpgsql AS $$ 
+DECLARE
+  num1 integer := 0; 
+  num2 integer := 1;
+  placeholder integer;
+BEGIN
+ 
+	if n=0 then
+		return 0;
+	elseif n=1 then
+		return 1;
+	end if;
+	
+	for i in 0..(n-1) loop
+		placeholder := num1;
+		num1 := num1+num2;
+		num2 := placeholder;
+   	end loop;
+   
+   RETURN num1;
+END ; 
+$$ 
+
+select fibonacci_2(5);
