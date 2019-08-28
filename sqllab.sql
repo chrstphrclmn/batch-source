@@ -1,7 +1,5 @@
 -- Michael Zhang
 
---2.X
-
 --2.1.1: Select all columns from employee table
 select * 
 from "Employee";
@@ -87,3 +85,19 @@ full join "Invoice" as i
 on c."CustomerId" = i."CustomerId";
 
 
+--3.3.1: Create a right join that joins album and artist specifying artist name and title.
+select ar."Name", al."Title"
+from "Album" as al
+right join "Artist" as ar
+on al."ArtistId" = ar."ArtistId";
+
+--3.4.1: Create a cross join that joins album and artist and sorts by artist name in ascending order.
+select ar."Name", al."Title"
+from "Album" as al
+cross join "Artist" as ar
+order by ar."Name" asc;
+
+--3.5.1: Perform a self-join on the employee table, joining on the reportsto column.
+select e1."FirstName", e1."LastName", e2."ReportsTo"
+from "Employee" as e1, "Employee" as e2
+where e1."EmployeeId" = e2."EmployeeId";
