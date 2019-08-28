@@ -271,27 +271,5 @@ select assess_raise(13,200);
 
 
 
-CREATE OR REPLACE FUNCTION fibonacci (n INTEGER) 
-   RETURNS INTEGER 
-   LANGUAGE plpgsql AS $$ 
-DECLARE
-   counter INTEGER := 0 ; 
-   i INTEGER := 0 ; 
-   j INTEGER := 1 ;
-BEGIN
- 
-   IF (n < 1) THEN
-      RETURN 0 ;
-   END IF; 
-   
-   LOOP 
-      EXIT WHEN counter = n ; 
-      counter := counter + 1 ; 
-      SELECT j, i + j INTO i,   j ;
-   END LOOP ; 
-   
-   RETURN i ;
-END ; 
-$$ 
 
 
