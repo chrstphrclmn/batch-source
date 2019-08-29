@@ -97,12 +97,14 @@ group by c."SupportRepId") g);
 
 select g."Name", h."NumOfPurchases"
 from "Genre" g join 
-(select t."GenreId", count(t."GenreId") as "NumOfPurchases"
+(select t."GenreId", sum(il."Quantity") as "NumOfPurchases"
 from "InvoiceLine" il join "Track" t
 on il."TrackId" = t."TrackId"
 group by "GenreId") h
 on g."GenreId"=h."GenreId"
 order by "NumOfPurchases" desc;
+
+
 
 --4.0.a Create a function that returns the average total of all invoices.
 
