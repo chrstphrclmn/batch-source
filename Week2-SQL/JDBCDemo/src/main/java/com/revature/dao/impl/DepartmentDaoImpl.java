@@ -1,5 +1,6 @@
 package com.revature.dao.impl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,6 +127,53 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		}
 		
 		return rowsDeleted;
+	}
+
+	@Override
+	public Department createDepartmentWithFunction(Department d) {
+		
+		String sql = "select * from adddept(?, ?)";
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, d.getName());
+			ps.setDouble(2, d.getMonthlyBudget());
+			
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) {
+				int deptId = rs.getInt("dept_id");
+				String deptName = rs.getString("dept_name");
+				double salary = rs.getDouble("monthly_budget");
+				d = new Department(deptId, deptName, salary);
+			}
+			
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return d;
+	}
+
+	@Override
+	public void increaseDepartmentBudgetWithFunction(Department d, double increase) {
+		
+		String sql = "{call increase_budget(?,?)}";
+		
+		try(Connection c = ConnectionUtil.getConnection();
+			CallableStatement cs = c.prepareCall(sql)){
+			
+			cs.setDouble(1, increase);
+			cs.setInt(2, d.getId());
+			
+			cs.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.revature;
 
-import java.util.List;
-
 import com.revature.dao.DepartmentDao;
 import com.revature.dao.impl.DepartmentDaoImpl;
 import com.revature.model.Department;
@@ -47,8 +45,21 @@ public class Driver {
 //		int depts = dd.updateDepartment(dept2);
 //		System.out.println(depts);
 		
-		int deletedRows = dd.deleteDepartment(16);
-		System.out.println(deletedRows);
+//		int deletedRows = dd.deleteDepartment(16);
+//		System.out.println(deletedRows);
+		
+//		EmployeeDao ed = new EmployeeDaoImpl();
+//		List<Employee> employees = ed.getEmployeesAgain();
+//		for(Employee e: employees) {
+//			System.out.println(e);
+//		}
+		
+//		Department salesDept = new Department(5);
+//		dd.increaseDepartmentBudgetWithFunction(salesDept, 100);
+		
+		Department d = new Department("last department", 1000);
+		Department result = dd.createDepartmentWithFunction(d);
+		System.out.println(result);
 		
 	}
 
