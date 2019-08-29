@@ -246,5 +246,3 @@ $$
 end
 
 --select find_playlist_price(1) as "Playlist Price";
-
-
