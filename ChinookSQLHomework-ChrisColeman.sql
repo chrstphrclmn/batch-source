@@ -67,3 +67,98 @@ order by ar."Name" asc;
 select *
 from "Employee" e join "Employee" f
 on e."EmployeeId"=f."ReportsTo";
+
+--3.6.a Create a query that shows the customer first name and last name as FULL_NAME 
+--(you can use || to concatenate two strings) with the total amount of money they have spent as TOTAL.
+select c."FirstName"||c."LastName" as "FULL_NAME", sum(i."Total") as "TOTAL"
+from "Customer" c join "Invoice" i
+on c."CustomerId"=i."CustomerId"
+group by i."CustomerId", c."FirstName", c."LastName";
+
+--3.6.b Create a query that shows the employee that has made the highest total value of sales (total of all invoices).
+
+select e."FirstName", e."LastName", f."total"
+from "Employee" e join (
+select c."SupportRepId", sum(i."Total") as "total"
+from "Customer" c join "Invoice" i
+on c."CustomerId"=i."CustomerId"
+group by c."SupportRepId") f
+on e."EmployeeId"=f."SupportRepId"
+where	"total"=(
+select max("total")
+from (
+select c."SupportRepId", sum(i."Total") as "total"
+from "Customer" c join "Invoice" i
+on c."CustomerId"=i."CustomerId"
+group by c."SupportRepId") g);
+
+--3.6.c Create a query which shows the number of purchases per each genre. 
+--Display the name of each genre and number of purchases. Show the most popular genre first.
+
+select g."Name", h."NumOfPurchases"
+from "Genre" g join 
+(select t."GenreId", count(t."GenreId") as "NumOfPurchases"
+from "InvoiceLine" il join "Track" t
+on il."TrackId" = t."TrackId"
+group by "GenreId") h
+on g."GenreId"=h."GenreId"
+order by "NumOfPurchases" desc;
+
+--4.0.a Create a function that returns the average total of all invoices.
+
+create function invoiceAvrg()
+returns numeric(7,2) as $$
+begin
+return(
+	select avg("Total")
+	from "Invoice");
+end $$
+language plpgsql;
+
+select invoiceAvrg()
+
+--4.0.b Create a function that returns all employees who are born after 1968.
+create or replace function birthday()
+returns table (firstname character varying, lastname character varying) as $$
+begin
+	return query 
+	select e."FirstName", e."LastName"
+	from "Employee" e
+	where e."BirthDate"::date > date '1968-12-31';
+	
+end; $$
+language plpgsql;
+
+--4.0.c Create a function that returns the manager of an employee, given the id of the employee.
+create or replace function manager(cid int)
+returns int as $$
+begin
+	return (
+	select e."ReportsTo"
+	from "Employee" e
+	where e."EmployeeId"=cid);
+end; $$
+language plpgsql;
+
+--4.0.d Create a function that returns the price of a particular playlist, given the id for that playlist
+create or replace function price(id int)
+returns numeric(7,2) as $$
+begin
+	return (
+	select sum(t."UnitPrice")
+	from "PlaylistTrack" p join "Track" t
+	on p."TrackId"=t."TrackId"
+	where p."PlaylistId"=id
+	group by p."PlaylistId"
+	);
+	
+end; $$
+language plpgsql;
+
+select * from price(3);
+
+
+
+
+
+
