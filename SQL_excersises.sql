@@ -215,3 +215,209 @@ from
 	on e."ReportsTo"=m."EmployeeId";
 
 
+/*
+ * 3.6 Joined Queries
+Create a query that shows the customer first name and last name as 
+FULL_NAME (you can use || to concatenate two strings) with the total 
+amount of money they have spent as TOTAL.
+*/
+
+select*
+from "Customer";
+
+select
+	concat("FirstName",' ',"LastName") as "FullName",
+	"Total" as "Total"
+	
+from
+	"Customer"
+inner join "Invoice" on "Customer"."CustomerId"="Invoice"."CustomerId";
+
+/*
+Create a query that shows the employee that has made the 
+highest total value of sales (total of all invoices).
+*/
+create view middle
+as select "Employee"."FirstName"||' '||"Employee"."LastName" as "Employee",
+		"Partial"."Total" 
+		from "Employee" join(
+						select sum("Invoice"."Total")  as "Total",
+						"Customer"."SupportRepId" as "SupportRepId"
+						
+						from "Invoice" join "Customer"  on "Invoice"."CustomerId"="Customer"."CustomerId" 
+						group by "Customer"."SupportRepId"
+						
+						) as "Partial" on "Employee"."EmployeeId"="Partial"."SupportRepId" 
+
+select "Employee"."FirstName"||' '||"Employee"."LastName" as "Employee",
+		"Partial"."Total" 
+		from "Employee" join(
+						select sum("Invoice"."Total")  as "Total",
+						"Customer"."SupportRepId" as "SupportRepId"
+						
+						from "Invoice" join "Customer"  on "Invoice"."CustomerId"="Customer"."CustomerId" 
+						group by "Customer"."SupportRepId"
+						
+						) as "Partial" on "Employee"."EmployeeId"="Partial"."SupportRepId" 
+						
+						where "Partial"."Total"=(
+						select max("Total") from middle
+						
+						);
+						
+
+					
+
+
+/*
+Create a query which shows the number of purchases per each genre. 
+Display the name of each genre and number of purchases. 
+Show the most popular genre first.
+*/
+
+create or replace view genreTrack as
+select "Genre"."Name", "Track"."TrackId"  from "Track" inner  join "Genre"   on "Track"."GenreId"= "Genre"."GenreId";  
+select "Name","TrackId" from genretrack ;
+
+create or replace view gtInvoice as
+select genreTrack."Name",genreTrack."TrackId", "InvoiceLine"."Quantity" 
+from genretrack inner join "InvoiceLine" 
+on genreTrack."TrackId"="InvoiceLine"."TrackId";
+
+select*from gtInvoice;
+
+select "Name", sum("Quantity") from gtinvoice group by"Name";
+
+/*
+4.0 User Defined Functions
+Create a function that returns the average total of all invoices.
+*/
+
+
+select* from "Invoice";
+
+create or replace function averageInvoice()
+returns numeric(7,2)
+language plpgsql
+as $$
+declare	
+promedio numeric(7,2);
+begin
+	select round(avg("Total"),2) into promedio 
+	from "Invoice"; 
+	return promedio;
+
+end;
+$$
+
+select averageInvoice();
+
+/*
+
+Create a function that returns all employees who are born 
+after 1968.*/
+
+select* from "Employee";
+
+create or replace function afterD()
+returns setof "Employee"
+language plpgsql
+as $$
+declare 
+
+
+begin
+	return query 
+	select* 
+	from "Employee"
+	where to_timestamp('1/1/1968','MM/DD/YYYY HH24:MI:SS')<="BirthDate";
+	
+end;
+$$
+
+select afterD();
+
+
+/*
+Create a function that returns the manager of an employee, given the 
+id of the employee.
+*/
+select*from "Employee";
+
+
+create or replace function employeemanager(id numeric)
+returns  varchar
+language plpgsql
+as $$
+declare 
+mid integer;
+mname varchar;
+begin
+	mid:=(select "ReportsTo" from "Employee" where "EmployeeId"=id);
+	 
+	select "FirstName"||' '||"LastName" into mname
+	from"Employee" where "EmployeeId"=mid;
+
+	return mname;	
+
+end;
+$$
+
+select employeemanager(6);
+
+
+/*
+Create a function that returns the price of a particular playlist, given the id for that playlist.
+*/
+
+select*from "Playlist"; 
+
+
+create or replace function pricePlaylist(id numeric)
+returns  numeric(7,2);
+language plpgsql
+as $$
+declare 
+price integer;
+
+begin
+	price:=(select "" from "Employee" where "EmployeeId"=id);
+	 
+	select "FirstName"||' '||"LastName" into mname
+	from"Employee" where "EmployeeId"=mid;
+
+	return mname;	
+
+end;
+$$
+
+select employeemanager(6);
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
