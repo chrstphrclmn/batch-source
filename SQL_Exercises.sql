@@ -21,7 +21,7 @@ select "FirstName"
 from "Customer" 
 order by "City" asc;
 
---Select all invoices with a billing address like “T%”.
+--Select all invoices with a billing address like â€œT%â€.
 
 select * 
 from "Invoice" 
@@ -76,13 +76,13 @@ update "Customer"
 set "FirstName" = 'Robert' , "LastName" = 'Walter' 
 where "FirstName" = 'Aaron'  and "LastName" = 'Mitchell';
 
---Update name of artist in the Artist table “Creedence Clearwater Revival” to “CCR”
+--Update name of artist in the Artist table â€œCreedence Clearwater Revivalâ€ to â€œCCRâ€
 
 update "Artist" 
 set "Name" = 'CCR' 
 where "Name" = 'Creedence Clearwater Revival';
 
---Update name of artist in the Artist table “Creedence Clearwater Revival” to “CCR”
+--Update name of artist in the Artist table â€œCreedence Clearwater Revivalâ€ to â€œCCRâ€
 
 select "Customer"."FirstName", "Customer"."LastName", "Invoice"."InvoiceId" 
 from "Customer" 
@@ -235,7 +235,7 @@ from "Track"
 join (
 	  select * 
 	  from "PlaylistTrack" 
-	  where "PlaylistId" = 1
+	  where "PlaylistId" = play_list_id
 	 ) as pid_and_tid
 on "Track"."TrackId" = pid_and_tid."TrackId");
 	
