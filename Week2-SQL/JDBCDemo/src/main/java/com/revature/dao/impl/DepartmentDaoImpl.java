@@ -164,7 +164,6 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		
 		try(Connection c = ConnectionUtil.getConnection();
 			CallableStatement cs = c.prepareCall(sql)){
-			
 			cs.setDouble(1, increase);
 			cs.setInt(2, d.getId());
 			

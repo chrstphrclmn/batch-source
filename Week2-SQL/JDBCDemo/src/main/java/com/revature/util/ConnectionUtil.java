@@ -12,6 +12,8 @@ public class ConnectionUtil {
 
 	private static Connection connection;
 
+	private static boolean isTest = true;
+
 	public static Connection getHardCodedConnection() throws SQLException {
 
 		try {
@@ -46,18 +48,35 @@ public class ConnectionUtil {
 
 	public static Connection getConnection() throws SQLException {
 
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		if(isTest==true) {
+			return getH2Connection();
+		} else {
+
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			String url = System.getenv("DB_URL");
+			String username = System.getenv("DB_USER");
+			String password = System.getenv("DB_PASS");
+
+			if(connection == null || connection.isClosed()) {
+				connection = DriverManager.getConnection(url, username, password);
+			}
+
+			return connection;
 		}
+	}
 
-		String url = System.getenv("DB_URL");
-		String username = System.getenv("DB_USER");
-		String password = System.getenv("DB_PASS");
-
-		if(connection == null || connection.isClosed()) {
-			connection = DriverManager.getConnection(url, username, password);
+	public static Connection getH2Connection() {
+		try {
+			if(connection == null || connection.isClosed()) {
+				connection = DriverManager.getConnection("jdbc:h2:~/test");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return connection;
