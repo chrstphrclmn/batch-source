@@ -22,11 +22,12 @@ public class AccountView {
 	public static void showTransferAccounts(List<SubAccount> subAccounts, String notification, long skip) {
 		System.out.println("Select the account that will be " + notification);
 		System.out.println("| Options:                               |");
-		for (int i = 0; i < subAccounts.size(); i++) {
+		for (int i = 0, j = 0; i < subAccounts.size(); i++) {
 			SubAccount subAccount = subAccounts.get(i);
 			if (subAccount.getId() != skip) {
-				System.out.println("|        " + i + ". " + subAccount.getType() + " Account, Id: "
+				System.out.println("|        " + j + ". " + subAccount.getType() + " Account, Id: "
 						+ subAccounts.get(i).getId() + "           ");
+				j++;
 			}
 		}
 		System.out.println("|        B. Go back                      |");

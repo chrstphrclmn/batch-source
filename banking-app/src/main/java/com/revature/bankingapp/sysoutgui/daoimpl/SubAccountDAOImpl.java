@@ -21,7 +21,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 
 	private final String[] databaseColumns = { "id", "type", "amount", "account_id" };
 	private static Logger logger = ApplicationLogger.getLogger();
-	
+
 	@Override
 	public Optional<SubAccount> findById(long id) {
 		Optional<SubAccount> subaccountOptional = Optional.empty();
@@ -109,6 +109,42 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void updateTransfer(SubAccount subAccount1, SubAccount subAccount2) {
+		String query = "UPDATE subaccounts SET type= ?, amount=?, account_id=? WHERE id=?";
+		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
+				DatabaseCredentials.getPass());
+				PreparedStatement subaccount1_stmt = conn.prepareStatement(query);
+				PreparedStatement subaccount2_stmt = conn.prepareStatement(query)) {
+
+			// start transaction block
+			conn.setAutoCommit(false);
+
+			// SubAccount 1
+			subaccount1_stmt.setString(1, subAccount1.getType());
+			subaccount1_stmt.setDouble(2, subAccount1.getAmount());
+			subaccount1_stmt.setLong(3, subAccount1.getAccountId());
+			subaccount1_stmt.setLong(4, subAccount1.getId());
+			subaccount1_stmt.executeUpdate();
+
+			// SubAccount 2
+			subaccount2_stmt.setString(1, subAccount2.getType());
+			subaccount2_stmt.setDouble(2, subAccount2.getAmount());
+			subaccount2_stmt.setLong(3, subAccount2.getAccountId());
+			subaccount2_stmt.setLong(4, subAccount2.getId());
+			subaccount2_stmt.executeUpdate();
+
+			// end transaction block, commit changes
+			conn.commit();
+
+			// good practice to set it back to default true
+			conn.setAutoCommit(true);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -14,6 +14,8 @@ public interface SubAccountDAO {
 	void save(SubAccount subAccount);
 
 	void update(SubAccount subAccount);
-
+	
+	void updateTransfer(SubAccount subAccount1, SubAccount subAccount2);
+	
 	void delete(SubAccount subAccount);
 }

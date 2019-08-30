@@ -40,5 +40,22 @@ public class SubAccountServiceImpl implements SubAccountService {
 		
 		return subAccountDAO.findById(subAccount.getId()).get();
 	}
+	
+	@Override
+	public SubAccount transferFunds(SubAccount subAccount1, SubAccount subAccount2, Double funds) {
+		try {
+			Double currentAmount = subAccount1.getAmount();
+			if ((currentAmount - funds) < 0) {
+				throw new InsufficientFundsException("Cannot perform transaction. There are insufficient funds");
+			}
+			subAccount1.setAmount(subAccount1.getAmount() - funds);
+			subAccount2.setAmount(subAccount2.getAmount() + funds);
+			subAccountDAO.updateTransfer(subAccount1, subAccount2);
+		} catch (InsufficientFundsException e) {
+			logger.info(e.getMessage());
+		}
+
+		return subAccountDAO.findById(subAccount1.getId()).get();
+	}
 
 }

@@ -120,10 +120,10 @@ public class AccountController {
 			String subAccountCase = reader.next();
 			switch (subAccountCase.toUpperCase()) {
 			case "D":
-				updateFunds(reader, subAccount, "Add");
+				subAccount = updateFunds(reader, subAccount, "Add");
 				break;
 			case "W":
-				updateFunds(reader, subAccount, "Subtract");
+				subAccount = updateFunds(reader, subAccount, "Subtract");
 				break;
 			case "V":
 				System.out.println(subAccount.getAmount());
@@ -133,7 +133,7 @@ public class AccountController {
 				if (subAccount2 == null) {
 					break;
 				}
-				transferFunds(reader, subAccount, subAccount2);
+				subAccount = transferFunds(reader, subAccount, subAccount2);
 				break;
 			case "B":
 				break Outer;
@@ -152,28 +152,29 @@ public class AccountController {
 		}
 	}
 
-	private void updateFunds(Scanner reader, SubAccount subAccount, String operation) {
+	private SubAccount updateFunds(Scanner reader, SubAccount subAccount, String operation) {
 		try {
 			System.out.println("Enter amount");
 			String fundsString = reader.next();
 			Double funds = Double.parseDouble(fundsString);
-			subAccountService.updateFunds(subAccount, funds, operation);
+			subAccount = subAccountService.updateFunds(subAccount, funds, operation);
 			System.out.println("Funds Transfered");
 		} catch (NumberFormatException e) {
 			System.out.println("Invalid amount");
 		}
+		return subAccount;
 	}
 
-	private void transferFunds(Scanner reader, SubAccount subAccount1, SubAccount subAccount2) {
+	private SubAccount transferFunds(Scanner reader, SubAccount subAccount1, SubAccount subAccount2) {
 		try {
 			System.out.println("Enter amount");
 			String fundsString = reader.next();
 			Double funds = Double.parseDouble(fundsString);
-			subAccountService.updateFunds(subAccount1, funds, "Subtract");
-			subAccountService.updateFunds(subAccount2, funds, "Add");
+			subAccount1 = subAccountService.transferFunds(subAccount1, subAccount2, funds);
 		} catch (NumberFormatException e) {
 			System.out.println("Invalid amount");
 		}
+		return subAccount1;
 	}
 
 	private SubAccount showTransferFunds(Scanner reader, String notification, long skip) {
