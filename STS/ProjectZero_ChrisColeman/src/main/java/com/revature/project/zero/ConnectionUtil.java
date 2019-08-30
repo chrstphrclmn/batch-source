@@ -17,11 +17,11 @@ public class ConnectionUtil {
 		}
 
 		String url = (System.getenv("DB_URL") + "/postgres");
-		System.out.println(url);
+		//System.out.println(url);
 		String username = System.getenv("DB_USER");
-		System.out.println(username);
+		//System.out.println(username);
 		String password = System.getenv("DB_PASS");
-		System.out.println(password);
+		//System.out.println(password);
 
 		if(connection == null || connection.isClosed()) {
 			connection = DriverManager.getConnection(url, username, password);

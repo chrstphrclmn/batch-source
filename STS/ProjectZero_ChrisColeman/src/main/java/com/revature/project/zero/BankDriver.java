@@ -16,7 +16,7 @@ public class BankDriver {
 		
 		
 		System.out.println("Welcome to Fuax Green Bank.");
-		//query();
+		queryUserDetails();
 		
 		try(Connection connection = ConnectionUtil.getConnection();) {
 			
@@ -29,7 +29,7 @@ public class BankDriver {
 		scan.close();
 	}
 	
-	public static void query() {
+	public static void queryUserDetails() {
 		
 		System.out.println("Please enter 1 to login.");
 		System.out.println("Please enter 2 to register.");
@@ -44,7 +44,7 @@ public class BankDriver {
 		}
 		else {
 			System.out.println("That is not a valid command.");
-			query();
+			queryUserDetails();
 		}
 		
 	}
@@ -60,8 +60,25 @@ public class BankDriver {
 	
 	public static void register() {
 		
+		System.out.println("Please set a username.");
+		username = scan.next();
+		setPassword();
 		
+	}
+	
+	public static void setPassword() {
+		System.out.println("Please choose a password.");
+		String hold = scan.nextLine();
+		System.out.println("Please reenter your password to confirm.");
+		String hold2 = scan.nextLine();
 		
+		if(hold.equals(hold2)) {
+			pass = hold;
+		}
+		else {
+			System.out.println("Those passwords do not match.");
+			setPassword();
+		}
 	}
 	
 	
