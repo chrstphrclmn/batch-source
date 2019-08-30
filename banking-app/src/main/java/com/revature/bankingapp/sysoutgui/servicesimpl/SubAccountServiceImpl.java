@@ -11,9 +11,13 @@ import com.revature.bankingapp.sysoutgui.model.SubAccount;
 
 public class SubAccountServiceImpl implements SubAccountService {
 
-	SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
+	private SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
 	private static Logger logger = ApplicationLogger.getLogger();
 	
+	public void setSubAccountDAO(SubAccountDAO subAccountDAO) {
+		this.subAccountDAO = subAccountDAO;
+	}
+
 	@Override
 	public SubAccount updateFunds(SubAccount subAccount, Double funds, String operation) {
 		try {

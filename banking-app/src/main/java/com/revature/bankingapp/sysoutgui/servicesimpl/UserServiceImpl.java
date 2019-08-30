@@ -8,20 +8,16 @@ import com.revature.bankingapp.sysoutgui.model.User;
 import com.revature.bankingapp.sysoutgui.services.UserService;
 import com.revature.bankingapp.sysoutgui.util.ViewUtil;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-	UserDAO userDAOImpl = new UserDAOImpl();
+	private UserDAO userDAOImpl = new UserDAOImpl();
 	private static String newline = ViewUtil.getNewline();
-	private static String firstNamePolicy = "Invalid first name, please use Letters, dashes, and apostrophes." + newline;
+	private static String firstNamePolicy = "Invalid first name, please use Letters, dashes, and apostrophes."
+			+ newline;
 	private static String lastNamePolicy = "Invalid last name, please use Letters, dashes, and apostrophes." + newline;
 
-	@Override
-	public boolean firstNameIsValid(String firstName) {
-		String regex = "[A-Za-z-']{1,20}";
-		if (firstName.matches(regex)) {
-			return true;
-		}
-		return false;
+	public void setUserDAOImpl(UserDAO userDAOImpl) {
+		this.userDAOImpl = userDAOImpl;
 	}
 
 	public static String getFirstNamePolicy() {
@@ -32,6 +28,15 @@ public class UserServiceImpl implements UserService{
 		return lastNamePolicy;
 	}
 
+	@Override
+	public boolean firstNameIsValid(String firstName) {
+		String regex = "[A-Za-z-']{1,20}";
+		if (firstName.matches(regex)) {
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean lastNameIsValid(String lastName) {
 		String regex = "[A-Za-z-']{1,20}";
@@ -48,7 +53,7 @@ public class UserServiceImpl implements UserService{
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	@Override

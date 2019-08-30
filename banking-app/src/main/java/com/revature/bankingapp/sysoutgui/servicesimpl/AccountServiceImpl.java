@@ -25,6 +25,10 @@ public class AccountServiceImpl implements AccountService {
 		return usernamePolicy;
 	}
 
+	public void setAccountDAOImpl(AccountDAO accountDAOImpl) {
+		this.accountDAOImpl = accountDAOImpl;
+	}
+
 	@Override
 	public boolean usernameIsValid(String username) {
 		String regex = "[A-Za-z0-9]{3,32}";
