@@ -16,23 +16,25 @@ import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
 
 public class UserDAOImpl implements UserDAO {
 
+	private final String[] databaseColumns = { "id", "first_name", "last_name", "email" };
+
 	@Override
 	public Optional<User> findById(long id) {
 		Optional<User> userOptional = Optional.empty();
+		String query = "SELECT * FROM users WHERE id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			String query = "SELECT * FROM users WHERE id=" + id;
-			Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
-			ResultSet rs = stmt.executeQuery(query);
+				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Long userId = rs.getLong("id");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-				String email = rs.getString("email");
+				Long userId = rs.getLong(databaseColumns[0]);
+				String firstName = rs.getString(databaseColumns[1]);
+				String lastName = rs.getString(databaseColumns[2]);
+				String email = rs.getString(databaseColumns[3]);
 				User user = new User(userId, firstName, lastName, email);
 				userOptional = Optional.of(user);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -42,43 +44,42 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Optional<User> findByEmail(String emailAddress) {
 		Optional<User> userOptional = Optional.empty();
+		String query = "SELECT * FROM users WHERE email=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			String query = "SELECT * FROM users WHERE email='" + emailAddress + "'";
-			Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
-			ResultSet rs = stmt.executeQuery(query);
+				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+			stmt.setString(1, emailAddress);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				Long userId = rs.getLong("id");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-				String email = rs.getString("email");
+				Long userId = rs.getLong(databaseColumns[0]);
+				String firstName = rs.getString(databaseColumns[1]);
+				String lastName = rs.getString(databaseColumns[2]);
+				String email = rs.getString(databaseColumns[3]);
 				User user = new User(userId, firstName, lastName, email);
 				userOptional = Optional.of(user);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return userOptional;
 	}
-	
+
 	@Override
 	public List<User> findAll() {
 		List<User> users = new ArrayList<User>();
+		String query = "SELECT * FROM users";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			String query = "SELECT * FROM users";
-			Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
-			ResultSet rs = stmt.executeQuery(query);
+				DatabaseCredentials.getPass());
+				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
+				ResultSet rs = stmt.executeQuery(query);) {	
 			while (rs.next()) {
-				Long userId = rs.getLong("id");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-				String email = rs.getString("email");
+				Long userId = rs.getLong(databaseColumns[0]);
+				String firstName = rs.getString(databaseColumns[1]);
+				String lastName = rs.getString(databaseColumns[2]);
+				String email = rs.getString(databaseColumns[3]);
 				User user = new User(userId, firstName, lastName, email);
 				users.add(user);
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -87,9 +88,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void save(User user) {
+		String query = "INSERT INTO users values(default,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO users values(default,?,?,?)");
+				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setString(3, user.getEmail());
@@ -103,30 +104,32 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void update(User user, String[] params) {
+	public void update(User user) {
+		String query = "UPDATE users SET first_name= ?, last_name=?, email=? WHERE id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			PreparedStatement stmt = conn
-					.prepareStatement("UPDATE users SET first_name= ?, last_name=?, email=? WHERE id=?");
-			for (int i = 0; i < params.length; i++) {
-				stmt.setString(i + 1, params[i]);
-			}
+				DatabaseCredentials.getPass());PreparedStatement stmt = conn
+				.prepareStatement(query);) {
+			stmt.setString(1, user.getFirstName());
+			stmt.setString(2, user.getLastName());
+			stmt.setString(3, user.getEmail());
 			stmt.setLong(4, user.getId());
 			int i = stmt.executeUpdate();
 			System.out.println(i + " records updated");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NumberFormatException nf) {
+			nf.printStackTrace();
 		}
 	}
 
 	@Override
 	public void delete(User user) {
+		String query  = "DELETE FROM users WHERE id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());) {
-			Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
-			String del = "DELETE FROM users WHERE id=" + "'" + user.getId() + "'";
-			stmt.executeUpdate(del);
-
+				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
+			stmt.setLong(1, user.getId());
+			int i = stmt.executeUpdate();
+			System.out.println(i + " records deleted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

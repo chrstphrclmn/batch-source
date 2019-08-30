@@ -15,7 +15,7 @@ public interface AccountDAO {
 
 	void save(Account account);
 
-	void update(Account account, String[] params);
+	void update(Account account);
 
 	void delete(Account account);
 }

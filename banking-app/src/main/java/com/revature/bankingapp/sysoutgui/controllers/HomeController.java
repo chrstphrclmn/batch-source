@@ -117,9 +117,6 @@ public class HomeController {
 	private boolean validateSubmission(String username, String password) {
 		try {
 			Account account = accountDAO.findByUsername(username).get();
-			if (!account.getUsername().equals(username)) {
-				return false;
-			}
 			if (!account.getPassword().equalsIgnoreCase(password)) {
 				return false;
 			}
@@ -156,10 +153,10 @@ public class HomeController {
 		String line;
 		reader.nextLine();
 		String[] inputs = initiateChecks(reader);
-		System.out.println("Press enter to submit. Press R to restart.");
+		System.out.println("Press enter to submit. Press R to restart. Enter exit to cancel sign up.");
 		if ((line = reader.nextLine()) != null && line.equalsIgnoreCase("R")) {
 			inputs = initiateChecks(reader);
-		}
+		}else if(line != null && line.equalsIgnoreCase("exit")) {return;}
 		User newUser = new User(inputs[0], inputs[1], inputs[2]);
 		userDAO.save(newUser);
 		System.out.println("The User " + newUser.getFirstName() + " was created succesfully");
@@ -177,20 +174,21 @@ public class HomeController {
 			System.out.print(inputFields[i]);
 			inputs[i] = reader.nextLine();
 			System.out.println(inputs[i]);
-			boolean failed = !inputFieldsAreValid(inputs, i);
-			if (i > 0) {
-				System.out.println("Go back one field? y / n");
-				String line;
-				while (!(line = reader.nextLine()).equals("y") && !line.equals("n")) {
-					System.out.println("Invalid selection, enter y or n for yes or no");
-				}
-				if (line.equals("y")) {
-					i = i - 1;
-				}
-			}
-			if (failed) {
-				i = i - 1;
-			}
+//			boolean failed = !
+					inputFieldsAreValid(inputs, i);
+//			if (i > 0) {
+//				System.out.println("Go back one field? y / n");
+//				String line;
+//				while (!(line = reader.nextLine()).equals("y") && !line.equals("n")) {
+//					System.out.println("Invalid selection, enter y or n for yes or no");
+//				}
+//				if (line.equals("y")) {
+//					i = i - 1;
+//				}
+//			}
+//			if (failed) {
+//				i = i - 1;
+//			}
 
 		}
 		return inputs;

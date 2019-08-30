@@ -1,11 +1,6 @@
 package com.revature.bankingapp;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,7 +19,8 @@ import com.revature.bankingapp.sysoutgui.views.HomeView;
 public class BankingAppApplication {	
 	public static void main(String[] args) {
 		// SpringApplication.run(BankingAppApplication.class, args);
-		
+
+		System.out.println("Main started");
 		new FeeHandler().schedule();
 		//See Singleton Scanner for explanation
 		try (Scanner reader = SingletonScanner.getScannerInstance()) {
@@ -32,7 +28,6 @@ public class BankingAppApplication {
 		} catch (Exception e) {
 			System.out.println("An error occured in class " + e.getClass() + ": " + e + "\n Exiting application...");
 		}
-		
 	}
 	
 	private static String run() {

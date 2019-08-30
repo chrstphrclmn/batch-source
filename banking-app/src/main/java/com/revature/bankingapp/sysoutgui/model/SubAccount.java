@@ -1,6 +1,6 @@
 package com.revature.bankingapp.sysoutgui.model;
 
-public class SubAccount {
+public class SubAccount implements Comparable<SubAccount>{
 
 	private Long id;
 	private String type;
@@ -20,11 +20,16 @@ public class SubAccount {
 		this.amount = amount;
 	}
 
-	public SubAccount(String type, Double amount, Long accountId ) {
+	public SubAccount(String type, Double amount, Long accountId) {
 		super();
 		this.type = type;
 		this.accountId = accountId;
 		this.amount = amount;
+	}
+
+	@Override
+	public String toString() {
+		return "SubAccount [id=" + id + ", type=" + type + ", accountId=" + accountId + ", amount=" + amount + "]";
 	}
 
 	public Long getId() {
@@ -82,6 +87,11 @@ public class SubAccount {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(SubAccount s) {
+		return Long.compare(this.id, s.id);
 	}
 
 }

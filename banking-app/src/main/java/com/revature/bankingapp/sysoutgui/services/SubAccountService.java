@@ -1,8 +1,9 @@
 package com.revature.bankingapp.sysoutgui.services;
 
+import com.revature.bankingapp.sysoutgui.model.SubAccount;
+
 public interface SubAccountService {
 
-	void addFunds(Long funds);
-	void subtractFunds(Long funds);
-	
+	SubAccount updateFunds(SubAccount subAccount, Double funds, String operation);
+
 }

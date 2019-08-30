@@ -13,7 +13,7 @@ public interface SubAccountDAO {
 
 	void save(SubAccount subAccount);
 
-	void update(SubAccount subAccount, String[] params);
+	void update(SubAccount subAccount);
 
 	void delete(SubAccount subAccount);
 }
