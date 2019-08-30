@@ -1,0 +1,16 @@
+package main;
+
+public class Engine extends CarPart{
+	
+	public boolean running;
+	
+	public Engine() {
+		
+		this.condition = 100;
+	}
+
+	public void status() {
+		
+		
+	}
+}

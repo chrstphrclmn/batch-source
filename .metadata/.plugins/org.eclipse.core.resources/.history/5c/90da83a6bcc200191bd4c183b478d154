@@ -1,0 +1,5 @@
+package com.mycompany.main;
+
+public abstract class AbstactClass {
+
+}

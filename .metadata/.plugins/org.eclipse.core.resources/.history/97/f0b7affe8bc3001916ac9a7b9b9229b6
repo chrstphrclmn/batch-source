@@ -1,0 +1,53 @@
+package com.revature.oopexercise;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Main {
+	
+	public static void print(List<Piece> objs) {
+		
+		//Polymorphism Example. Using the superclass Piece as opposed to specified subclasses to more effective iterate
+		for(Piece p : objs) {
+			
+			System.out.printf("%c at (%d, %d)\n", p.label, p.pos[0], p.pos[1]);
+		}
+	}
+
+	public static void main(String[] args) {
+		
+		//Creation
+		
+		//Valid Creation
+		List<Piece> pieces = new ArrayList<Piece>();
+		pieces.add(new Pawn(3, 4, 0));
+		pieces.add(new Rook(7, 6, 1));
+		
+		//Invalid Creation / Error Catching #1
+		try {
+			
+			pieces.add(new Pawn(-1, -1, 0));
+		}
+		
+		catch (InvalidMoveException e){
+			
+			System.out.printf("Attempt to create Piece with invalid initial position\n");
+		}
+		
+		print(pieces);
+		
+		//Movement
+		
+		//Valid Movement
+		
+		for(Piece p : pieces) {
+			p.move(p.pos[0], p.pos[1] + 1);
+		}
+		
+		//Invalid Movement
+		try {
+			
+			Piece p = pieces.get(0);
+		}
+	}
+}

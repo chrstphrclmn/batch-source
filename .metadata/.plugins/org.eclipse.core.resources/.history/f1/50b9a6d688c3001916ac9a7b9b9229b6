@@ -1,0 +1,24 @@
+package com.revature.oopexercise;
+
+public class Rook extends Piece{
+	
+	public Rook() {
+		
+		super();
+		status = 1; value = 10;
+	}
+	
+	public Rook(int xpos, int ypos, int ctype) {
+		
+		this();
+		this.pos[0] = xpos; this.pos[1] = ypos;
+		this.color = ctype;
+	}
+	
+	public boolean verify(int[] pos) {
+		
+		
+	}
+	
+
+}

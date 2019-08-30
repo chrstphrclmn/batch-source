@@ -1,0 +1,22 @@
+package main;
+
+public class Engine extends CarPart{
+	
+	public boolean state;
+	
+	public Engine() {
+		
+		this.condition = 100;
+		this.state = true;
+	}
+
+	public void status() {
+		
+		this.function()
+	}
+	
+	public void function() {
+		
+		if(this.condition == 0) ? this.state = false : this.condition --;
+	}
+}

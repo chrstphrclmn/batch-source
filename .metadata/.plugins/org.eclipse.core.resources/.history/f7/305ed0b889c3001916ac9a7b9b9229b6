@@ -1,0 +1,40 @@
+package com.revature.oopexercise;
+
+public class Rook extends Piece{
+	
+	public Rook() {
+		
+		super();
+		status = 1; value = 10;
+	}
+	
+	public Rook(int xpos, int ypos, int ctype) {
+		
+		this();
+		this.pos[0] = xpos; this.pos[1] = ypos;
+		this.color = ctype;
+	}
+	
+	public boolean verify(int[] pos) {
+		
+		if((pos[0] < 0 || pos[0] >= 8 ) || (pos[1] < 0 || pos[1] >= 8) ) {
+			
+			return false;
+		}
+		
+		if(status == 1) {
+			
+			int xdiff = this.pos[0] - pos[0];
+			int ydiff = this.pos[1] - pos[1];
+			
+			if(xdiff == 0 && ydiff == 0) return false;
+			
+			if(xdiff == 0 || ydiff == 0){
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+}

@@ -1,0 +1,14 @@
+package main;
+
+public class Engine extends CarPart{
+	
+	public Engine() {
+		
+		this.condition = 100;
+	}
+
+	public void status() {
+		
+		
+	}
+}

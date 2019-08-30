@@ -1,0 +1,6 @@
+package com.revature.oopexercise;
+
+public abstract class Piece {
+
+	
+}

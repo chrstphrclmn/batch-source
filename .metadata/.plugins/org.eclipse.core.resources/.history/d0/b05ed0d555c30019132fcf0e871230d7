@@ -1,0 +1,8 @@
+package main;
+
+public abstract class CarPart implements Functional{
+
+	public int condition;
+	
+	
+}

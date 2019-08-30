@@ -1,0 +1,17 @@
+package com.revature.oopexercise;
+
+public class Pawn extends Piece{
+
+	public Pawn() {
+		
+		super();
+		status = 1; value = 1;
+	}
+	
+	public Pawn(int xpos, int ypos, int ctype) {
+		
+		this();
+		this.pos[0] = xpos; this.pos[1] = ypos;
+		this.color = ctype;
+	}
+}

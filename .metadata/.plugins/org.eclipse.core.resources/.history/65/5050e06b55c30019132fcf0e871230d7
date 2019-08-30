@@ -1,0 +1,8 @@
+package main;
+import java.util.List;
+import java.util.ArrayList;
+
+public class Car {
+
+	public List<CarPart> parts = new ArrayList<CarPart;>
+}

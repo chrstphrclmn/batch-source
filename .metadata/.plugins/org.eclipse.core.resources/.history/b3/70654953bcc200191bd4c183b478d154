@@ -1,0 +1,9 @@
+package com.mycompany.main;
+
+public class Application {
+
+	public static void main(String[] args) {
+		
+		System.out.println(StaticClass.sum(13.1, 15.7))
+	}
+}

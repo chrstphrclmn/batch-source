@@ -1,0 +1,18 @@
+package com.revature.oopexercise;
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Main {
+	
+	public static draw()
+
+	public static void main(String[] args) {
+		
+		//Movement Example
+		
+		List<Piece> pieces = new ArrayList<Piece>();
+		pieces.add(new Pawn(3, 4, 1));
+		pieces.add(new Rook(7, 7, 0));
+	}
+}

@@ -1,0 +1,8 @@
+package com.revature.oopexercise;
+
+
+public abstract class Piece implements Movable{
+
+	public abstract boolean verify();
+	public abstract void move();
+}

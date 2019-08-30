@@ -1,8 +1,6 @@
 package com.revature.models;
 
 import java.io.Serializable;
-
-import com.revature.dao.impl.UserAccountDaoImpl;
 import com.revature.util.StringUtil;
 
 public class UserAccount implements Serializable{
@@ -22,53 +20,25 @@ public class UserAccount implements Serializable{
 		super(); 
 	}
 	
-	public UserAccount(String username, String password, String firstname, String Lastname, String email) {
+	public UserAccount(String username, String password, String firstname, String lastname, String email) {
 		
 		this();
 		
-		this.setUsername(username);
-		this.setPassword(password);
-		this.setFirstName(firstname);
-		this.setLastName(Lastname);
-		this.setEmail(email);
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
 	}
 	
-	public boolean logIn(String username, String password) {
+	public boolean logIn(String password) {
 		
-		UserAccount user = null;
-		
-		if(StringUtil.isValidEmail(username)){
+		if(password.contentEquals(this.getPassword())) {
 			
-			user =  new UserAccountDaoImpl().getUserAccountByEmail(username);
-		}
-		
-		else if (StringUtil.isValidUsername(username)) {
-			
-			user = new UserAccountDaoImpl().getUserAccountByUsername(username);
-		}
-		
-		else {
-			
-			System.out.println("Log In Failed: Invalid username or email.");
-			return false;
-		}
-		
-		if(user == null) {
-			
-			System.out.println("Log In Failed: No user found with that username or email.");
-			return false;
-		}
-		
-		if(password.contentEquals(user.password)) {
-			
-			this.setAs(user);
 			this.loggedin = true;
-			System.out.println("Successfully logged in.");
 			return true;
 		}
 		
-		
-		System.out.println("Log In Failed: Incorrect Password.");
 		return false;
 	}
 	
@@ -91,6 +61,8 @@ public class UserAccount implements Serializable{
 	public String getLastname() 	{ return this.lastname;}
 	public String getEmail() 		{ return this.email;}
 	
+	public boolean isLoggedIn() 	{ return this.loggedin;}
+	
 	public boolean setUsername(String username) {
 		
 		if(StringUtil.isValidUsername(username)) {
@@ -99,14 +71,20 @@ public class UserAccount implements Serializable{
 			return true;
 		}
 		
-		System.out.println("Invalid Username");
+		System.out.println("Username Change Failed: Invalid Username");
 		return false;
 	}
 	
 	public boolean setPassword(String password) {
 		
-		this.password = password;
-		return true;
+		if(this.loggedin) {
+			
+			this.password = password;
+			return true;
+		}
+		
+		System.out.println("Password Change Failed: No Valid Login");
+		return false;
 	}
 	
 	public boolean setFirstName(String firstname) {
@@ -129,17 +107,57 @@ public class UserAccount implements Serializable{
 			return true;
 		}
 		
-		System.out.println("Invalid Email.");
+		System.out.println("Email Change Failed: Invalid Email.");
 		return false;
 	}
 	
-	private void setAs(UserAccount user) {
-		
-		this.username = user.username;
-		this.password = user.password;
-		this.firstname = user.firstname;
-		this.lastname = user.lastname;
-		this.email = user.email;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserAccount other = (UserAccount) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstname == null) {
+			if (other.firstname != null)
+				return false;
+		} else if (!firstname.equals(other.firstname))
+			return false;
+		if (lastname == null) {
+			if (other.lastname != null)
+				return false;
+		} else if (!lastname.equals(other.lastname))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 	
 	private void clean() {

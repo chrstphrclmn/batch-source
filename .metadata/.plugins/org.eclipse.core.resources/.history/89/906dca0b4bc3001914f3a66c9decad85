@@ -1,0 +1,13 @@
+package main;
+
+public class MyObject {
+
+	public long id = 1365;
+	
+	public boolean equals(Object o) {
+		
+		if(!(o instanceof MyObject)) return false;
+		
+		return this.id == o.id;
+	}
+}

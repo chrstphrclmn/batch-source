@@ -1,0 +1,6 @@
+package com.mycompany.main;
+
+public class ConcreteClass extends AbstractClass{
+	
+
+}
