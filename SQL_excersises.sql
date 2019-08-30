@@ -372,27 +372,31 @@ Create a function that returns the price of a particular playlist, given the id 
 
 select*from "Playlist"; 
 
+create or replace view ptrack as 
+select "Playlist"."Name","Playlist"."PlaylistId","PlaylistTrack"."TrackId"
+from "Playlist" inner join "PlaylistTrack" 
+on "Playlist"."PlaylistId"="PlaylistTrack"."PlaylistId"; 
 
-create or replace function pricePlaylist(id numeric)
-returns  numeric(7,2);
+create or replace view unitp as 
+select  ptrack."PlaylistId",sum("Track"."UnitPrice") 
+	from ptrack inner join "Track"
+	on ptrack."TrackId"="Track"."TrackId"
+	group by ptrack."PlaylistId"
+	
+create or replace function pricePlaylist(pid numeric)
+returns  numeric(7,2) 
 language plpgsql
 as $$
-declare 
+declare
 price integer;
-
 begin
-	price:=(select "" from "Employee" where "EmployeeId"=id);
-	 
-	select "FirstName"||' '||"LastName" into mname
-	from"Employee" where "EmployeeId"=mid;
-
-	return mname;	
-
+	
+	price:=(select sum from unitp where "PlaylistId"=pid);
+	return price; 
 end;
-$$
+$$ 
 
-select employeemanager(6);
-
+select pricePlaylist(5);
 
 
 
