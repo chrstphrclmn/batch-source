@@ -10,14 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 
 public class AccountDAOImpl implements AccountDAO {
 
 	private final String[] databaseColumns = { "id", "username", "password", "user_id" };
-
+	private static Logger logger = ApplicationLogger.getLogger();
+	
 	@Override
 	public Optional<Account> findById(long id) {
 		Optional<Account> accountOptional = Optional.empty();
@@ -97,8 +101,7 @@ public class AccountDAOImpl implements AccountDAO {
 			stmt.setLong(3, account.getUserId());
 
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records inserted");
-
+			logger.info(i + " records inserted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -114,7 +117,7 @@ public class AccountDAOImpl implements AccountDAO {
 			stmt.setLong(3, account.getUserId());
 			stmt.setLong(4, account.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records updated");
+			logger.info(i + " records updated");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -127,7 +130,7 @@ public class AccountDAOImpl implements AccountDAO {
 				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, account.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records deleted");
+			logger.info(i + " records deleted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,0 +1,5 @@
+08:29 23:36:14.977 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
+08:29 23:44:55.802 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
+08:29 23:44:55.818 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
+08:29 23:45:07.687 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
+08:29 23:45:07.687 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page

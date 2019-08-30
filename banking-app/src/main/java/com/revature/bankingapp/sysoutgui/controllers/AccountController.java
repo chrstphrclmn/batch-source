@@ -1,22 +1,24 @@
 package com.revature.bankingapp.sysoutgui.controllers;
 
 import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.revature.bankingapp.SingletonScanner;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
 import com.revature.bankingapp.sysoutgui.services.SubAccountService;
 import com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
+import com.revature.bankingapp.sysoutgui.util.ScannerUtil;
 import com.revature.bankingapp.sysoutgui.views.AccountView;
 
 public class AccountController {
 
+	private static Logger logger = ApplicationLogger.getLogger();
 	private SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
 	private boolean exit;
 	private String indicator = "E";
@@ -37,9 +39,9 @@ public class AccountController {
 	}
 
 	public String launch() {
-		System.out.println("Login Successful");
-		System.out.println("Launching Login page");
-		showSubAccounts(SingletonScanner.getScannerInstance());
+		logger.info("Login Successful");
+		logger.info("Launching Login page");
+		showSubAccounts(ScannerUtil.getScannerInstance());
 		return indicator;
 	}
 
@@ -173,7 +175,7 @@ public class AccountController {
 			System.out.println("Invalid amount");
 		}
 	}
-	
+
 	private SubAccount showTransferFunds(Scanner reader, String notification, long skip) {
 		SubAccount subAccount = null;
 		Outer: while (!exit) {
@@ -208,35 +210,4 @@ public class AccountController {
 		}
 		return subAccount;
 	}
-
-//	AccountView.showTransferAccounts(subAccounts, "Account that will be deposited to");
-//			
-//			SubAccount subAccount1 = getSpecifiedAccount(reader, "Account that will be withdrawn from");
-//			
-//			
-//			SubAccount subAccount2 = getSpecifiedAccount(reader, "Account that will be deposited to");
-//			System.out.println("Please enter the amount to transfer: ");
-//			try {
-//				String fundsString = reader.next();
-//				Double funds = Double.parseDouble(fundsString);
-//				subAccountService.updateFunds(subAccount1, funds, "Subtract");
-//				subAccountService.updateFunds(subAccount2, funds, "Add");
-//			} catch (InputMismatchException e) {
-//				System.out.println("Invalid amount");
-//			}
-
-	private SubAccount getSpecifiedAccount(Scanner reader, String notification) {
-		try {
-			System.out.println(notification + " - Please enter the account 'Id' number: ");
-			String idString = reader.next();
-			Integer id = Integer.parseInt(idString);
-			return subAccountDAO.findById(id).get();
-		} catch (NoSuchElementException e) {
-			System.out.println("There is no account with that id");
-		} catch (NumberFormatException e) {
-			System.out.println("Please enter an id");
-		}
-		return null;
-	}
-
 }

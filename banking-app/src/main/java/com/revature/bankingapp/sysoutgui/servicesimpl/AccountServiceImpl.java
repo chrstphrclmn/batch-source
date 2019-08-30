@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl;
-import com.revature.bankingapp.sysoutgui.helper.Helper;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.services.AccountService;
+import com.revature.bankingapp.sysoutgui.util.ViewUtil;
 
 public class AccountServiceImpl implements AccountService {
 
 	private AccountDAO accountDAOImpl = new AccountDAOImpl();
-	private static String newline = Helper.getNewline();
+	private static String newline = ViewUtil.getNewline();
 	private static String passwordPolicyMessage = "Password requires:" + newline  + "At least one number " + newline
 			+ "At least one lowercase " + newline  + "At least one uppercase letter." + newline
 			+  "At least six characters." + newline;

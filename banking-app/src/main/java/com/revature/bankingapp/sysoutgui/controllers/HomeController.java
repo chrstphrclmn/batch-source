@@ -3,7 +3,8 @@ package com.revature.bankingapp.sysoutgui.controllers;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.revature.bankingapp.SingletonScanner;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.dao.UserDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl;
@@ -14,13 +15,15 @@ import com.revature.bankingapp.sysoutgui.services.AccountService;
 import com.revature.bankingapp.sysoutgui.services.UserService;
 import com.revature.bankingapp.sysoutgui.servicesimpl.AccountServiceImpl;
 import com.revature.bankingapp.sysoutgui.servicesimpl.UserServiceImpl;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
+import com.revature.bankingapp.sysoutgui.util.ScannerUtil;
 import com.revature.bankingapp.sysoutgui.views.HomeView;
 
 public class HomeController {
 
 	private boolean exit;
 	private String indicator = "E";
-
+	private static Logger logger = ApplicationLogger.getLogger();
 	private UserService userService = new UserServiceImpl();
 	private AccountService accountService = new AccountServiceImpl();
 	private UserDAO userDAO = new UserDAOImpl();
@@ -32,8 +35,8 @@ public class HomeController {
 	}
 
 	public String launch() {
-		System.out.println("Launching Home page");
-		home(SingletonScanner.getScannerInstance());
+		logger.info("Launching Home page");
+		home(ScannerUtil.getScannerInstance());
 		return indicator;
 	}
 
@@ -67,8 +70,8 @@ public class HomeController {
 			case "T":
 				if (submitLogin(reader)) {
 					exit = true;
-					System.out.println("Leaving Home Screen");
-					indicator ="L";
+					logger.info("Leaving Home Screen");
+					indicator = "L";
 					break Outer;
 				} else {
 					break;
@@ -156,7 +159,9 @@ public class HomeController {
 		System.out.println("Press enter to submit. Press R to restart. Enter exit to cancel sign up.");
 		if ((line = reader.nextLine()) != null && line.equalsIgnoreCase("R")) {
 			inputs = initiateChecks(reader);
-		}else if(line != null && line.equalsIgnoreCase("exit")) {return;}
+		} else if (line != null && line.equalsIgnoreCase("exit")) {
+			return;
+		}
 		User newUser = new User(inputs[0], inputs[1], inputs[2]);
 		userDAO.save(newUser);
 		System.out.println("The User " + newUser.getFirstName() + " was created succesfully");
@@ -175,7 +180,7 @@ public class HomeController {
 			inputs[i] = reader.nextLine();
 			System.out.println(inputs[i]);
 //			boolean failed = !
-					inputFieldsAreValid(inputs, i);
+			inputFieldsAreValid(inputs, i);
 //			if (i > 0) {
 //				System.out.println("Go back one field? y / n");
 //				String line;

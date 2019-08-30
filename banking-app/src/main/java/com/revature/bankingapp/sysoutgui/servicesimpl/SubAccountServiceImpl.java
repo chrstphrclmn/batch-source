@@ -1,15 +1,19 @@
 package com.revature.bankingapp.sysoutgui.servicesimpl;
 
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl;
 import com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException;
 import com.revature.bankingapp.sysoutgui.services.SubAccountService;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
 
 public class SubAccountServiceImpl implements SubAccountService {
 
 	SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
-
+	private static Logger logger = ApplicationLogger.getLogger();
+	
 	@Override
 	public SubAccount updateFunds(SubAccount subAccount, Double funds, String operation) {
 		try {
@@ -27,7 +31,7 @@ public class SubAccountServiceImpl implements SubAccountService {
 			}
 			subAccountDAO.update(subAccount);
 		} catch (InsufficientFundsException e) {
-			System.out.println(e.getMessage());
+			logger.info(e.getMessage());
 		}
 		
 		return subAccountDAO.findById(subAccount.getId()).get();

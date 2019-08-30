@@ -10,14 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.UserDAO;
 import com.revature.bankingapp.sysoutgui.model.User;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 
 public class UserDAOImpl implements UserDAO {
 
 	private final String[] databaseColumns = { "id", "first_name", "last_name", "email" };
-
+	private static Logger logger = ApplicationLogger.getLogger();
+	
 	@Override
 	public Optional<User> findById(long id) {
 		Optional<User> userOptional = Optional.empty();
@@ -96,7 +100,7 @@ public class UserDAOImpl implements UserDAO {
 			stmt.setString(3, user.getEmail());
 
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records inserted");
+			logger.info(i + " records inserted");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -114,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
 			stmt.setString(3, user.getEmail());
 			stmt.setLong(4, user.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records updated");
+			logger.info(i + " records updated");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NumberFormatException nf) {
@@ -129,7 +133,7 @@ public class UserDAOImpl implements UserDAO {
 				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, user.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records deleted");
+			logger.info(i + " records deleted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

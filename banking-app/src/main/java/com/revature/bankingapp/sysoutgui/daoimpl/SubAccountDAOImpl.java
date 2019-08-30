@@ -10,14 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.Logger;
+
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 
 public class SubAccountDAOImpl implements SubAccountDAO {
 
 	private final String[] databaseColumns = { "id", "type", "amount", "account_id" };
-
+	private static Logger logger = ApplicationLogger.getLogger();
+	
 	@Override
 	public Optional<SubAccount> findById(long id) {
 		Optional<SubAccount> subaccountOptional = Optional.empty();
@@ -73,7 +77,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			stmt.setLong(3, subAccount.getAccountId());
 
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records inserted");
+			logger.info(i + " records inserted");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,7 +94,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			stmt.setLong(3, subAccount.getAccountId());
 			stmt.setLong(4, subAccount.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records updated");
+			logger.info(i + " records updated");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,7 +107,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, subAccount.getId());
 			int i = stmt.executeUpdate();
-			System.out.println(i + " records deleted");
+			logger.info(i + " records deleted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
