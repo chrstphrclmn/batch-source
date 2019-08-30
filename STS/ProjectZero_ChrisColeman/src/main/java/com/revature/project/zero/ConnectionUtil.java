@@ -16,7 +16,7 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 
-		String url = (System.getenv("DB_URL") + "/postgres");
+		String url = (System.getenv("DB_URL"));
 		//System.out.println(url);
 		String username = System.getenv("DB_USER");
 		//System.out.println(username);
