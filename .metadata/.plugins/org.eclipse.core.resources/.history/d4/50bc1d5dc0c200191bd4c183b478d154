@@ -1,8 +1,0 @@
-package main;
-
-public class Runner {
-
-	public void run() {
-		throw CustomException;
-	}
-}

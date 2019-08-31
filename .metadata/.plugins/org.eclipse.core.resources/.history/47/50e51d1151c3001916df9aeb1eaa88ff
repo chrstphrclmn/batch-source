@@ -1,7 +1,0 @@
-package main;
-
-public class Account {
-	
-	public long id;
-	
-}

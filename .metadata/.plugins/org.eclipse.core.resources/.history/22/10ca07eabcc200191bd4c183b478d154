@@ -1,6 +1,0 @@
-package com.mycompany.main;
-
-public abstract class AbstactClass {
-
-	public abstract void run();
-}

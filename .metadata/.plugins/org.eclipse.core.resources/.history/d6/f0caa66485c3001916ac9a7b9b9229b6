@@ -1,8 +1,0 @@
-package com.revature.oopexercise;
-
-public class Pawn extends Piece{
-
-	public Pawn() {
-		super();
-	}
-}

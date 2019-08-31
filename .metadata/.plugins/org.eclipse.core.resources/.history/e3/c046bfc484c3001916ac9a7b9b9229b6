@@ -1,7 +1,0 @@
-package com.revature.oopexercise;
-
-public interface Movable {
-
-	public boolean verifyMovable();
-	public void move();
-}
