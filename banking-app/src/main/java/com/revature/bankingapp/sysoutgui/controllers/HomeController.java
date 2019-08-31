@@ -3,6 +3,7 @@ package com.revature.bankingapp.sysoutgui.controllers;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
@@ -11,11 +12,11 @@ import com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl;
 import com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.model.User;
+import com.revature.bankingapp.sysoutgui.security.CustomPasswordEncoder;
 import com.revature.bankingapp.sysoutgui.services.AccountService;
 import com.revature.bankingapp.sysoutgui.services.UserService;
 import com.revature.bankingapp.sysoutgui.servicesimpl.AccountServiceImpl;
 import com.revature.bankingapp.sysoutgui.servicesimpl.UserServiceImpl;
-import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 import com.revature.bankingapp.sysoutgui.util.ScannerUtil;
 import com.revature.bankingapp.sysoutgui.views.HomeView;
 
@@ -23,15 +24,16 @@ public class HomeController {
 
 	private boolean exit;
 	private String indicator = "E";
-	private static Logger logger = ApplicationLogger.getLogger();
+	private static Logger logger = LogManager.getLogger();
 	private UserService userService = new UserServiceImpl();
 	private AccountService accountService = new AccountServiceImpl();
 	private UserDAO userDAO = new UserDAOImpl();
 	private AccountDAO accountDAO = new AccountDAOImpl();
-	private Account loggedinAccount;
+	private Long loggedinAccountId;
+	private CustomPasswordEncoder customPasswordEncoder = new CustomPasswordEncoder();
 
-	public Account getLoggedinAccount() {
-		return loggedinAccount;
+	public Long getLoggedinAccountId() {
+		return loggedinAccountId;
 	}
 
 	public String launch() {
@@ -110,7 +112,7 @@ public class HomeController {
 			}
 		}
 		if (!validateSubmission(username, password)) {
-			System.out.println("Invalid credentials");
+			logger.info("Invalid credentials");
 			return false;
 		} else {
 			return true;
@@ -120,10 +122,10 @@ public class HomeController {
 	private boolean validateSubmission(String username, String password) {
 		try {
 			Account account = accountDAO.findByUsername(username).get();
-			if (!account.getPassword().equalsIgnoreCase(password)) {
+			if (!customPasswordEncoder.matches(password, account.getPassword())) {
 				return false;
 			}
-			loggedinAccount = account;
+			loggedinAccountId = account.getId();
 			return true;
 		} catch (NoSuchElementException e) {
 			return false;
@@ -166,7 +168,7 @@ public class HomeController {
 		userDAO.save(newUser);
 		System.out.println("The User " + newUser.getFirstName() + " was created succesfully");
 		newUser = userDAO.findByEmail(newUser.getEmail()).get();
-		Account newAccount = new Account(inputs[3], inputs[4], newUser.getId());
+		Account newAccount = new Account(inputs[3], customPasswordEncoder.encode(inputs[4]), newUser.getId());
 		accountDAO.save(newAccount);
 		System.out.println("The Account " + newAccount.getUsername() + " was created succesfully");
 	}
@@ -178,22 +180,7 @@ public class HomeController {
 		for (int i = 0; i < length; i++) {
 			System.out.print(inputFields[i]);
 			inputs[i] = reader.nextLine();
-			System.out.println(inputs[i]);
-//			boolean failed = !
 			inputFieldsAreValid(inputs, i);
-//			if (i > 0) {
-//				System.out.println("Go back one field? y / n");
-//				String line;
-//				while (!(line = reader.nextLine()).equals("y") && !line.equals("n")) {
-//					System.out.println("Invalid selection, enter y or n for yes or no");
-//				}
-//				if (line.equals("y")) {
-//					i = i - 1;
-//				}
-//			}
-//			if (failed) {
-//				i = i - 1;
-//			}
 
 		}
 		return inputs;
@@ -250,3 +237,19 @@ public class HomeController {
 	}
 
 }
+
+//boolean failed = !
+//inputFieldsAreValid(inputs, i);
+//if (i > 0) {
+//	System.out.println("Go back one field? y / n");
+//	String line;
+//	while (!(line = reader.nextLine()).equals("y") && !line.equals("n")) {
+//		System.out.println("Invalid selection, enter y or n for yes or no");
+//	}
+//	if (line.equals("y")) {
+//		i = i - 1;
+//	}
+//}
+//if (failed) {
+//	i = i - 1;
+//}

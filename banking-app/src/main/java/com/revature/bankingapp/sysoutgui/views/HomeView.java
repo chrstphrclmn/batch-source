@@ -11,7 +11,7 @@ public class HomeView {
 	public static void showHome() {
 		System.out.println("\n Welcome to Bank Revature!");
 		System.out.println("Select an option and press enter");
-		System.out.println("| Options:                          |");
+		System.out.println("| Options:                 |");
 		System.out.println("|        C. Create Account |");
 		System.out.println("|        L. Login          |");
 		System.out.println("|        E. Exit           |");

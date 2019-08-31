@@ -1,6 +1,5 @@
 package com.revature.bankingapp.sysoutgui.servicesimpl;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -23,13 +22,13 @@ public class AccountServiceImplTest {
 	@InjectMocks
 	AccountServiceImpl accountServiceImpl;
 	@Mock
-	private AccountDAOImpl accountDAOImpl;
+	AccountDAOImpl accountDAOImpl;
 
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		accountServiceImpl = new AccountServiceImpl();
-		accountServiceImpl.setAccountDAOImpl(accountDAOImpl);
+		accountServiceImpl.setAccountDAO(accountDAOImpl);
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(new Account("samueldorilas", "Pass123", 1L));
 		when(accountDAOImpl.findAll()).thenReturn(accounts);

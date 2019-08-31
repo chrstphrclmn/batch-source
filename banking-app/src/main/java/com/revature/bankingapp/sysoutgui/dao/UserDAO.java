@@ -13,7 +13,7 @@ public interface UserDAO{
     
     List<User> findAll();
     
-    void save(User user);
+    Long save(User user);
      
     void update(User user);
      

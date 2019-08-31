@@ -1,35 +1,107 @@
-08:29 23:36:14.977 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:29 23:44:55.802 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:29 23:44:55.818 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:29 23:45:07.687 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:29 23:45:07.687 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 13:13:10.254 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 13:13:10.273 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:30 13:13:17.890 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Leaving Home Screen
-08:30 13:13:17.894 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:30 13:13:17.894 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 13:13:38.948 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - 1 records updated
-08:30 13:29:38.018 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 13:29:38.030 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:30 13:29:48.527 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Leaving Home Screen
-08:30 13:29:48.533 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:30 13:29:48.533 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 13:30:00.718 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - T
-08:30 13:42:43.722 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 13:42:43.738 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:30 13:43:05.656 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Leaving Home Screen
-08:30 13:43:05.659 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:30 13:43:05.659 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 13:44:05.708 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 13:44:05.719 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:30 13:44:13.662 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Leaving Home Screen
-08:30 13:44:13.666 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:30 13:44:13.666 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 13:44:25.215 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Test
-08:30 13:55:37.905 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 13:55:37.917 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
-08:30 13:57:19.347 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Leaving Home Screen
-08:30 13:57:19.351 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Login Successful
-08:30 13:57:19.351 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Login page
-08:30 14:11:06.704 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - App is running
-08:30 14:11:06.705 [main] [INFO] [com.revature.bankingapp.sysoutgui.util.ApplicationLogger] - Launching Home page
+08:30 18:54:09.177 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 18:54:09.453 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 18:54:09.453 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $97.0 from Checking Account 7 to Savings Account 8 For account with id 1
+08:30 18:54:39.488 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 18:54:39.760 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 18:54:39.764 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Savings Account 8 to Checking Account 7 For account with id 1
+08:30 18:54:57.311 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+08:30 18:54:57.872 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 18:54:57.874 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $500.0 from Checking Account 7 For account with id 1
+08:30 18:55:04.017 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 18:57:21.793 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - 1 records inserted
+08:30 18:57:22.523 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+08:30 18:57:50.994 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 18:57:50.995 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:08:25.234 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:08:25.317 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:08:41.724 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:08:41.729 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:14:41.933 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:14:42.016 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:14:53.883 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:14:53.888 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:17:23.322 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:17:23.405 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:17:40.150 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:17:40.155 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:17:49.303 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records inserted
+08:30 19:17:49.552 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - An error occured in class class java.lang.NullPointerException: java.lang.NullPointerException
+ Exiting application...
+08:30 19:32:01.864 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:32:01.911 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:32:15.763 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:32:15.766 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:32:19.380 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records inserted
+08:30 19:32:19.618 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - An error occured in class class java.lang.NullPointerException: java.lang.NullPointerException
+ Exiting application...
+08:30 19:34:39.276 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:34:39.324 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:34:54.394 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:34:54.397 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:34:59.653 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records inserted
+08:30 19:34:59.922 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 19:36:13.121 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:36:31.875 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:36:31.875 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:38:20.100 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:38:28.913 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:38:28.913 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:39:15.599 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:39:15.647 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:39:28.352 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:39:28.355 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:39:39.325 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08:30 19:39:47.283 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+08:30 19:39:47.836 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+08:30 19:39:47.836 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $100.0 to Checking Account 11 For account with id 2
+08:30 19:46:47.191 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:46:47.238 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:47:01.018 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:47:01.021 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:47:40.358 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records inserted
+08:30 19:47:56.537 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08:30 19:48:04.015 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - An error occured in class class java.util.NoSuchElementException: java.util.NoSuchElementException: No value present
+ Exiting application...
+08:30 19:48:46.750 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 19:48:46.797 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 19:48:57.453 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 19:48:57.456 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 19:49:01.067 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - An error occured in class class java.util.NoSuchElementException: java.util.NoSuchElementException: No value present
+ Exiting application...
+08:30 20:28:45.559 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:28:45.606 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:29:56.934 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+08:30 20:30:30.609 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:30:30.656 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:30:35.648 [main] [ERROR] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+08:30 20:36:02.947 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:36:02.994 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:36:13.126 [main] [ERROR] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+08:30 20:39:02.594 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:39:02.642 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:39:15.311 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:39:15.359 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:39:19.112 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:39:19.159 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:39:24.926 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+08:30 20:46:18.000 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+08:30 20:46:18.052 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 20:46:26.375 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+08:30 20:46:56.995 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08:30 20:46:56.999 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+08:30 20:47:01.901 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 2 records inserted
+08:30 20:48:02.858 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08:30 20:48:14.578 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08:30 20:48:40.727 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+08:30 20:48:41.018 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+08:30 20:48:41.019 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $50.0 from Checking Account 11 to Savings Account 13 For account with id 2
+08:30 20:49:21.176 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08:30 21:34:32.260 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+08:30 21:51:32.538 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08:30 21:51:32.546 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+

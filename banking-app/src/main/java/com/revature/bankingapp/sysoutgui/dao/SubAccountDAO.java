@@ -11,11 +11,13 @@ public interface SubAccountDAO {
 
 	List<SubAccount> findAll();
 
-	void save(SubAccount subAccount);
+	List<SubAccount> findAllById(long id);
+
+	Long save(SubAccount subAccount);
 
 	void update(SubAccount subAccount);
-	
+
 	void updateTransfer(SubAccount subAccount1, SubAccount subAccount2);
-	
+
 	void delete(SubAccount subAccount);
 }

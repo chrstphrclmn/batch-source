@@ -6,21 +6,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
-import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 
 public class SubAccountDAOImpl implements SubAccountDAO {
 
 	private final String[] databaseColumns = { "id", "type", "amount", "account_id" };
-	private static Logger logger = ApplicationLogger.getLogger();
+	private static Logger logger = LogManager.getLogger();
 
 	@Override
 	public Optional<SubAccount> findById(long id) {
@@ -40,7 +41,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return subaccountOptional;
 	}
@@ -62,26 +63,86 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 				subAccounts.add(subaccount);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return subAccounts;
 	}
 
 	@Override
-	public void save(SubAccount subAccount) {
-		String query = "INSERT INTO subaccounts values(default,?,?,?)";
+	public List<SubAccount> findAllById(long id) {
+		List<SubAccount> subAccounts = new ArrayList<SubAccount>();
+		String query = "SELECT * FROM subaccounts WHERE account_id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
 				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
-			stmt.setString(1, subAccount.getType());
-			stmt.setDouble(2, subAccount.getAmount());
-			stmt.setLong(3, subAccount.getAccountId());
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Long subaccountId = rs.getLong(databaseColumns[0]);
+				String type = rs.getString(databaseColumns[1]);
+				Double amount = rs.getDouble(databaseColumns[2]);
+				Long accountId = rs.getLong(databaseColumns[3]);
+				SubAccount subaccount = new SubAccount(subaccountId, type, amount, accountId);
+				subAccounts.add(subaccount);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			logger.error(e.getStackTrace());
+		}
+		return subAccounts;
+	}
 
-			int i = stmt.executeUpdate();
-			logger.info(i + " records inserted");
+	@Override
+	public Long save(SubAccount subAccount) {
+		String sQuery = "INSERT INTO subaccounts values(default,?,?,?)";
+		String tQuery = "INSERT INTO transaction_histories values(default,?,?)";
+		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
+				DatabaseCredentials.getPass());
+				PreparedStatement subaccountStmt = conn.prepareStatement(sQuery, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement tHistoryStmt = conn.prepareStatement(tQuery, Statement.RETURN_GENERATED_KEYS)) {
+			// start transaction block
+			conn.setAutoCommit(false);
+
+			// Subaccount
+			subaccountStmt.setString(1, subAccount.getType());
+			subaccountStmt.setDouble(2, subAccount.getAmount());
+			subaccountStmt.setLong(3, subAccount.getAccountId());
+
+			int i = subaccountStmt.executeUpdate();
+
+			try (ResultSet generatedKeys = subaccountStmt.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					subAccount.setId(generatedKeys.getLong("id"));
+				} else {
+					throw new SQLException("Creating subAccount failed, no ID obtained.");
+				}
+			}
+
+			String historyMessage = LocalDateTime.now() + " " + subAccount.getType() + "Account  " + subAccount.getId()
+					+ " was created. Current funds are: $" + subAccount.getAmount();
+
+			// Transaction History
+			tHistoryStmt.setString(1, historyMessage);
+			tHistoryStmt.setLong(2, subAccount.getId());
+
+			int j = tHistoryStmt.executeUpdate();
+
+			try (ResultSet generatedKeys = tHistoryStmt.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					generatedKeys.getLong("id");
+					logger.info(j + i + " records inserted");
+				} else {
+					throw new SQLException("Creating TransactionHistory failed, no ID obtained.");
+				}
+			}
+
+			// end transaction block, commit changes
+			conn.commit();
+			conn.setAutoCommit(true);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		return subAccount.getId();
 	}
 
 	@Override
@@ -96,7 +157,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 
@@ -109,7 +170,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 
@@ -140,12 +201,10 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 
 			// end transaction block, commit changes
 			conn.commit();
-
-			// good practice to set it back to default true
 			conn.setAutoCommit(true);
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (SQLException e) {
+			logger.error(e.getStackTrace());
 		}
 	}
 

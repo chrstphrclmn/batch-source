@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
-import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 
 public class AccountDAOImpl implements AccountDAO {
 
 	private final String[] databaseColumns = { "id", "username", "password", "user_id" };
-	private static Logger logger = ApplicationLogger.getLogger();
+	private static Logger logger = LogManager.getLogger();
 	
 	@Override
 	public Optional<Account> findById(long id) {
@@ -41,7 +41,7 @@ public class AccountDAOImpl implements AccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return accountOptional;
 	}
@@ -64,7 +64,7 @@ public class AccountDAOImpl implements AccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return accountOptional;
 	}
@@ -86,13 +86,13 @@ public class AccountDAOImpl implements AccountDAO {
 				accounts.add(account);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 		return accounts;
 	}
 
 	@Override
-	public void save(Account account) {
+	public Long save(Account account) {
 		String query = "INSERT INTO accounts values(default,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
 				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
@@ -101,10 +101,22 @@ public class AccountDAOImpl implements AccountDAO {
 			stmt.setLong(3, account.getUserId());
 
 			int i = stmt.executeUpdate();
-			logger.info(i + " records inserted");
+
+			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+	            if (generatedKeys.next()) {
+	            	account.setId(generatedKeys.getLong("id"));
+	            	logger.info(i + " records inserted");
+	            }
+	            else {
+	                throw new SQLException("Creating Account failed, no ID obtained.");
+	            }
+	        }
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
+		
+		return account.getId();
 	}
 
 	@Override
@@ -119,7 +131,7 @@ public class AccountDAOImpl implements AccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 
@@ -132,7 +144,7 @@ public class AccountDAOImpl implements AccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getStackTrace());
 		}
 	}
 

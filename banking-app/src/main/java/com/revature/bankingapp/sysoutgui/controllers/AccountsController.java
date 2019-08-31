@@ -4,50 +4,51 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl;
-import com.revature.bankingapp.sysoutgui.model.Account;
+import com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
+import com.revature.bankingapp.sysoutgui.dao.TransactionHistoryDAO;
 import com.revature.bankingapp.sysoutgui.services.SubAccountService;
 import com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl;
-import com.revature.bankingapp.sysoutgui.util.ApplicationLogger;
 import com.revature.bankingapp.sysoutgui.util.ScannerUtil;
 import com.revature.bankingapp.sysoutgui.views.AccountView;
 
-public class AccountController {
+public class AccountsController {
 
-	private static Logger logger = ApplicationLogger.getLogger();
+	private static Logger logger = LogManager.getLogger();
 	private SubAccountDAO subAccountDAO = new SubAccountDAOImpl();
 	private boolean exit;
 	private String indicator = "E";
-	private Account loggedinAccount;
+	private Long loggedinAccountId;
 	private SubAccountService subAccountService = new SubAccountServiceImpl();
+	private TransactionHistoryDAO transactionHistoryDAO = new TransactionHistoryDAOImpl();
 
-	public AccountController() {
+	public AccountsController() {
 		super();
 	}
 
-	public AccountController(Account loggedinAccount) {
+	public AccountsController(Long loggedinAccountId) {
 		super();
-		this.loggedinAccount = loggedinAccount;
+		this.loggedinAccountId = loggedinAccountId;
 	}
 
-	public void setLoggedinAccount(Account loggedinAccount) {
-		this.loggedinAccount = loggedinAccount;
+	public void setLoggedinAccount(Long loggedinAccountId) {
+		this.loggedinAccountId = loggedinAccountId;
 	}
 
 	public String launch() {
 		logger.info("Login Successful");
-		logger.info("Launching Login page");
 		showSubAccounts(ScannerUtil.getScannerInstance());
 		return indicator;
 	}
 
 	private void showSubAccounts(Scanner reader) {
 		Outer: while (!exit) {
-			List<SubAccount> subAccounts = subAccountDAO.findAll();
+			List<SubAccount> subAccounts = subAccountDAO.findAllById(loggedinAccountId);
 			Collections.sort(subAccounts);
 			AccountView.showAccounts(subAccounts);
 			if (reader.hasNextInt()) {
@@ -86,11 +87,11 @@ public class AccountController {
 			SubAccount subAccount;
 			switch (subAccountCase.toUpperCase()) {
 			case "C":
-				subAccount = new SubAccount("Checking", 0d, loggedinAccount.getId());
+				subAccount = new SubAccount("Checking", 0d, loggedinAccountId);
 				subAccountDAO.save(subAccount);
 				break;
 			case "S":
-				subAccount = new SubAccount("Savings", 0d, loggedinAccount.getId());
+				subAccount = new SubAccount("Savings", 0d, loggedinAccountId);
 				subAccountDAO.save(subAccount);
 				break;
 			case "B":
@@ -125,15 +126,22 @@ public class AccountController {
 			case "W":
 				subAccount = updateFunds(reader, subAccount, "Subtract");
 				break;
-			case "V":
-				System.out.println(subAccount.getAmount());
-				break;
 			case "T":
+				if (subAccountDAO.findAllById(loggedinAccountId).size() <= 1) {
+					System.out.println("You do not have any other accounts to transfer to");
+					break;
+				}
 				SubAccount subAccount2 = showTransferFunds(reader, "deposited to", subAccount.getId());
 				if (subAccount2 == null) {
 					break;
 				}
 				subAccount = transferFunds(reader, subAccount, subAccount2);
+				break;
+			case "V":
+				System.out.println("$" + subAccount.getAmount());
+				break;
+			case "H":
+				System.out.println(transactionHistoryDAO.findBySubAccountId(subAccount.getId()).get().getHistory());
 				break;
 			case "B":
 				break Outer;
@@ -158,7 +166,6 @@ public class AccountController {
 			String fundsString = reader.next();
 			Double funds = Double.parseDouble(fundsString);
 			subAccount = subAccountService.updateFunds(subAccount, funds, operation);
-			System.out.println("Funds Transfered");
 		} catch (NumberFormatException e) {
 			System.out.println("Invalid amount");
 		}
@@ -180,12 +187,16 @@ public class AccountController {
 	private SubAccount showTransferFunds(Scanner reader, String notification, long skip) {
 		SubAccount subAccount = null;
 		Outer: while (!exit) {
-			List<SubAccount> subAccounts = subAccountDAO.findAll();
+			List<SubAccount> subAccounts = subAccountDAO.findAllById(loggedinAccountId);
 			Collections.sort(subAccounts);
-			AccountView.showTransferAccounts(subAccounts, notification, skip);
+			int indexSkipped = AccountView.showTransferAccounts(subAccounts, notification, skip);
 			if (reader.hasNextInt()) {
 				try {
-					subAccount = subAccounts.get(reader.nextInt());
+					int selectedIndex = reader.nextInt();
+					if (selectedIndex >= indexSkipped) {
+						selectedIndex++;
+					}
+					subAccount = subAccounts.get(selectedIndex);
 					break;
 				} catch (IndexOutOfBoundsException e) {
 					System.out.println("Invalid selection");

@@ -1,0 +1,36 @@
+08-30-2019 17:30:59.773 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+08-30-2019 17:31:11.989 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+08-30-2019 17:31:11.996 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountController] - Login Successful
+08-30-2019 17:36:50.045 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $1200.0 to Checking 7
+08-30-2019 18:04:47.152 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $100.0 from Checking 7 For account id1
+08-30-2019 18:11:46.578 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $200.0 to Savings 8 For account id1
+08-30-2019 18:14:39.422 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Checking 7 to Checking 7 For account id1
+08-30-2019 18:23:53.703 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Checking 7 to Checking 7 For account id1
+08-30-2019 18:28:43.140 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Checking Account 7 to Checking Account 7 For account with id 1
+08-30-2019 18:33:02.656 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Checking Account 7 to Checking Account 7 For account with id 1
+08-30-2019 18:36:00.503 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Checking Account 7 to Checking Account 7 For account with id 1
+08-30-2019 18:53:47.768 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $3.0 from Checking Account 7 to Savings Account 8 For account with id 1
+08-30-2019 18:54:09.453 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $97.0 from Checking Account 7 to Savings Account 8 For account with id 1
+08-30-2019 18:54:39.764 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $100.0 from Savings Account 8 to Checking Account 7 For account with id 1
+08-30-2019 18:54:57.874 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $500.0 from Checking Account 7 For account with id 1
+08-30-2019 19:39:39.325 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08-30-2019 19:39:47.836 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $100.0 to Checking Account 11 For account with id 2
+08-30-2019 19:47:56.537 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08-30-2019 20:48:02.858 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08-30-2019 20:48:14.578 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+08-30-2019 20:48:41.019 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $50.0 from Checking Account 11 to Savings Account 13 For account with id 2
+

@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
 
 public class FeeHandler {
 
-	private static Logger logger = ApplicationLogger.getLogger();
+	private static Logger logger = LogManager.getLogger();
 	
 	private void deductFees(Double fee) {
 		String sql = "{call deduct_fees(?)}";

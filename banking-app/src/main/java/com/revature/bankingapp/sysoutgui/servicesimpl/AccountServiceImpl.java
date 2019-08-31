@@ -10,7 +10,7 @@ import com.revature.bankingapp.sysoutgui.util.ViewUtil;
 
 public class AccountServiceImpl implements AccountService {
 
-	private AccountDAO accountDAOImpl = new AccountDAOImpl();
+	private AccountDAO accountDAO = new AccountDAOImpl();
 	private static String newline = ViewUtil.getNewline();
 	private static String passwordPolicyMessage = "Password requires:" + newline  + "At least one number " + newline
 			+ "At least one lowercase " + newline  + "At least one uppercase letter." + newline
@@ -25,8 +25,8 @@ public class AccountServiceImpl implements AccountService {
 		return usernamePolicy;
 	}
 
-	public void setAccountDAOImpl(AccountDAO accountDAOImpl) {
-		this.accountDAOImpl = accountDAOImpl;
+	public void setAccountDAO(AccountDAO accountDAO) {
+		this.accountDAO = accountDAO;
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public boolean usernameExists(String username) {
-		List<Account> accounts = accountDAOImpl.findAll();
+		List<Account> accounts = accountDAO.findAll();
 		for (Account a : accounts) {
 			if (username.equals(a.getUsername())) {
 				return true;

@@ -13,7 +13,7 @@ public interface AccountDAO {
 
 	List<Account> findAll();
 
-	void save(Account account);
+	Long save(Account account);
 
 	void update(Account account);
 
