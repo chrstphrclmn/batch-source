@@ -18,11 +18,14 @@ public class SubAccountServiceImpl implements SubAccountService {
 	private TransactionHistoryDAO transactionHistoryDAO = new TransactionHistoryDAOImpl();
 	private static Logger logger = LogManager.getLogger();
 
-	public void setSubAccountDAO(SubAccountDAO subAccountDAO) {
-		this.subAccountDAO = subAccountDAO;
+	public SubAccountServiceImpl() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setTransactionHistoryDAO(TransactionHistoryDAO transactionHistoryDAO) {
+	public SubAccountServiceImpl(SubAccountDAO subAccountDAO, TransactionHistoryDAO transactionHistoryDAO) {
+		super();
+		this.subAccountDAO = subAccountDAO;
 		this.transactionHistoryDAO = transactionHistoryDAO;
 	}
 

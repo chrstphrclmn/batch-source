@@ -27,8 +27,7 @@ public class AccountServiceImplTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		accountServiceImpl = new AccountServiceImpl();
-		accountServiceImpl.setAccountDAO(accountDAOImpl);
+		accountServiceImpl = new AccountServiceImpl(accountDAOImpl);
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(new Account("samueldorilas", "Pass123", 1L));
 		when(accountDAOImpl.findAll()).thenReturn(accounts);

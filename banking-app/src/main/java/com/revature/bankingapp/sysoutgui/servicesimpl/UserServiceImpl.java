@@ -16,7 +16,13 @@ public class UserServiceImpl implements UserService {
 			+ newline;
 	private static String lastNamePolicy = "Invalid last name, please use Letters, dashes, and apostrophes." + newline;
 
-	public void setUserDAOImpl(UserDAO userDAOImpl) {
+	public UserServiceImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserServiceImpl(UserDAO userDAOImpl) {
+		super();
 		this.userDAOImpl = userDAOImpl;
 	}
 
@@ -36,7 +42,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean lastNameIsValid(String lastName) {
 		String regex = "[A-Za-z-']{1,20}";

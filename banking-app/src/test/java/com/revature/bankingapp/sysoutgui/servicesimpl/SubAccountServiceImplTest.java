@@ -35,9 +35,7 @@ public class SubAccountServiceImplTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		subAccountServiceImpl = new SubAccountServiceImpl();
-		subAccountServiceImpl.setSubAccountDAO(subAccountDAOImpl);	
-		subAccountServiceImpl.setTransactionHistoryDAO(transactionHistoryDAO);
+		subAccountServiceImpl = new SubAccountServiceImpl(subAccountDAOImpl, transactionHistoryDAO);
 	}
 
 	@Test

@@ -26,8 +26,7 @@ public class UserServiceImplTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		userServiceImpl = new UserServiceImpl();
-		userServiceImpl.setUserDAOImpl(userDAOImpl);
+		userServiceImpl = new UserServiceImpl(userDAOImpl);
 		List<User> users = new ArrayList<User>();
 		users.add(new User("Samuel", "Dorilas", "samuedorilas@outlook.com"));
 		when(userDAOImpl.findAll()).thenReturn(users);
