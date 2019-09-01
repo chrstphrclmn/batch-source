@@ -8,8 +8,6 @@ public interface TransactionDAO {
 	
 	public List<Transaction> getTransactions();
 	public Transaction getTransactionByKey(int transactionID);
-	public void createTransaction();
-	public void updateTransaction();
-	public void deleteTransaction();
+	public int createTransaction(Transaction transaction);
 
 }

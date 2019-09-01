@@ -8,8 +8,8 @@ public interface LoginDAO {
 	
 	public List<Login> getLogins();
 	public Login getLoginByUsername(String username);
-	public void createLogin(Login login);
-	public void updateLogin(Login login);
-	public void deleteLogin(Login login);
+	public int createLogin(Login login);
+	public int updateLogin(Login login);
+	public int deleteLogin(Login login);
 	
 }

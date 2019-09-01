@@ -8,8 +8,15 @@ public class ConnectionUtil {
 	
 	private static Connection connection;
 	
+	private static boolean isTest = false;
+	
 	public static Connection getConnection() throws SQLException {
-
+		
+		if(isTest) {
+			return getH2Connection();
+		}
+		//return null;
+		
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
@@ -25,6 +32,20 @@ public class ConnectionUtil {
 
 		if(connection == null || connection.isClosed()) {
 			connection = DriverManager.getConnection(url, username, password);
+		}
+
+		return connection;
+		
+		
+	}
+	
+	public static Connection getH2Connection() {
+		try {
+			if(connection == null || connection.isClosed()) {
+				connection = DriverManager.getConnection("jdbc:h2:~/test");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return connection;

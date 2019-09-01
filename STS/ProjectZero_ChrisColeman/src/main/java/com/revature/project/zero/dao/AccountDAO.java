@@ -10,8 +10,8 @@ public interface AccountDAO {
 
 	public List<Account> getAccounts();
 	public Account getAccountByNum(int accountNum);
-	public void createAccount(Account a);
-	public void updateAccount(Account a);
-	public void deleteAccount(Account a);
-	
+	public int createAccount(Account a);
+	public int updateAccount(Account a);
+	public int deleteAccount(Account a);
+	public double depSlashWithdraw(double ammount, int a);
 }
