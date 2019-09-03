@@ -20,6 +20,8 @@ public class StringUtil {
 		
 		if(amount.matches(MONEY_REGEX)) return false;
 		
+		if (num <= 0) return false;
+		
 		int idx = amount.indexOf('.');
 		
 		if(idx == -1) return true;

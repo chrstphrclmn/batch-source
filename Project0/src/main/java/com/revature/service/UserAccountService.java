@@ -11,7 +11,8 @@ import com.revature.util.LoggerUtil;
 import com.revature.util.StringUtil;
 
 public class UserAccountService {
-
+	
+	private static final String AES_KEY = System.getenv("AES_KEY");
 	
 	private UserAccountDao dao = new UserAccountDaoImpl();
 	

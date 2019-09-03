@@ -2,8 +2,6 @@ package com.revature.models;
 
 import java.io.Serializable;
 
-import com.revature.util.LoggerUtil;
-
 public class BankAccount implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

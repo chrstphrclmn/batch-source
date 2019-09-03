@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.PropertyConfigurator;
 
+import com.revature.util.EncryptionUtil;
 import com.revature.util.StringUtil;
 import com.revature.models.BankAccount;
 import com.revature.models.UserAccount;
@@ -23,6 +24,7 @@ public class Driver {
 	static UserAccount user = null;
 	
 	static final String[] ACCOUNT_TYPES = {"Checking", "Savings"};
+	private static final String AES_KEY = System.getenv("AES_KEY");
 	
 
 	public static void main(String[] args) {
@@ -200,7 +202,7 @@ public class Driver {
 			}
 		} while (flag == true);
 		
-		user = new UserAccount(username, password, firstname, lastname, email);
+		user = new UserAccount(username, EncryptionUtil.encrypt(password, AES_KEY), firstname, lastname, email);
 		user.logIn(password);
 		service.createUserAccount(user);
 		service.logInUserAccount(username, password);
@@ -404,11 +406,20 @@ public class Driver {
 				
 				validResp = true;
 			}
+			
+			else {
+				
+				System.out.println("Enter a valid amount.");
+			}
 		}
 		
 		
-		account.withdraw(amount);
-		bservice.updateBankAccount(account);
+		if(account.withdraw(amount)) {
+			
+			bservice.updateBankAccount(account);
+		}
+		
+		else System.out.println("Insufficient Funds");
 		
 	}
 	
@@ -432,7 +443,16 @@ public class Driver {
 			
 			if(line.contentEquals("-q")) return;
 			
-			ubservice.createNewUserBankLink(service.getUserAccountByUsername(line), account);
+			try {
+				
+				ubservice.createNewUserBankLink(service.getUserAccountByUsername(line), account);
+			}
+			
+			catch(NullPointerException e) {
+				
+				System.out.printf("User does not exist%n");
+			}
+				
 		}
 	}
 	

@@ -2,12 +2,14 @@ package com.revature.models;
 
 import java.io.Serializable;
 
+import com.revature.util.EncryptionUtil;
 import com.revature.util.LoggerUtil;
 import com.revature.util.StringUtil;
 
 public class UserAccount implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private static final String AES_KEY = System.getenv("AES_KEY");
 	
 	private String username;
 	private String password;
@@ -35,7 +37,7 @@ public class UserAccount implements Serializable{
 	
 	public boolean logIn(String password) {
 		
-		if(password.contentEquals(this.getPassword())) {
+		if(password.contentEquals(EncryptionUtil.decrypt(this.getPassword(), AES_KEY))) {
 			
 			this.loggedin = true;
 			return true;
