@@ -27,6 +27,7 @@ public class UserAccountServiceTest {
 		
 		//setup when and thenReturn statements
 		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		tester.logIn("password");
 		when(dao.getUserAccountByUsername("tester")).thenReturn(tester);
 		when(dao.getUserAccountByEmail("test@test.com")).thenReturn(tester);
 		when(dao.getUserAccountByUsername("tester2")).thenReturn(null);
@@ -68,6 +69,49 @@ public class UserAccountServiceTest {
 	public void invalidUsername() {
 		
 		assertEquals(null, service.logInUserAccount("Invalid Username", "anything"));
+	}
+	
+	@Test
+	public void nullUser() {
+		
+		assertEquals(null, service.logInUserAccount(null, "Hi"));
+	}
+	
+	@Test
+	public void nullPW() {
+		
+		assertEquals(null, service.logInUserAccount("Hi", null));
+	}
+	
+	@Test
+	public void doubleNullInput() {
+		
+		assertEquals(null, service.logInUserAccount(null, null));
+	}
+	
+	//Log Out Tests
+	
+	@Test
+	public void nullLogout() {
+		
+		assertEquals(false, service.logOutUserAccount(null));
+	}
+	
+	@Test
+	public void validLogout() {
+		
+		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		tester.logIn("password");
+		
+		assertEquals(true, service.logOutUserAccount(tester));
+	}
+	
+	@Test
+	public void invalidLogout() {
+		
+		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		
+		assertEquals(false, service.logOutUserAccount(tester));
 	}
 	
 }

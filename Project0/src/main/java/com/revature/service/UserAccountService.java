@@ -12,11 +12,11 @@ import com.revature.util.StringUtil;
 
 public class UserAccountService {
 	
-	private static final String AES_KEY = System.getenv("AES_KEY");
-	
 	private UserAccountDao dao = new UserAccountDaoImpl();
 	
 	public UserAccount logInUserAccount(String username, String password) {
+		
+		if(username == null || password == null) return null;
 			
 		UserAccount returnUser = null;
 		
@@ -58,6 +58,8 @@ public class UserAccountService {
 	}
 	
 	public boolean logOutUserAccount(UserAccount user) {
+		
+		if(user == null) return false;
 		
 		return user.logOut();
 	}

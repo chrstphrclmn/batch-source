@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.PropertyConfigurator;
-
-import com.revature.util.EncryptionUtil;
 import com.revature.util.StringUtil;
 import com.revature.models.BankAccount;
 import com.revature.models.UserAccount;
@@ -17,6 +15,7 @@ import com.revature.service.UserBankAccountService;
 public class Driver {
 	
 	static Scanner scan = new Scanner(System.in);
+	
 	static UserAccountService service = new UserAccountService();
 	static BankAccountService bservice = new BankAccountService();
 	static UserBankAccountService ubservice = new UserBankAccountService();
@@ -24,7 +23,6 @@ public class Driver {
 	static UserAccount user = null;
 	
 	static final String[] ACCOUNT_TYPES = {"Checking", "Savings"};
-	private static final String AES_KEY = System.getenv("AES_KEY");
 	
 
 	public static void main(String[] args) {
@@ -202,7 +200,7 @@ public class Driver {
 			}
 		} while (flag == true);
 		
-		user = new UserAccount(username, EncryptionUtil.encrypt(password, AES_KEY), firstname, lastname, email);
+		user = new UserAccount(username, password , firstname, lastname, email);
 		user.logIn(password);
 		service.createUserAccount(user);
 		service.logInUserAccount(username, password);
