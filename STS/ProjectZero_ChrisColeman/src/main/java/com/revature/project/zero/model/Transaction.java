@@ -94,6 +94,20 @@ public class Transaction {
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		String check;
+		if(transfer>0) {
+			check = "Deposit Ammount";
+		}
+		else {
+			check = "Withdrawal Ammount";
+		}
+		return "TransactionID = " + transactionID + ", User = " + username
+				+ ", "+check+" =" + transfer;
+	}
 	
 	
 	
