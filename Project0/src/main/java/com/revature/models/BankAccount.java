@@ -2,6 +2,8 @@ package com.revature.models;
 
 import java.io.Serializable;
 
+import com.revature.util.LoggerUtil;
+
 public class BankAccount implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -32,7 +34,7 @@ public class BankAccount implements Serializable {
 		
 		if(!user.isLoggedIn()) {
 			
-			System.out.println("Bank Account Retrieval Failed: User not logged in.");
+			LoggerUtil.log.warn("Bank Account Retrieval Failed: User not logged in.");
 			return false;
 		}
 		
@@ -41,16 +43,19 @@ public class BankAccount implements Serializable {
 		return true;
 	}
 	
+	public boolean deposit(double amount) {
+		
+		this.accountBalance += amount;
+		
+		return true;
+	}
+	
 	public boolean withdraw(double amount) {
 		
-		if(!this.verified) {
-			
-			System.out.println("Bank Account Withdraw Failed: No verified owner.");
-		}
-		
+
 		if(this.accountBalance - amount < 0.0) return false;
 		
-		
+		this.accountBalance -= amount;
 		
 		return true;
 	}

@@ -12,11 +12,11 @@ import com.revature.util.ConnectionUtil;
 
 public class BankAccountDaoImpl implements BankAccountDao {
 	
-	private final static String TABLE_NAME = "BankAccount";
+	private static final String TABLE_NAME = "BankAccount";
 	
-	private final static String COLUMN_1 = "AccountId";
-	private final static String COLUMN_2 = "AccountType";
-	private final static String COLUMN_3 = "AccountBalance";
+	private static final String COLUMN_1 = "AccountId";
+	private static final String COLUMN_2 = "AccountType";
+	private static final String COLUMN_3 = "AccountBalance";
 
 	public BankAccount getBankAccountFromId(int id) {
 
@@ -44,6 +44,8 @@ public class BankAccountDaoImpl implements BankAccountDao {
 			}
 			
 			conn.close();
+			statement.close();
+			results.close();
 			
 		}
 		
@@ -72,6 +74,7 @@ public class BankAccountDaoImpl implements BankAccountDao {
 			ret += statement.getInt(1);
 			
 			conn.close();
+			statement.close();
 		}
 		
 		catch (SQLException e) {
@@ -101,6 +104,7 @@ public class BankAccountDaoImpl implements BankAccountDao {
 			updated += statement.executeUpdate();
 			
 			conn.close();
+			statement.close();
 		}
 		
 		catch (SQLException e) {
@@ -112,8 +116,35 @@ public class BankAccountDaoImpl implements BankAccountDao {
 	}
 
 	public boolean updateBankAccount(BankAccount account) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		int updated = 0;
+		
+		String sqltemplate = String.format("update \"%s\" set"
+										+  "\"%s\" = ?"
+										+  "where \"%s\" = ?",
+										TABLE_NAME,
+										COLUMN_3, COLUMN_1);
+		
+		Connection conn = ConnectionUtil.getConnection();
+		
+		try {
+			
+			PreparedStatement statement = conn.prepareStatement(sqltemplate);
+			statement.setDouble(1, account.getAccountBalance());
+			statement.setInt(2,  account.getAccountId());
+			
+			updated += statement.executeUpdate();
+			
+			conn.close();
+			statement.close();
+			
+		}
+		
+		catch(SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return updated > 0;
 	}
 
 	public boolean removeBankAccount(int id) {
