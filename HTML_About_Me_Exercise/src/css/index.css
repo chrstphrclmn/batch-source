@@ -1,0 +1,32 @@
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid black;
+  text-align: left;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #5c5252;
+  margin-top: 3%;
+}
+
+.home-card {
+  background-color: white;
+  margin: auto;
+  width: 70%;
+  height: 70%;
+  text-align: center;
+}
+
+.list-none{
+    list-style:none;
+}
+
+
+
