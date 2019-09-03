@@ -88,4 +88,62 @@ public class SessionDAOImpl implements SessionDAO{
 		
 	}
 
+
+
+	@Override
+	public Session getSessionByUsername(String username) {
+
+
+		String sql = "select * from session where username = ?";
+		Session a = null;
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, username); 
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String userName = rs.getString("username");
+				int accountNum = rs.getInt("accountnum");
+				a = new Session(accountNum, userName);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return a;
+		
+	}
+
+
+
+	@Override
+	public Session getSessionByAccount(int accountNum) {
+
+		String sql = "select * from session where accountnum = ?";
+		Session a = null;
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setInt(1, accountNum); 
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String userName = rs.getString("username");
+				int accountNums = rs.getInt("accountnum");
+				a = new Session(accountNums, userName);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return a;
+		
+		
+	}
+
 }

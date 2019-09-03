@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.revature.project.zero.ConnectionUtil;
 import com.revature.project.zero.dao.TransactionDAO;
-import com.revature.project.zero.model.Login;
 import com.revature.project.zero.model.Transaction;
 
 public class TransactionDAOImpl implements TransactionDAO{
