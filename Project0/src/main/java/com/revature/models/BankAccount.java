@@ -12,8 +12,6 @@ public class BankAccount implements Serializable {
 	private int accountType;
 	private double accountBalance;
 	
-	private boolean verified = false;
-	
 	public BankAccount() {
 		
 		super();
@@ -29,19 +27,6 @@ public class BankAccount implements Serializable {
 	public int getAccountId() 		{ return this.accountId; }
 	public int getAccountType() 	{ return this.accountType; }
 	public double getAccountBalance() 	{ return this.accountBalance; }
-	
-	public boolean getBankAccountFromId(UserAccount user) {
-		
-		if(!user.isLoggedIn()) {
-			
-			LoggerUtil.log.warn("Bank Account Retrieval Failed: User not logged in.");
-			return false;
-		}
-		
-		verified = true;
-		
-		return true;
-	}
 	
 	public boolean deposit(double amount) {
 		

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import com.revature.dao.BankAccountDao;
 import com.revature.models.BankAccount;
 import com.revature.util.ConnectionUtil;
+import com.revature.util.LoggerUtil;
 
 public class BankAccountDaoImpl implements BankAccountDao {
 	
@@ -27,31 +28,34 @@ public class BankAccountDaoImpl implements BankAccountDao {
 		
 		BankAccount returnAccount = null;
 		
-		try {
+		
+		try (PreparedStatement statement = conn.prepareStatement(sqltemplate)){
 			
-			PreparedStatement statement = conn.prepareStatement(sqltemplate);
 			statement.setInt(1, id);
 			
-			ResultSet results = statement.executeQuery();
+			try(ResultSet results = statement.executeQuery()){
 			
-			while(results.next()) {
+				while(results.next()) {
+					
+					int accountId = results.getInt(COLUMN_1);
+					int accountType = results.getInt(COLUMN_2);
+					double accountBalance = results.getDouble(COLUMN_3);
+					
+					returnAccount = new BankAccount(accountId, accountType, accountBalance);
+				}
 				
-				int accountId = results.getInt(COLUMN_1);
-				int accountType = results.getInt(COLUMN_2);
-				double accountBalance = results.getDouble(COLUMN_3);
-				
-				returnAccount = new BankAccount(accountId, accountType, accountBalance);
+				conn.close();
 			}
 			
-			conn.close();
-			statement.close();
-			results.close();
-			
+			catch (SQLException e) {
+				
+				LoggerUtil.log.warn(e.getMessage());
+			}
 		}
 		
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			LoggerUtil.log.warn(e.getMessage());
 		}
 		
 		return returnAccount;
@@ -65,21 +69,19 @@ public class BankAccountDaoImpl implements BankAccountDao {
 		
 		Connection conn = ConnectionUtil.getConnection();
 		
-		try {
+		try(CallableStatement statement = conn.prepareCall(sqltemplate)) {
 			
-			CallableStatement statement = conn.prepareCall(sqltemplate);
 			statement.registerOutParameter(1, java.sql.Types.INTEGER);
 			statement.execute();
 			
 			ret += statement.getInt(1);
 			
 			conn.close();
-			statement.close();
 		}
 		
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			LoggerUtil.log.warn(e.getMessage());
 		}
 		
 		return ret;
@@ -95,21 +97,19 @@ public class BankAccountDaoImpl implements BankAccountDao {
 		
 		Connection conn = ConnectionUtil.getConnection();
 		
-		try {
+		try(PreparedStatement statement = conn.prepareStatement(sqltemplate)) {
 			
-			PreparedStatement statement = conn.prepareStatement(sqltemplate);
 			statement.setInt(1, account.getAccountType());
 			statement.setDouble(2, account.getAccountBalance());
 			
 			updated += statement.executeUpdate();
 			
 			conn.close();
-			statement.close();
 		}
 		
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			LoggerUtil.log.warn(e.getMessage());
 		}
 		
 		return updated > 0;
@@ -127,29 +127,49 @@ public class BankAccountDaoImpl implements BankAccountDao {
 		
 		Connection conn = ConnectionUtil.getConnection();
 		
-		try {
+		try(PreparedStatement statement = conn.prepareStatement(sqltemplate)) {
 			
-			PreparedStatement statement = conn.prepareStatement(sqltemplate);
+			
 			statement.setDouble(1, account.getAccountBalance());
 			statement.setInt(2,  account.getAccountId());
 			
 			updated += statement.executeUpdate();
 			
 			conn.close();
-			statement.close();
 			
 		}
 		
 		catch(SQLException e) {
 			
-			e.printStackTrace();
+			LoggerUtil.log.warn(e.getMessage());
 		}
+		
 		return updated > 0;
 	}
 
 	public boolean removeBankAccount(int id) {
-		// TODO Auto-generated method stub
-		return false;
+
+		int updated = 0;
+		
+		String sqltemplate = String.format("delete from \"%s\" where \"%s\" = ?", TABLE_NAME, COLUMN_1);
+		
+		Connection conn = ConnectionUtil.getConnection();
+		
+		try(PreparedStatement statement = conn.prepareStatement(sqltemplate)) {
+			
+			statement.setInt(1, id);
+			
+			updated += statement.executeUpdate();
+			
+			conn.close();
+		}
+		
+		catch(SQLException e) {
+			
+			LoggerUtil.log.warn(e.getMessage());
+		}
+		
+		return updated > 0;
 	}
 
 }
