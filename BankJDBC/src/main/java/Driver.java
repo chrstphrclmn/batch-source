@@ -60,8 +60,6 @@ public class Driver {
 						userName = inputFromUser.nextLine().trim();
 					}
 					
-					
-					
 					while(!(passKey.equals(passKey2))) {
 						System.out.println("Enter password for your account: ");
 						passKey = inputFromUser.nextLine();
@@ -69,13 +67,19 @@ public class Driver {
 						passKey2 = inputFromUser.nextLine();
 					}
 					System.out.println("Enter starting balance: ");
-					Float balance = inputFromUser.nextFloat();
 					
-					User u = new User(userName, passKey, balance);
+					String balance = inputFromUser.nextLine();
+					
+					while(!(checkInput(balance))) {
+						System.out.println("Wrong input. Enter an actual number: ");
+						balance = inputFromUser.nextLine();
+					}
+					
+					User u = new User(userName, passKey, Float.parseFloat(balance));
 					
 					uu.createUser(u);
 					
-					System.out.println("Thanks for creating opening an account at the Private Bank!");
+					System.out.println("Thanks for creating opening an account at the Private Bank! \n");
 					
 					break;
 			
@@ -89,6 +93,18 @@ public class Driver {
 		System.out.println("Thanks for choosing the Private Bank");
 		input.close();
 		
+	}
+	
+	private static boolean checkInput(String value) {
+		if(value == null || value.isEmpty()) {
+			return false;
+		}
+		for(char c : value.toCharArray()) {
+				if(Character.isAlphabetic(c)) {
+					return false;
+				}
+		}
+		return true;
 	}
 	
 
