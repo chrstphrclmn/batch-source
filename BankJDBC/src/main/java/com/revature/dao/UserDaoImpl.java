@@ -17,8 +17,8 @@ import com.revature.util.ConnectionUtil;
 
 public class UserDaoImpl implements UserDao {
 
+	@Override
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
 		
 		String sql = "select * from users";
 		
@@ -29,10 +29,14 @@ public class UserDaoImpl implements UserDao {
 				ResultSet rs = s.executeQuery(sql);){
 			
 			while(rs.next()) {
-				int userId = rs.getInt("user_id");
+//				User u = new User();
+//				u.setUser_name(rs.getString("user_name"));
+//				u.setPassKey(rs.getString("pass_word"));
+//				u.setBalance(rs.getFloat("balance"));
+				Integer userId = rs.getInt("user_id");				
 				String userName = rs.getString("user_name");
 				String passWord = rs.getString("pass_word");
-				float balance = rs.getFloat("balance");
+				Float balance = rs.getFloat("balance");
 				User u = new User(userId, userName, passWord, balance);
 				users.add(u);
 			}
@@ -43,13 +47,13 @@ public class UserDaoImpl implements UserDao {
 		return users;
 	}
 
+	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
+		User u = null;
 		
 		// sql statement
 		String sql = "select * from users where user_id = ?";
 		
-		User u = null;
 		
 		try(Connection c = ConnectionUtil.getConnection();
 				PreparedStatement ps = c.prepareStatement(sql)){
@@ -59,11 +63,12 @@ public class UserDaoImpl implements UserDao {
 			
 			// loop through results
 			while(rs.next()) {
-				int userId = rs.getInt("user_id");
+				Integer userId = rs.getInt("user_id");
 				String userName = rs.getString("user_name");
 				String passWord = rs.getString("pass_word");
-				float balance = rs.getFloat("balance");
-				u = new User(userId, userName, passWord, balance);
+				Float balance = rs.getFloat(4);
+				System.out.println(userName + ":" + passWord + ":" + balance);
+				u = new User(userName, passWord, balance);
 			}
 			
 			// close the statement connection
@@ -73,7 +78,6 @@ public class UserDaoImpl implements UserDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return u;
 	}
 
@@ -116,25 +120,6 @@ public class UserDaoImpl implements UserDao {
 		return usersCreated;
 	}
 
-	public int updateUser(User u) {
-		// TODO Auto-generated method stub
-		int usersUpdated = 0;
-		
-		String sql = "update users " + "set user_name = ?, " + 
-						"pass_word = ? " + "where user_id = ?";
-		
-		try (Connection c = ConnectionUtil.getConnection(); 
-				PreparedStatement ps = c.prepareStatement(sql)){
-			
-			ps.setString(1, u.getUser_name());
-			ps.setString(2, u.getPassKey());
-			ps.setInt(3, u.getUser_id());
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return usersUpdated;
-	}
 
 	@Override
 	public int deleteUser(int id) {
@@ -163,9 +148,18 @@ public class UserDaoImpl implements UserDao {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Please enter your user name: ");
-		String userName = scanner.nextLine();
+		String userName = scanner.nextLine().trim();
+		while(!(checkIfEmpty(userName))) {
+			System.out.println("User Name cannot be empty. Please enter your User Name: ");
+			userName = scanner.nextLine().trim();
+		}
 		System.out.println("Please enter your password: ");
-		String passWord = scanner.nextLine();
+		String passWord = scanner.nextLine().trim();
+		
+		while(!(checkIfEmpty(passWord))) {
+			System.out.println("Password cannot be empty. Please enter your password: ");
+			passWord = scanner.nextLine().trim();
+		}
 		
 		String sql = "Select * from users where user_name = ? and pass_word = ?";
 		
@@ -211,6 +205,9 @@ public class UserDaoImpl implements UserDao {
 
 		System.out.println("Welcome to your account. Choose from the following options: ");
 		System.out.println("\n");
+		System.out.println("\n");
+		System.out.println("\n");
+
 		while(selected != 'a') {
 			System.out.println("a. Log Out");
 			System.out.println("b. Check Balance");
@@ -230,7 +227,8 @@ public class UserDaoImpl implements UserDao {
 				withdraw(user, balance);
 				break;
 			case 'd':
-				deposit(user, balance);
+				deposit(user);
+				break;
 			}
 		}
 	}
@@ -258,19 +256,25 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 	
-	public boolean deposit(String user, Float balance) {
+	public boolean deposit(String user) {
 		System.out.println("Enter amount you want to deposit into your account: ");
-		Float moneyToDeposit;
 		Scanner scanner = new Scanner(System.in);
 		
-		moneyToDeposit = scanner.nextFloat();
+		String moneyToDeposit = scanner.nextLine();
 		
+		while(!(checkInput(moneyToDeposit))) {
+			System.out.println("Invalid amount entered. Please enter an actual number: ");
+			moneyToDeposit = scanner.nextLine();
+		}
+		
+		
+//		callable statement. Defined in sql script. Takes in username and amount to deposit.
 		String sql = "{call deposit(?, ?)}";
 		
 		try(Connection c = ConnectionUtil.getConnection(); 
 				CallableStatement cs = c.prepareCall(sql)){
 			cs.setString(1, user);
-			cs.setFloat(2, moneyToDeposit);
+			cs.setFloat(2, Float.parseFloat(moneyToDeposit));
 			
 			cs.execute();
 		}catch(SQLException e) {
@@ -283,19 +287,25 @@ public class UserDaoImpl implements UserDao {
 	
 	private boolean withdraw(String userName, Float balance) {
 		System.out.println("Enter amount to withdraw: ");
-		Float moneyToWithDraw;
 		Scanner scanner = new Scanner(System.in);
 		
-		moneyToWithDraw = scanner.nextFloat();
+		String moneyToWithDraw = scanner.nextLine();
 		
-		if(moneyToWithDraw > balance) {
+		while(!(checkInput(moneyToWithDraw))) {
+			System.out.println("Enter an actual amount");
+			moneyToWithDraw = scanner.nextLine();
+		}
+		
+		
+		
+		if(Float.parseFloat(moneyToWithDraw) > balance) {
 			System.out.println("You don't have enough money in the account. Please enter amoutn equal to or less than your current balance");
 		}else {
 			String sql = "{call withdraw(?, ?)}";
 			try(Connection c = ConnectionUtil.getConnection();
 					CallableStatement cs = c.prepareCall(sql)){
 				cs.setString(1, userName);
-				cs.setFloat(2, moneyToWithDraw);
+				cs.setFloat(2, Float.parseFloat(moneyToWithDraw));
 				
 				cs.execute();
 			}catch(SQLException e) {
@@ -308,6 +318,25 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
+	
+	private static boolean checkInput(String value) {
+		if(value == null || value.isEmpty()) {
+			return false;
+		}
+		for(char c : value.toCharArray()) {
+				if(Character.isAlphabetic(c)) {
+					return false;
+				}
+		}
+		return true;
+	}
+	
+	private static boolean checkIfEmpty(String value) {
+		if(value == null || value.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 }

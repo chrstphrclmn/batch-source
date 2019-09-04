@@ -9,11 +9,10 @@ public interface UserDao {
 	public List<User> getUsers();
 	public User getUserById(int id);
 	public int createUser(User u);
-	public int updateUser(User u);
 	public int deleteUser(int id);
 	
 	public void login();
-	public boolean deposit(String user, Float amount);
+	public boolean deposit(String user);
 	
 	
 	
