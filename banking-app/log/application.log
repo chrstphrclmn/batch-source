@@ -105,3 +105,181 @@
 08:30 21:51:32.538 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
 08:30 21:51:32.546 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
 
+09:03 18:08:07.106 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:08:07.118 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:09:25.643 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - 1 records inserted
+09:03 18:09:26.259 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - [Ljava.lang.StackTraceElement;@45b4c3a9
+09:03 18:18:45.078 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:18:45.089 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:19:10.696 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - 1 records inserted
+09:03 18:19:11.055 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - [Ljava.lang.StackTraceElement;@1190200a
+09:03 18:36:15.211 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:36:15.223 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:37:12.727 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:37:12.739 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:37:22.985 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - [Ljava.lang.StackTraceElement;@75f9eccc
+09:03 18:37:23.845 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - [Ljava.lang.StackTraceElement;@52aa2946
+09:03 18:39:39.427 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:39:39.438 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:40:20.088 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - [Ljava.lang.StackTraceElement;@75f9eccc
+09:03 18:40:28.976 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - [Ljava.lang.StackTraceElement;@52aa2946
+09:03 18:40:48.736 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - org.postgresql.util.PSQLException: The connection attempt failed.
+09:03 18:44:27.278 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:44:27.289 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:44:40.073 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl] - [Ljava.lang.StackTraceElement;@75f9eccc
+09:03 18:44:47.687 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - [Ljava.lang.StackTraceElement;@52aa2946
+09:03 18:44:55.479 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - org.postgresql.util.PSQLException: The connection attempt failed.
+09:03 18:45:47.995 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+09:03 18:45:48.030 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - org.postgresql.util.PSQLException: ERROR: insert or update on table "accounts" violates foreign key constraint "accounts_user_id_fkey"
+  Detail: Key (user_id)=(1) is not present in table "users".
+09:03 18:47:56.870 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:47:56.881 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:48:23.723 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+09:03 18:48:23.754 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+09:03 18:48:23.756 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - java.sql.SQLException: Custom test
+09:03 18:51:43.688 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:51:43.699 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:52:06.484 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+09:03 18:52:06.514 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl] - 1 records inserted
+09:03 18:52:33.064 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+09:03 18:52:33.067 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+09:03 18:56:36.661 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 18:56:36.672 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:56:46.063 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+09:03 18:56:46.066 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+09:03 18:56:52.684 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 18:57:07.291 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+09:03 18:57:22.458 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+09:03 18:58:39.716 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Invalid credentials
+09:03 19:02:40.314 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 19:02:40.326 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 19:02:54.689 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 19:02:54.701 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 19:03:04.008 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+09:03 19:03:04.011 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+09:03 19:03:55.021 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - App is running
+09:03 19:03:55.033 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 19:04:29.549 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+09:03 19:04:29.552 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+09:03 19:05:12.090 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Launching Home page
+09:03 19:06:34.789 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Leaving Home Screen
+09:03 19:06:34.789 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Login Successful
+09:03 19:07:19.542 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 2 records inserted
+09:03 19:07:54.749 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 2 records inserted
+09:03 19:08:11.571 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+09:03 19:27:59.387 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:27:59.398 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:28:30.083 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:28:30.095 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:28:53.888 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:28:53.900 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:29:04.846 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 19:29:04.849 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 19:29:13.196 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09:03 19:29:25.267 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09:03 19:29:49.584 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 19:29:50.122 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+09:03 19:29:50.123 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 14 For account with id 7
+09:03 19:30:13.484 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 19:30:14.017 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+09:03 19:30:14.019 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $250.0 from Checking Account 14 For account with id 7
+09:03 19:36:07.454 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:36:07.466 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:36:16.939 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 19:36:16.943 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 19:36:28.049 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 19:36:28.603 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records inserted
+09:03 19:36:28.605 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $250.0 to Checking Account 14 For account with id 7
+09:03 19:48:09.134 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Attempting to exit the application
+09:03 19:48:09.134 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the account controller
+09:03 19:48:09.134 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the application
+09:03 19:52:44.006 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:52:44.018 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:52:56.543 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 19:52:56.546 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 19:55:26.825 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 19:55:26.837 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 19:55:39.762 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 19:55:39.766 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 19:55:42.708 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 2 records inserted
+09:03 19:55:45.453 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 2 records inserted
+09:03 19:56:00.238 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 19:56:00.801 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "transaction_histories_subaccount_id_key"
+  Detail: Key (subaccount_id)=(16) already exists.
+09:03 19:56:00.801 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 16 For account with id 7
+09:03 20:00:06.944 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:00:06.956 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:00:17.137 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 20:00:17.140 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 20:00:33.152 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 20:00:33.700 [main] [ERROR] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "transaction_histories_subaccount_id_key"
+  Detail: Key (subaccount_id)=(16) already exists.
+09:03 20:00:33.700 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 16 For account with id 7
+09:03 20:03:58.696 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:03:58.707 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:04:09.269 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 20:04:09.272 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 20:04:26.829 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 20:04:27.367 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+09:03 20:04:27.368 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $500.0 from Checking Account 16 For account with id 7
+09:03 20:04:57.065 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.SubAccountDAOImpl] - 1 records updated
+09:03 20:04:57.634 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+09:03 20:04:57.635 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $200.0 to Savings Account 17 For account with id 7
+09:03 20:05:01.164 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09:03 20:05:26.666 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+09:03 20:05:26.931 [main] [INFO] [com.revature.bankingapp.sysoutgui.daoimpl.TransactionHistoryDAOImpl] - 1 records updated
+09:03 20:05:26.933 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $150.0 from Checking Account 16 to Savings Account 17 For account with id 7
+09:03 20:05:50.321 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the account controller
+09:03 20:05:50.322 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:05:53.917 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Attempting to exit the application
+09:03 20:05:53.917 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 20:05:53.917 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the application
+09:03 20:09:21.507 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:09:21.519 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:10:11.666 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:10:11.676 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:10:12.540 [pool-2-thread-1] [INFO] [com.revature.bankingapp.sysoutgui.util.FeeHandler] - Fees deducted
+09:03 20:12:36.098 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:12:36.109 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:14:43.427 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:14:43.436 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:15:24.175 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:15:24.185 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:16:51.769 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:16:51.785 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:17:42.755 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:17:42.755 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:18:25.611 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:18:25.621 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:19:24.404 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:19:24.413 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:19:42.935 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:19:42.935 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:20:09.171 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:20:09.171 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:20:58.789 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:20:58.808 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:21:18.656 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:21:18.672 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:21:26.656 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:21:26.671 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:21:49.031 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:21:49.031 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:21:58.812 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - User authentication failed. Invalid credentials
+09:03 20:22:07.643 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 20:22:07.658 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:03 20:22:11.993 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the account controller
+09:03 20:22:11.993 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:03 20:22:18.033 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Attempting to exit the application
+09:03 20:22:18.034 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:03 20:22:18.034 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the application
+09:03 20:23:01.673 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:03 20:23:01.688 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched

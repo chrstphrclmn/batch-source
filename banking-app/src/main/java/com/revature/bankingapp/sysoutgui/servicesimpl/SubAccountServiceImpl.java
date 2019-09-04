@@ -49,7 +49,8 @@ public class SubAccountServiceImpl implements SubAccountService {
 				break;
 			}
 		} catch (InsufficientFundsException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
+			logger.error(e);
 		}
 
 		return subAccountDAO.findById(subAccount.getId()).get();
@@ -67,7 +68,8 @@ public class SubAccountServiceImpl implements SubAccountService {
 			subAccountDAO.updateTransfer(subAccount1, subAccount2);
 			updateTransferHistory(subAccount1, subAccount2, funds);
 		} catch (InsufficientFundsException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
+			logger.error(e);
 		}
 
 		return subAccountDAO.findById(subAccount1.getId()).get();
@@ -83,10 +85,11 @@ public class SubAccountServiceImpl implements SubAccountService {
 		case "SUBTRACT":
 			tHistoryMessage = "\n Withdrew $" + funds + " from " + subAccount.getType() + " Account "
 					+ subAccount.getId();
+			break;
 		}
 		TransactionHistory transactionHistory = transactionHistoryDAO.findBySubAccountId(subAccount.getId()).get();
 		transactionHistory.setHistory(transactionHistory.getHistory() + tHistoryMessage);
-		transactionHistoryDAO.save(transactionHistory);
+		transactionHistoryDAO.update(transactionHistory);
 		logger.info(tHistoryMessage + " For account with id " + subAccount.getAccountId());
 	}
 

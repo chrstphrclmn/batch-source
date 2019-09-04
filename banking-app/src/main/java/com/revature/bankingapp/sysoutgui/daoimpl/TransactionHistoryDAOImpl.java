@@ -17,11 +17,11 @@ import com.revature.bankingapp.sysoutgui.dao.TransactionHistoryDAO;
 import com.revature.bankingapp.sysoutgui.model.TransactionHistory;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
 
-public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
+public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 
 	private final String[] databaseColumns = { "id", "history", "subaccount_id" };
 	private static Logger logger = LogManager.getLogger();
-	
+
 	@Override
 	public Optional<TransactionHistory> findById(long id) {
 		Optional<TransactionHistory> tHistoryOptional = Optional.empty();
@@ -39,11 +39,11 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return tHistoryOptional;
 	}
-	
+
 	@Override
 	public Optional<TransactionHistory> findBySubAccountId(long id) {
 		Optional<TransactionHistory> tHistoryOptional = Optional.empty();
@@ -61,7 +61,7 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return tHistoryOptional;
 	}
@@ -73,7 +73,7 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
 				DatabaseCredentials.getPass());
 				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
-				ResultSet rs = stmt.executeQuery(query);) {	
+				ResultSet rs = stmt.executeQuery(query);) {
 			while (rs.next()) {
 				Long tHistoryId = rs.getLong(databaseColumns[0]);
 				String history = rs.getString(databaseColumns[1]);
@@ -82,7 +82,7 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 				tHistories.add(tHistory);
 			}
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return tHistories;
 	}
@@ -91,26 +91,26 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 	public Long save(TransactionHistory transactionHistory) {
 		String query = "INSERT INTO transaction_histories values(default,?,?)";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
+				DatabaseCredentials.getPass());
+				PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, transactionHistory.getHistory());
 			stmt.setLong(2, transactionHistory.getSubaccount_id());
 
 			int i = stmt.executeUpdate();
-			
+
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	            	transactionHistory.setId(generatedKeys.getLong("id"));
-	            	logger.info(i + " records inserted");
-	            }
-	            else {
-	                throw new SQLException("Creating TransactionHistory failed, no ID obtained.");
-	            }
-	        }
+				if (generatedKeys.next()) {
+					transactionHistory.setId(generatedKeys.getLong("id"));
+					logger.info(i + " records inserted");
+				} else {
+					throw new SQLException("Creating TransactionHistory failed, no ID obtained.");
+				}
+			}
 
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
-		
+
 		return transactionHistory.getId();
 	}
 
@@ -118,30 +118,27 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO{
 	public void update(TransactionHistory transactionHistory) {
 		String query = "UPDATE transaction_histories SET history= ?, subaccount_id=? WHERE id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn
-				.prepareStatement(query);) {
+				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, transactionHistory.getHistory());
 			stmt.setLong(2, transactionHistory.getSubaccount_id());
 			stmt.setLong(3, transactionHistory.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
-		} catch (NumberFormatException nf) {
-			logger.error(nf.getStackTrace());
+			logger.error(e);
 		}
 	}
 
 	@Override
 	public void delete(TransactionHistory transactionHistory) {
-		String query  = "DELETE FROM transaction_histories WHERE id=?";
+		String query = "DELETE FROM transaction_histories WHERE id=?";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
+				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, transactionHistory.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 

@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
 
-public class FeeHandler {
+public class FeeHandler implements Runnable {
 
 	private static Logger logger = LogManager.getLogger();
 	
@@ -22,13 +22,18 @@ public class FeeHandler {
 				DatabaseCredentials.getPass());CallableStatement stmt = conn.prepareCall(sql);) {
 			stmt.setDouble(1, fee);
 			stmt.execute();
-			logger.info("Fees deducted");
+			logger.info("Monthly fees deducted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void schedule() {
+		
+	}
+
+	@Override
+	public void run() {
 		LocalDate firstDayOfMonth = LocalDate.now().with(ChronoField.DAY_OF_MONTH, 1);
 		LocalDate currentDate = LocalDate.now();
 		if (currentDate.getDayOfYear() == firstDayOfMonth.getDayOfYear()) {

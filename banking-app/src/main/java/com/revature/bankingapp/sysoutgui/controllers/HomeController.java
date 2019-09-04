@@ -7,9 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
-import com.revature.bankingapp.sysoutgui.dao.UserDAO;
 import com.revature.bankingapp.sysoutgui.daoimpl.AccountDAOImpl;
-import com.revature.bankingapp.sysoutgui.daoimpl.UserDAOImpl;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.model.User;
 import com.revature.bankingapp.sysoutgui.security.CustomPasswordEncoder;
@@ -27,7 +25,6 @@ public class HomeController {
 	private static Logger logger = LogManager.getLogger();
 	private UserService userService = new UserServiceImpl();
 	private AccountService accountService = new AccountServiceImpl();
-	private UserDAO userDAO = new UserDAOImpl();
 	private AccountDAO accountDAO = new AccountDAOImpl();
 	private Long loggedinAccountId;
 	private CustomPasswordEncoder customPasswordEncoder = new CustomPasswordEncoder();
@@ -37,7 +34,8 @@ public class HomeController {
 	}
 
 	public String launch() {
-		logger.info("Launching Home page");
+		System.out.println("Opening Home page");
+		logger.info("Home Controller was succesfully launched");
 		home(ScannerUtil.getScannerInstance());
 		return indicator;
 	}
@@ -56,6 +54,7 @@ public class HomeController {
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");
+				logger.info("Attempting to exit the application");
 				break Outer;
 			default:
 				System.out.println("Not a valid option, please reselect \n");
@@ -72,7 +71,6 @@ public class HomeController {
 			case "T":
 				if (submitLogin(reader)) {
 					exit = true;
-					logger.info("Leaving Home Screen");
 					indicator = "L";
 					break Outer;
 				} else {
@@ -83,6 +81,7 @@ public class HomeController {
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");
+				logger.info("Attempting to exit the application");
 				break Outer;
 			default:
 				System.out.println("Not a valid option, please reselect \n");
@@ -112,7 +111,8 @@ public class HomeController {
 			}
 		}
 		if (!validateSubmission(username, password)) {
-			logger.info("Invalid credentials");
+			System.out.println("Invalid credentials");
+			logger.info("User authentication failed. Invalid credentials");
 			return false;
 		} else {
 			return true;
@@ -145,6 +145,7 @@ public class HomeController {
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");
+				logger.info("Attempting to exit the application");
 				break Outer;
 			default:
 				System.out.println("Not a valid option, please reselect \n");
@@ -165,22 +166,27 @@ public class HomeController {
 			return;
 		}
 		User newUser = new User(inputs[0], inputs[1], inputs[2]);
-		userDAO.save(newUser);
-		System.out.println("The User " + newUser.getFirstName() + " was created succesfully");
-		newUser = userDAO.findByEmail(newUser.getEmail()).get();
-		Account newAccount = new Account(inputs[3], customPasswordEncoder.encode(inputs[4]), newUser.getId());
-		accountDAO.save(newAccount);
-		System.out.println("The Account " + newAccount.getUsername() + " was created succesfully");
+		Account newAccount = new Account(inputs[3], customPasswordEncoder.encode(inputs[4]), null);
+		Long accountId = accountDAO.save(newUser, newAccount);
+		if (accountId != null) {
+			System.out.println("The User " + newUser.getFirstName() + " was created succesfully");
+			System.out.println("The Account " + newAccount.getUsername() + " was created succesfully");
+		}else {
+			System.out.println("Your request could not be processed. Please try again.");
+			logger.info("An error occured when attempting to create a new user and account");
+		}
 	}
 
 	private String[] initiateChecks(Scanner reader) {
 		String[] inputFields = HomeView.getInputFields();
 		int length = inputFields.length;
 		String[] inputs = new String[length];
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length;) {
 			System.out.print(inputFields[i]);
 			inputs[i] = reader.nextLine();
-			inputFieldsAreValid(inputs, i);
+			if (inputFieldsAreValid(inputs, i)) {
+				i++;
+			}
 
 		}
 		return inputs;

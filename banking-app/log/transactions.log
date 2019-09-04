@@ -34,3 +34,23 @@
 08-30-2019 20:48:41.019 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
  Transfered $50.0 from Checking Account 11 to Savings Account 13 For account with id 2
 
+09-03-2019 19:08:11.571 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - Cannot perform transaction. There are insufficient funds
+09-03-2019 19:29:13.196 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09-03-2019 19:29:25.267 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09-03-2019 19:29:50.123 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 14 For account with id 7
+09-03-2019 19:30:14.019 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $250.0 from Checking Account 14 For account with id 7
+09-03-2019 19:36:28.605 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $250.0 to Checking Account 14 For account with id 7
+09-03-2019 19:56:00.801 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 16 For account with id 7
+09-03-2019 20:00:33.700 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $500.0 to Checking Account 16 For account with id 7
+09-03-2019 20:04:27.368 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Withdrew $500.0 from Checking Account 16 For account with id 7
+09-03-2019 20:04:57.635 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Deposited $200.0 to Savings Account 17 For account with id 7
+09-03-2019 20:05:01.164 [main] [ERROR] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - com.revature.bankingapp.sysoutgui.exceptions.InsufficientFundsException: Cannot perform transaction. There are insufficient funds
+09-03-2019 20:05:26.933 [main] [INFO] [com.revature.bankingapp.sysoutgui.servicesimpl.SubAccountServiceImpl] - 
+ Transfered $150.0 from Checking Account 16 to Savings Account 17 For account with id 7

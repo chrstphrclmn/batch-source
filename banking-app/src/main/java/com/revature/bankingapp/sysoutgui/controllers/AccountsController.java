@@ -41,7 +41,8 @@ public class AccountsController {
 	}
 
 	public String launch() {
-		logger.info("Login Successful");
+		System.out.println("Login Successful");
+		logger.info("Accounts Controller was succesfully launched");
 		showSubAccounts(ScannerUtil.getScannerInstance());
 		return indicator;
 	}
@@ -71,6 +72,7 @@ public class AccountsController {
 				case "E":
 					exit = true;
 					System.out.println("Exiting application...");
+					logger.info("Attempting to exit the application");
 					break Outer;
 				default:
 					System.out.println("Not a valid option, please reselect \n");
@@ -103,6 +105,7 @@ public class AccountsController {
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");
+				logger.info("Attempting to exit the application");
 				break Outer;
 			default:
 				System.out.println("Not a valid option, please reselect \n");
@@ -152,6 +155,7 @@ public class AccountsController {
 			case "E":
 				exit = true;
 				System.out.println("Exiting application...");
+				logger.info("Attempting to exit the application");
 				break Outer;
 			default:
 				System.out.println("Not a valid option, please reselect \n");
@@ -213,6 +217,7 @@ public class AccountsController {
 				case "E":
 					exit = true;
 					System.out.println("Exiting application...");
+					logger.info("Attempting to exit the application");
 					break Outer;
 				default:
 					System.out.println("Not a valid option, please reselect \n");

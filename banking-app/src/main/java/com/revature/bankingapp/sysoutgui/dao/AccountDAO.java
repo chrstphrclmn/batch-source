@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.revature.bankingapp.sysoutgui.model.Account;
+import com.revature.bankingapp.sysoutgui.model.User;
 
 public interface AccountDAO {
 
@@ -14,6 +15,8 @@ public interface AccountDAO {
 	List<Account> findAll();
 
 	Long save(Account account);
+	
+	Long save(User user, Account account);
 
 	void update(Account account);
 

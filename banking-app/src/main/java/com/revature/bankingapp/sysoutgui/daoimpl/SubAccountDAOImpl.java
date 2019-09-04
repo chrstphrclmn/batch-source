@@ -41,7 +41,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return subaccountOptional;
 	}
@@ -63,7 +63,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 				subAccounts.add(subaccount);
 			}
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return subAccounts;
 	}
@@ -86,7 +86,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return subAccounts;
 	}
@@ -140,7 +140,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			conn.setAutoCommit(true);
 
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e);
 		}
 		return subAccount.getId();
 	}
@@ -157,7 +157,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 			conn.setAutoCommit(true);
 
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 

@@ -15,13 +15,14 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.model.Account;
+import com.revature.bankingapp.sysoutgui.model.User;
 import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
 
 public class AccountDAOImpl implements AccountDAO {
 
 	private final String[] databaseColumns = { "id", "username", "password", "user_id" };
 	private static Logger logger = LogManager.getLogger();
-	
+
 	@Override
 	public Optional<Account> findById(long id) {
 		Optional<Account> accountOptional = Optional.empty();
@@ -41,7 +42,7 @@ public class AccountDAOImpl implements AccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return accountOptional;
 	}
@@ -64,7 +65,7 @@ public class AccountDAOImpl implements AccountDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return accountOptional;
 	}
@@ -86,7 +87,7 @@ public class AccountDAOImpl implements AccountDAO {
 				accounts.add(account);
 			}
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return accounts;
 	}
@@ -95,7 +96,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public Long save(Account account) {
 		String query = "INSERT INTO accounts values(default,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+				DatabaseCredentials.getPass());
+				PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, account.getUsername());
 			stmt.setString(2, account.getPassword());
 			stmt.setLong(3, account.getUserId());
@@ -103,19 +105,71 @@ public class AccountDAOImpl implements AccountDAO {
 			int i = stmt.executeUpdate();
 
 			try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-	            if (generatedKeys.next()) {
-	            	account.setId(generatedKeys.getLong("id"));
-	            	logger.info(i + " records inserted");
-	            }
-	            else {
-	                throw new SQLException("Creating Account failed, no ID obtained.");
-	            }
-	        }
-			
+				if (generatedKeys.next()) {
+					account.setId(generatedKeys.getLong("id"));
+					logger.info(i + " records inserted");
+				} else {
+					throw new SQLException("Creating Account failed, no ID obtained.");
+				}
+			}
+
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			e.printStackTrace();
+			logger.error(e);
 		}
-		
+
+		return account.getId();
+	}
+
+	@Override
+	public Long save(User user, Account account) {
+		String uQuery = "INSERT INTO users values(default,?,?,?)";
+		String aQuery = "INSERT INTO accounts values(default,?,?,?)";
+		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
+				DatabaseCredentials.getPass());
+				PreparedStatement userStmt = conn.prepareStatement(uQuery, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement accountStmt = conn.prepareStatement(aQuery, Statement.RETURN_GENERATED_KEYS)) {
+			// start transaction block
+			conn.setAutoCommit(false);
+
+			// User
+			userStmt.setString(1, user.getFirstName());
+			userStmt.setString(2, user.getLastName());
+			userStmt.setString(3, user.getEmail());
+
+			int i = userStmt.executeUpdate();
+
+			try (ResultSet generatedKeys = userStmt.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					user.setId(generatedKeys.getLong("id"));
+					logger.info(i + " records inserted");
+				} else {
+					throw new SQLException("Creating User failed, no ID obtained.");
+				}
+			}
+
+			// Account
+			accountStmt.setString(1, account.getUsername());
+			accountStmt.setString(2, account.getPassword());
+			accountStmt.setLong(3, user.getId());
+
+			int j = accountStmt.executeUpdate();
+
+			try (ResultSet generatedKeys = accountStmt.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					account.setId(generatedKeys.getLong("id"));
+					logger.info(j + " records inserted");
+				} else {
+					throw new SQLException("Creating Account failed, no ID obtained.");
+				}
+			}
+			// end transaction block, commit changes
+			conn.commit();
+			conn.setAutoCommit(true);
+
+		} catch (SQLException e) {
+			logger.error(e);
+		}
 		return account.getId();
 	}
 
@@ -131,7 +185,7 @@ public class AccountDAOImpl implements AccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 
@@ -144,7 +198,7 @@ public class AccountDAOImpl implements AccountDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 	}
 

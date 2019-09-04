@@ -40,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return userOptional;
 	}
@@ -63,7 +63,7 @@ public class UserDAOImpl implements UserDAO {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return userOptional;
 	}
@@ -85,7 +85,7 @@ public class UserDAOImpl implements UserDAO {
 				users.add(user);
 			}
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		return users;
 	}
@@ -112,7 +112,7 @@ public class UserDAOImpl implements UserDAO {
 	        }
 			
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 		
 		return user.getId();
@@ -131,9 +131,7 @@ public class UserDAOImpl implements UserDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records updated");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
-		} catch (NumberFormatException nf) {
-			logger.error(nf.getStackTrace());
+			logger.error(e);
 		}
 	}
 
@@ -146,7 +144,7 @@ public class UserDAOImpl implements UserDAO {
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
 		} catch (SQLException e) {
-			logger.error(e.getStackTrace());
+			logger.error(e);
 		}
 
 	}

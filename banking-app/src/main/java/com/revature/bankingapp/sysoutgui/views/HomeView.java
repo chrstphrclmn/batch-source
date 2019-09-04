@@ -2,7 +2,7 @@ package com.revature.bankingapp.sysoutgui.views;
 
 public class HomeView {
 
-	private static String [] InputFields = {"First Name: ", "Last Name: ", "Email: ", "Username: ", "Password: ", "Confirm Password"};
+	private static String [] InputFields = {"First Name: ", "Last Name: ", "Email: ", "Username: ", "Password: ", "Confirm Password: "};
 
 	public static String[] getInputFields() {
 		return InputFields;
@@ -11,10 +11,10 @@ public class HomeView {
 	public static void showHome() {
 		System.out.println("\n Welcome to Bank Revature!");
 		System.out.println("Select an option and press enter");
-		System.out.println("| Options:                 |");
-		System.out.println("|        C. Create Account |");
-		System.out.println("|        L. Login          |");
-		System.out.println("|        E. Exit           |");
+		System.out.println("| Options:                        |");
+		System.out.println("|        C. Create a user Account |");
+		System.out.println("|        L. Login                 |");
+		System.out.println("|        E. Exit                  |");
 	}
 
 	public static void showForm(String form) {
@@ -35,6 +35,6 @@ public class HomeView {
 	}
 
 	public static void showFormat() {
-		System.out.println("| Please enter the following information, each followed by the 'enter' key. Type Submit when finished|");
+		System.out.println("| Please enter the following information, each followed by the 'enter' key.");
 	}
 }
