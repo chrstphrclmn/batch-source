@@ -12,9 +12,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.revature.dao.UserAccountDao;
 import com.revature.models.UserAccount;
+import com.revature.util.EncryptionUtil;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserAccountServiceTest {
+	
+	private static final String AES_KEY = System.getenv("AES_KEY");
 
 	@InjectMocks
 	private UserAccountService service;
@@ -26,7 +29,7 @@ public class UserAccountServiceTest {
 	public void setUp() {
 		
 		//setup when and thenReturn statements
-		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		UserAccount tester = new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com");
 		tester.logIn("password");
 		when(dao.getUserAccountByUsername("tester")).thenReturn(tester);
 		when(dao.getUserAccountByEmail("test@test.com")).thenReturn(tester);
@@ -36,7 +39,7 @@ public class UserAccountServiceTest {
 	@Test
 	public void getUserAccountByValidUsername() {
 		
-		assertEquals(new UserAccount("tester", "password", "First", "Last", "test@test.com"), service.getUserAccountByUsername("tester"));
+		assertEquals(new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com"), service.getUserAccountByUsername("tester"));
 	}
 	
 	//Log In Tests
@@ -44,19 +47,19 @@ public class UserAccountServiceTest {
 	@Test
 	public void validLoginUsername() {
 		
-		assertEquals(new UserAccount("tester", "password", "First", "Last", "test@test.com"), service.logInUserAccount("Tester", "password"));
+		assertEquals(new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com"), service.logInUserAccount("Tester", "password"));
 	}
 	
 	@Test
 	public void validLogInEmail() {
 		
-		assertEquals(new UserAccount("tester", "password", "First", "Last", "test@test.com"), service.logInUserAccount("tEsT@test.coM", "password"));
+		assertEquals(new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com"), service.logInUserAccount("tEsT@test.coM", "password"));
 	}
 	
 	@Test
 	public void invalidLoginWrongPassword() {
 		
-		assertEquals(null, service.logInUserAccount("tester", "passworD"));
+		assertEquals(null, service.logInUserAccount("tester", "password123"));
 	}
 	
 	@Test
@@ -100,7 +103,7 @@ public class UserAccountServiceTest {
 	@Test
 	public void validLogout() {
 		
-		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		UserAccount tester = new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com");
 		tester.logIn("password");
 		
 		assertEquals(true, service.logOutUserAccount(tester));
@@ -109,7 +112,7 @@ public class UserAccountServiceTest {
 	@Test
 	public void invalidLogout() {
 		
-		UserAccount tester = new UserAccount("tester", "password", "First", "Last", "test@test.com");
+		UserAccount tester = new UserAccount("tester", EncryptionUtil.encrypt("password", AES_KEY), "First", "Last", "test@test.com");
 		
 		assertEquals(false, service.logOutUserAccount(tester));
 	}

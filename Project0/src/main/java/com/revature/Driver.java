@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.PropertyConfigurator;
+
+import com.revature.util.EncryptionUtil;
 import com.revature.util.StringUtil;
 import com.revature.models.BankAccount;
 import com.revature.models.UserAccount;
@@ -13,6 +15,8 @@ import com.revature.service.UserAccountService;
 import com.revature.service.UserBankAccountService;
 
 public class Driver {
+	
+	private static final String AES_KEY = System.getenv("AES_KEY");
 	
 	static Scanner scan = new Scanner(System.in);
 	
@@ -50,6 +54,7 @@ public class Driver {
 				catch(InputMismatchException e) {
 					
 					e.printStackTrace();
+					scan.next();
 				}
 				
 				switch(opt) {
@@ -101,6 +106,7 @@ public class Driver {
 				catch(InputMismatchException e) {
 					
 					e.printStackTrace();
+					scan.next();
 				}
 				
 				switch(opt) {
@@ -194,16 +200,20 @@ public class Driver {
 				System.out.printf("Email already taken: Please enter another.%n");
 			}
 			
+			else if (!StringUtil.isValidEmail(email)) {
+				
+				System.out.printf("Invalid Email Format%n");
+			}
+			
 			else {
 				
 				flag = false;
 			}
 		} while (flag == true);
 		
-		user = new UserAccount(username, password , firstname, lastname, email);
+		user = new UserAccount(username.toLowerCase(), EncryptionUtil.encrypt(password, AES_KEY) , firstname, lastname, email.toLowerCase());
 		user.logIn(password);
 		service.createUserAccount(user);
-		service.logInUserAccount(username, password);
 		
 	}
 	
@@ -228,6 +238,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			switch(resp) {
@@ -259,6 +270,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			if(StringUtil.isValidAmount(accountBalance)) {
@@ -297,6 +309,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			if(resp <= accounts.size() && resp > 0) {
@@ -327,6 +340,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			switch(resp) {
@@ -366,6 +380,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			if(StringUtil.isValidAmount(amount)) {
@@ -398,6 +413,7 @@ public class Driver {
 			catch(InputMismatchException e) {
 				
 				e.printStackTrace();
+				scan.next();
 			}
 			
 			if(StringUtil.isValidAmount(amount)) {

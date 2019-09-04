@@ -29,7 +29,7 @@ public class UserAccount implements Serializable{
 		this();
 		
 		this.username = username;
-		this.password = EncryptionUtil.encrypt(password, AES_KEY);
+		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;

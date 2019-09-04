@@ -42,7 +42,7 @@ public class UserAccountService {
 			return null;
 		}
 		
-		returnUser.logIn(password);
+		if(!returnUser.logIn(password)) return null;
 		
 		if(returnUser.isLoggedIn()) {
 			
