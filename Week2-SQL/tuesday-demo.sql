@@ -204,7 +204,7 @@ from employee e
 right join department d
 on e.dept_id = d.dept_id;
 
--- inner join 
+-- inner join on the same table (self join)
 select e.empl_name "Employee", m.empl_name "Manager"
 from employee e
 join employee m 
