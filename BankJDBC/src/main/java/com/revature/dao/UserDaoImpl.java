@@ -19,31 +19,33 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getUsers() {
+		// get all users
 		
 		String sql = "select * from users";
 		
 		List<User> users = new ArrayList<User>();
 		
+		// simple statement should because data does not need to be parametrized
 		try(Connection c = ConnectionUtil.getConnection();
 				Statement s = c.createStatement();
 				ResultSet rs = s.executeQuery(sql);){
 			
 			while(rs.next()) {
-//				User u = new User();
-//				u.setUser_name(rs.getString("user_name"));
-//				u.setPassKey(rs.getString("pass_word"));
-//				u.setBalance(rs.getFloat("balance"));
+
 				Integer userId = rs.getInt("user_id");				
 				String userName = rs.getString("user_name");
 				String passWord = rs.getString("pass_word");
 				Float balance = rs.getFloat("balance");
+				// create a new user
 				User u = new User(userId, userName, passWord, balance);
+				// keep adding the user to the ArrayList
 				users.add(u);
 			}
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
+		// return ArrayList of users
 		return users;
 	}
 
@@ -54,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 		// sql statement
 		String sql = "select * from users where user_id = ?";
 		
-		
+		// Prepared Statement because data is also being sent
 		try(Connection c = ConnectionUtil.getConnection();
 				PreparedStatement ps = c.prepareStatement(sql)){
 			
@@ -67,7 +69,6 @@ public class UserDaoImpl implements UserDao {
 				String userName = rs.getString("user_name");
 				String passWord = rs.getString("pass_word");
 				Float balance = rs.getFloat(4);
-				System.out.println(userName + ":" + passWord + ":" + balance);
 				u = new User(userName, passWord, balance);
 			}
 			
@@ -117,6 +118,7 @@ public class UserDaoImpl implements UserDao {
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
+		// returns 1 if user creation is successful. 0 otherwise.
 		return usersCreated;
 	}
 
@@ -148,11 +150,20 @@ public class UserDaoImpl implements UserDao {
 		Scanner scanner = new Scanner(System.in);
 		
 		System.out.println("Please enter your user name: ");
+		
+		// getting rid of white spaces
 		String userName = scanner.nextLine().trim();
+		
+		/* check if fields are left blank. If they are left blank, then program wont proceed until
+		 * something is entered. If checkIfEmpty returns false (i.e. field was left empty) 
+		 * loop will repeat until a value is entered.
+		 */
+		
 		while(!(checkIfEmpty(userName))) {
 			System.out.println("User Name cannot be empty. Please enter your User Name: ");
 			userName = scanner.nextLine().trim();
 		}
+		
 		System.out.println("Please enter your password: ");
 		String passWord = scanner.nextLine().trim();
 		
@@ -160,6 +171,8 @@ public class UserDaoImpl implements UserDao {
 			System.out.println("Password cannot be empty. Please enter your password: ");
 			passWord = scanner.nextLine().trim();
 		}
+		
+		// Check for username and password to authenticate
 		
 		String sql = "Select * from users where user_name = ? and pass_word = ?";
 		
@@ -173,11 +186,12 @@ public class UserDaoImpl implements UserDao {
 			
 			// if query works, then create result object
 			while(rs.next()) {
-				// only get username, password and balance bc that's all we need to work with for now
+				/* only get username, password and balance bc that's all we
+				 * need to work with for now
+				 */
 				String correctUserName = rs.getString("user_name");
 				String correctPassWord = rs.getString("pass_word");
-				float correctBalance = rs.getFloat("balance");
-				System.out.println(correctBalance);
+				Float correctBalance = rs.getFloat("balance");
 				
 				user.setUser_name(correctUserName);
 				user.setPassKey(correctPassWord);
@@ -185,10 +199,13 @@ public class UserDaoImpl implements UserDao {
 			}
 			rs.close();
 			
-//			if the query doesn't work:
+			// If user entered password matches the password in DB, then run loginSuccess command
 			if(user.getPassKey() != null || user.getPassKey().equals(passWord)) {
 //				we will pass user_name and password as parameters to loginSuccess to retrieve the info from the account
 				loginSuccess(user.getUser_name(), user.getBalance());
+			}else {
+				System.out.println("Invalid username or password");
+				login();
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -205,9 +222,7 @@ public class UserDaoImpl implements UserDao {
 
 		System.out.println("Welcome to your account. Choose from the following options: ");
 		System.out.println("\n");
-		System.out.println("\n");
-		System.out.println("\n");
-
+	
 		while(selected != 'a') {
 			System.out.println("a. Log Out");
 			System.out.println("b. Check Balance");
@@ -219,6 +234,7 @@ public class UserDaoImpl implements UserDao {
 			switch(selected) {
 			case 'a':
 				System.out.println("Thanks for visiting. Have a nice day!");
+				System.out.println("\n");
 				break;
 			case 'b':
 				balance(user);
@@ -246,6 +262,7 @@ public class UserDaoImpl implements UserDao {
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
+				// just need data from balance column to print out:
 				Float balance = rs.getFloat("balance");
 				System.out.println("Balance is: " + balance);
 			}
@@ -260,8 +277,10 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("Enter amount you want to deposit into your account: ");
 		Scanner scanner = new Scanner(System.in);
 		
+		// ask user how much they want to deposit
 		String moneyToDeposit = scanner.nextLine();
 		
+		// Validate input. Making sure they enter a valid number:
 		while(!(checkInput(moneyToDeposit))) {
 			System.out.println("Invalid amount entered. Please enter an actual number: ");
 			moneyToDeposit = scanner.nextLine();
@@ -269,6 +288,7 @@ public class UserDaoImpl implements UserDao {
 		
 		
 //		callable statement. Defined in sql script. Takes in username and amount to deposit.
+		
 		String sql = "{call deposit(?, ?)}";
 		
 		try(Connection c = ConnectionUtil.getConnection(); 
@@ -277,6 +297,10 @@ public class UserDaoImpl implements UserDao {
 			cs.setFloat(2, Float.parseFloat(moneyToDeposit));
 			
 			cs.execute();
+			
+			// print balance again after the transaction:
+			
+			balance(user);
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -289,7 +313,10 @@ public class UserDaoImpl implements UserDao {
 		System.out.println("Enter amount to withdraw: ");
 		Scanner scanner = new Scanner(System.in);
 		
+		// ask user how much money to withdraw
 		String moneyToWithDraw = scanner.nextLine();
+		
+		// Validate the input to make sure it's a valid number
 		
 		while(!(checkInput(moneyToWithDraw))) {
 			System.out.println("Enter an actual amount");
@@ -297,10 +324,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		
 		
+		// Check to make sure they can't withdraw more than they have
 		
 		if(Float.parseFloat(moneyToWithDraw) > balance) {
-			System.out.println("You don't have enough money in the account. Please enter amoutn equal to or less than your current balance");
+			System.out.println("You don't have enough money in the account. "
+					+ "Please enter amoutn equal to or less than your current balance");
 		}else {
+			
+			// callable statement. Call withdraw function in sql script if validation passes
 			String sql = "{call withdraw(?, ?)}";
 			try(Connection c = ConnectionUtil.getConnection();
 					CallableStatement cs = c.prepareCall(sql)){

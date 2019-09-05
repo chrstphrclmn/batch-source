@@ -57,10 +57,9 @@ public class UserDaoImplTest {
 	@Test
 	public void testSuccessFullDeposit() {
 //		get username. pass it into deposit function and get return value (which is a boolean)
-		User u = new User("test_deposit_user_2", "test_deposit_pass_2", 100f);
+		User u = new User("test_deposit_user_5", "test_deposit_pass_2", 100f);
 		us.createUser(u);
 		assertTrue(us.deposit("test_deposit_user"));
-
 	}
 	
 	

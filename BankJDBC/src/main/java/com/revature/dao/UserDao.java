@@ -10,7 +10,6 @@ public interface UserDao {
 	public User getUserById(int id);
 	public int createUser(User u);
 	public int deleteUser(int id);
-	
 	public void login();
 	public boolean deposit(String user);
 	

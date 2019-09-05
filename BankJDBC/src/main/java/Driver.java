@@ -49,6 +49,11 @@ public class Driver {
 					Scanner inputFromUser = new Scanner(System.in);
 					System.out.println("Enter your user name to create an account: ");
 					String userName = inputFromUser.nextLine().trim();
+					while(!(checkIfEmpty(userName))) {
+						System.out.println("User Name cannot be empty. Please enter a username: ");
+						userName = inputFromUser.nextLine().trim();
+					}
+					
 					
 					
 /*
@@ -60,29 +65,51 @@ public class Driver {
 //					List2:
 					List<String> userNames = new ArrayList<String>();
 					
-//					loop through List 1, get usernames from thsi list and insert into List 2. 
+//					loop through List 1, get usernames from this list and insert into List 2. 
 					for(User u: usersList) {
 						userNames.add(u.getUser_name());
 					}
 				
 //					Then check if List 2 already contains the user name entered by the user:
 					while(userNames.contains(userName)) {
-						System.out.println("Username already exists. please enter another username: ");
+						System.out.println("Username already exists. "
+								+ "please enter another username: ");
 						userName = inputFromUser.nextLine().trim();
 					}
 					
-//					As long as pass keys don't match, this loop will keep repeating and asking for a new password
+					
+					System.out.println("Enter password for your new account: ");
+					passKey = inputFromUser.nextLine().trim();
+					while(!(checkIfEmpty(passKey))) {
+						System.out.println("Password cannot be empty. Please enter  a password: ");
+						passKey = inputFromUser.nextLine().trim();
+					}
+					
+				
+					System.out.println("Confirm password: ");
+					passKey2 = inputFromUser.nextLine().trim();
+					while(!(checkIfEmpty(passKey2))) {
+						System.out.println("Confirm passkey cannot be empty. Please enter a valid passkey: ");
+						passKey2 = inputFromUser.nextLine().trim();
+					}
+					
+/*					As long as pass keys don't match,
+ *					this loop will keep repeating and asking for a new password
+ */
+					
 					while(!(passKey.equals(passKey2))) {
+						System.out.println("Passwords do not match");
 						System.out.println("Enter password for your account: ");
 						passKey = inputFromUser.nextLine().trim();
 						System.out.println("Confirm your password: ");
 						passKey2 = inputFromUser.nextLine().trim();
 					}
+					
 					System.out.println("Enter starting balance: ");
 					
-					String balance = inputFromUser.nextLine();
+					String balance = inputFromUser.nextLine().trim();
 					
-//					check if number being entered is actually a number!
+//					check if starting balance being entered is actually a number!
 /*					If method returns false i.e. user input is not a number, loop will repeat!
  * 						bc while(!false = true){...}
  */
@@ -97,7 +124,7 @@ public class Driver {
 					
 					uu.createUser(u);
 					
-					System.out.println("Thanks for creating opening an account at the Private Bank! \n");
+					System.out.println("Thanks for creating an account at the Private Bank! \n");
 					
 					break;
 			case 'c':
@@ -128,6 +155,12 @@ public class Driver {
 				if(Character.isAlphabetic(c)) {
 					return false;
 				}
+		}
+		return true;
+	}
+	private static boolean checkIfEmpty(String value) {
+		if(value == null || value.isEmpty()) {
+			return false;
 		}
 		return true;
 	}
