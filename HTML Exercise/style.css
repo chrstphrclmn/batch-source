@@ -1,0 +1,64 @@
+body{
+  background-color: blue;
+}
+.head {
+  color: blue;
+  text-decoration: underline;
+}
+
+.text{
+  color:white;
+  text-align:center;
+
+}
+
+p {
+  color: white;
+  text-align: center;
+  margin-left: 20rem;
+  margin-right: 20rem;
+}
+#words{
+  color:red;
+}
+.float-me{
+  float: right;
+  background-color: blue;
+}
+table {
+  border: 1px solid white;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+ tr >*{
+  border: 1px solid white;
+
+}
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ol{
+  list-style-position: inside;
+
+}
+ul{
+
+  list-style-position: inside;
+}
+
+/* div{
+  text-emphasis-style: dot;
+  margin: 1px;
+  font-size: 1px;
+  border-color: blue;
+} */
+/* *!important{
+
+}
+[attribute]{
+
+} */
