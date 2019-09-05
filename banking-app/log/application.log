@@ -283,3 +283,10 @@
 09:03 20:22:18.034 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the application
 09:03 20:23:01.673 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
 09:03 20:23:01.688 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:04 22:22:12.085 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - The application was started successfully
+09:04 22:22:12.150 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.HomeController] - Home Controller was succesfully launched
+09:04 22:22:30.964 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the home controller
+09:04 22:22:30.996 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Accounts Controller was succesfully launched
+09:04 22:22:34.058 [main] [INFO] [com.revature.bankingapp.sysoutgui.controllers.AccountsController] - Attempting to exit the application
+09:04 22:22:34.058 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the account controller
+09:04 22:22:34.059 [main] [INFO] [com.revature.bankingapp.BankingAppApplication] - Successfully exited the application

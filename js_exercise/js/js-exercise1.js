@@ -18,7 +18,7 @@ window.onload = function() {
   console.log(removeChar("Read", 2));
 
   console.log("BubbleSort");
-  console.log(bubbleSort([2,5,6,1,3,4]));
+  console.log(bubbleSort([2, 5, 6, 1, 3, 4]));
 
   console.log("isEven");
   console.log(isEven(0));
@@ -31,14 +31,19 @@ window.onload = function() {
   console.log(isPalindrome("10101"));
 
   console.log("isLeapYear");
-  let date1 = new Date('December 17, 2004 03:24:00');
-  let date2 = new Date('December 17, 2048 03:24:00');
-  let date3 = new Date('December 17, 1995 03:24:00');
-  let date4 = new Date('December 17, 1900 03:24:00');
+  let date1 = new Date("December 17, 2004 03:24:00");
+  let date2 = new Date("December 17, 2048 03:24:00");
+  let date3 = new Date("December 17, 1995 03:24:00");
+  let date4 = new Date("December 17, 1900 03:24:00");
   console.log(isLeapYear(date1));
   console.log(isLeapYear(date2));
   console.log(isLeapYear(date3));
   console.log(isLeapYear(date4));
+
+  
+  printShape("Square", 3, "$");
+  printShape("Triangle", 3, "$");
+  printShape("Diamond", 3, "$");
 };
 
 function maxLength(array) {
@@ -76,44 +81,73 @@ function isValidEmail(email) {
 }
 
 function removeChar(string, index) {
-    return string.replace(string[index],"");
+  return string.replace(string[index], "");
 }
 
-function bubbleSort(numArray){
-    let length = numArray.length -1;
-    let swapped = true;
-    while(swapped){
-        swapped = false;
-        for (let i=0; i < length; i++) {
-            if (numArray[i] > numArray[i+1]) {
-                let temp = numArray[i];
-                numArray[i] = numArray[i+1];
-                numArray[i+1] = temp;
-                swapped = true;
-            }
-        }
-    } 
-    return numArray;
+function bubbleSort(numArray) {
+  let length = numArray.length - 1;
+  let swapped = true;
+  while (swapped) {
+    swapped = false;
+    for (let i = 0; i < length; i++) {
+      if (numArray[i] > numArray[i + 1]) {
+        let temp = numArray[i];
+        numArray[i] = numArray[i + 1];
+        numArray[i + 1] = temp;
+        swapped = true;
+      }
+    }
+  }
+  return numArray;
 }
 
-function isEven(someNum){
-    if(Number.isInteger(someNum/2)){return true;}else{return false;}
+function isEven(someNum) {
+  if (Number.isInteger(someNum / 2)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function isPalindrome(someStr){
-    let newString = someStr.split("").reverse().join("");
-    return newString.toUpperCase() == someStr.toUpperCase();
+function isPalindrome(someStr) {
+  let newString = someStr
+    .split("")
+    .reverse()
+    .join("");
+  return newString.toUpperCase() == someStr.toUpperCase();
 }
 // Leap Years are any year that can be exactly divided by 4 (such as 2016, 2020, 2024, etc). not, except if it can be exactly divided by 100,
-function isLeapYear(date){
-    let year = date.getYear();
-    if ((year % 4 == 0 && year % 100 != 0)) {
-       return true;
-    } else {
-        return false;
-    }
+function isLeapYear(date) {
+  let year = date.getYear();
+  if (year % 4 == 0 && year % 100 != 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-function printShape(shape, height, character){
-    
+//"Square", "Triangle", "Diamond".
+function printShape(shape, height, character) {
+  switch (shape) {
+    case "Square":
+        for(let i = 0; i < height; i++){console.log(character+character+character);}
+      break;
+    case "Triangle":
+
+      break;
+    case "Diamond":
+      break;
+  }
 }
+
+// function test(){
+//     name: "hi"
+// }
+
+// test2{
+//     hello: "me"
+// }
+
+// test3{
+//     hello: "me"
+// }
