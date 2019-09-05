@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.TransactionHistoryDAO;
 import com.revature.bankingapp.sysoutgui.model.TransactionHistory;
-import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.security.DBCredentials;
 
 public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 
@@ -26,8 +26,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	public Optional<TransactionHistory> findById(long id) {
 		Optional<TransactionHistory> tHistoryOptional = Optional.empty();
 		String query = "SELECT * FROM transaction_histories WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -48,8 +48,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	public Optional<TransactionHistory> findBySubAccountId(long id) {
 		Optional<TransactionHistory> tHistoryOptional = Optional.empty();
 		String query = "SELECT * FROM transaction_histories WHERE subaccount_id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -70,8 +70,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	public List<TransactionHistory> findAll() {
 		List<TransactionHistory> tHistories = new ArrayList<TransactionHistory>();
 		String query = "SELECT * FROM transaction_histories";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
 				ResultSet rs = stmt.executeQuery(query);) {
 			while (rs.next()) {
@@ -90,8 +90,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	@Override
 	public Long save(TransactionHistory transactionHistory) {
 		String query = "INSERT INTO transaction_histories values(default,?,?)";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, transactionHistory.getHistory());
 			stmt.setLong(2, transactionHistory.getSubaccount_id());
@@ -117,8 +117,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	@Override
 	public void update(TransactionHistory transactionHistory) {
 		String query = "UPDATE transaction_histories SET history= ?, subaccount_id=? WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, transactionHistory.getHistory());
 			stmt.setLong(2, transactionHistory.getSubaccount_id());
 			stmt.setLong(3, transactionHistory.getId());
@@ -132,8 +132,8 @@ public class TransactionHistoryDAOImpl implements TransactionHistoryDAO {
 	@Override
 	public void delete(TransactionHistory transactionHistory) {
 		String query = "DELETE FROM transaction_histories WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, transactionHistory.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");

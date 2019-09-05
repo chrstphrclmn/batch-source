@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.SubAccountDAO;
 import com.revature.bankingapp.sysoutgui.model.SubAccount;
-import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.security.DBCredentials;
 
 public class SubAccountDAOImpl implements SubAccountDAO {
 
@@ -27,8 +27,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	public Optional<SubAccount> findById(long id) {
 		Optional<SubAccount> subaccountOptional = Optional.empty();
 		String query = "SELECT * FROM subaccounts WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -50,8 +50,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	public List<SubAccount> findAll() {
 		List<SubAccount> subAccounts = new ArrayList<SubAccount>();
 		String query = "SELECT * FROM subaccounts";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
 				ResultSet rs = stmt.executeQuery(query);) {
 			while (rs.next()) {
@@ -72,8 +72,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	public List<SubAccount> findAllById(long id) {
 		List<SubAccount> subAccounts = new ArrayList<SubAccount>();
 		String query = "SELECT * FROM subaccounts WHERE account_id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -95,8 +95,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	public Long save(SubAccount subAccount) {
 		String sQuery = "INSERT INTO subaccounts values(default,?,?,?)";
 		String tQuery = "INSERT INTO transaction_histories values(default,?,?)";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				PreparedStatement subaccountStmt = conn.prepareStatement(sQuery, Statement.RETURN_GENERATED_KEYS);
 				PreparedStatement tHistoryStmt = conn.prepareStatement(tQuery, Statement.RETURN_GENERATED_KEYS)) {
 			// start transaction block
@@ -148,8 +148,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	@Override
 	public void update(SubAccount subAccount) {
 		String query = "UPDATE subaccounts SET type= ?, amount=?, account_id=? WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, subAccount.getType());
 			stmt.setDouble(2, subAccount.getAmount());
 			stmt.setLong(3, subAccount.getAccountId());
@@ -164,8 +164,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	@Override
 	public void delete(SubAccount subAccount) {
 		String query = "DELETE FROM subaccounts WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, subAccount.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");
@@ -177,8 +177,8 @@ public class SubAccountDAOImpl implements SubAccountDAO {
 	@Override
 	public void updateTransfer(SubAccount subAccount1, SubAccount subAccount2) {
 		String query = "UPDATE subaccounts SET type= ?, amount=?, account_id=? WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				PreparedStatement subaccount1_stmt = conn.prepareStatement(query);
 				PreparedStatement subaccount2_stmt = conn.prepareStatement(query)) {
 

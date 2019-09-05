@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.revature.bankingapp.sysoutgui.dao.UserDAO;
 import com.revature.bankingapp.sysoutgui.model.User;
-import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.security.DBCredentials;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -26,8 +26,8 @@ public class UserDAOImpl implements UserDAO {
 	public Optional<User> findById(long id) {
 		Optional<User> userOptional = Optional.empty();
 		String query = "SELECT * FROM users WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -49,8 +49,8 @@ public class UserDAOImpl implements UserDAO {
 	public Optional<User> findByEmail(String emailAddress) {
 		Optional<User> userOptional = Optional.empty();
 		String query = "SELECT * FROM users WHERE email=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, emailAddress);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -72,8 +72,8 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> findAll() {
 		List<User> users = new ArrayList<User>();
 		String query = "SELECT * FROM users";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
 				ResultSet rs = stmt.executeQuery(query);) {	
 			while (rs.next()) {
@@ -93,8 +93,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Long save(User user) {
 		String query = "INSERT INTO users values(default,?,?,?)";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setString(3, user.getEmail());
@@ -121,8 +121,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void update(User user) {
 		String query = "UPDATE users SET first_name= ?, last_name=?, email=? WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());PreparedStatement stmt = conn
 				.prepareStatement(query);) {
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
@@ -138,8 +138,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void delete(User user) {
 		String query  = "DELETE FROM users WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, user.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");

@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import com.revature.bankingapp.sysoutgui.dao.AccountDAO;
 import com.revature.bankingapp.sysoutgui.model.Account;
 import com.revature.bankingapp.sysoutgui.model.User;
-import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.security.DBCredentials;
 
 public class AccountDAOImpl implements AccountDAO {
 
@@ -27,8 +27,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public Optional<Account> findById(long id) {
 		Optional<Account> accountOptional = Optional.empty();
 		String query = "SELECT * FROM accounts WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
 
@@ -51,8 +51,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public Optional<Account> findByUsername(String usernameInput) {
 		Optional<Account> accountOptional = Optional.empty();
 		String query = "SELECT * FROM accounts WHERE username=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, usernameInput);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -74,8 +74,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<Account> findAll() {
 		List<Account> accounts = new ArrayList<Account>();
 		String query = "SELECT * FROM accounts";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				Statement stmt = conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.TYPE_SCROLL_SENSITIVE);
 				ResultSet rs = stmt.executeQuery(query);) {
 			while (rs.next()) {
@@ -95,8 +95,8 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public Long save(Account account) {
 		String query = "INSERT INTO accounts values(default,?,?,?)";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
 			stmt.setString(1, account.getUsername());
 			stmt.setString(2, account.getPassword());
@@ -125,8 +125,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public Long save(User user, Account account) {
 		String uQuery = "INSERT INTO users values(default,?,?,?)";
 		String aQuery = "INSERT INTO accounts values(default,?,?,?)";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());
 				PreparedStatement userStmt = conn.prepareStatement(uQuery, Statement.RETURN_GENERATED_KEYS);
 				PreparedStatement accountStmt = conn.prepareStatement(aQuery, Statement.RETURN_GENERATED_KEYS)) {
 			// start transaction block
@@ -176,8 +176,8 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public void update(Account account) {
 		String query = "UPDATE accounts SET username= ?, password=?, user_id=? WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setString(1, account.getUsername());
 			stmt.setString(2, account.getPassword());
 			stmt.setLong(3, account.getUserId());
@@ -192,8 +192,8 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public void delete(Account account) {
 		String query = "DELETE FROM accounts WHERE id=?";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass()); PreparedStatement stmt = conn.prepareStatement(query);) {
 			stmt.setLong(1, account.getId());
 			int i = stmt.executeUpdate();
 			logger.info(i + " records deleted");

@@ -10,7 +10,8 @@ import java.time.temporal.ChronoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.revature.bankingapp.sysoutgui.security.DatabaseCredentials;
+import com.revature.bankingapp.sysoutgui.security.DBCredentials;
+
 
 public class FeeHandler implements Runnable {
 
@@ -18,8 +19,8 @@ public class FeeHandler implements Runnable {
 	
 	private void deductFees(Double fee) {
 		String sql = "{call deduct_fees(?)}";
-		try (Connection conn = DriverManager.getConnection(DatabaseCredentials.getUrl(), DatabaseCredentials.getUser(),
-				DatabaseCredentials.getPass());CallableStatement stmt = conn.prepareCall(sql);) {
+		try (Connection conn = DriverManager.getConnection(DBCredentials.getUrl(), DBCredentials.getUser(),
+				DBCredentials.getPass());CallableStatement stmt = conn.prepareCall(sql);) {
 			stmt.setDouble(1, fee);
 			stmt.execute();
 			logger.info("Monthly fees deducted");
