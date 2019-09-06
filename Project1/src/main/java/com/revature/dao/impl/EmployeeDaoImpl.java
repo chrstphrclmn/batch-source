@@ -62,7 +62,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		catch(SQLException e) {
 			
-			LoggerUtil.log.error(e.getStackTrace());
+			LoggerUtil.log.error(e.getMessage());
 		}
 		
 		return ret;
@@ -109,7 +109,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		catch(SQLException e) {
 			
-			LoggerUtil.log.error(e.getStackTrace());
+			LoggerUtil.log.error(e.getMessage());
 		}
 		
 		return ret;
@@ -148,7 +148,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		catch(SQLException e) {
 			
-			LoggerUtil.log.error(e.getStackTrace());
+			LoggerUtil.log.error(e.getMessage().toString());
 		}
 		
 		return ret;
@@ -191,7 +191,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		catch(SQLException e) {
 			
-			LoggerUtil.log.error(e.getStackTrace());
+			LoggerUtil.log.error(e.getMessage());
 		}
 		
 		return ret;
@@ -223,7 +223,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		catch(SQLException e) {
 			
-			LoggerUtil.log.error(e.getStackTrace());
+			LoggerUtil.log.error(e.getMessage());
 		}
 		
 		return ret;

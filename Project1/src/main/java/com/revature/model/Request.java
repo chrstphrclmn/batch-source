@@ -18,6 +18,8 @@ public class Request {
 	private Timestamp submissionDate;
 	private Timestamp resolutionDate;
 	
+	private String resolvedBy;
+	
 	public Request() {
 		
 		super();
@@ -30,9 +32,11 @@ public class Request {
 		this.status = status;
 		this.ticketLevel = ticketLevel;
 		this.amount = amount;
+		
+		this.setSubmissionDate();
 	}
 	
-	public Request(int requestId, String applicant, int status, int ticketLevel, double amount, String description, String reference, Timestamp submissionDate, Timestamp resolutionDate) {
+	public Request(int requestId, String applicant, int status, int ticketLevel, double amount, String description, String reference, Timestamp submissionDate, Timestamp resolutionDate, String resolvedBy) {
 		
 		this.requestId = requestId;
 		this.applicant = applicant;
@@ -43,9 +47,10 @@ public class Request {
 		this.reference = reference;
 		this.submissionDate = submissionDate;
 		this.resolutionDate = resolutionDate;
+		this.resolvedBy = resolvedBy;
 	}
 	
-	public int requestId() { return this.requestId; }
+	public int getRequestId() { return this.requestId; }
 	public String getApplicant() { return this.applicant; }
 	public int getStatus() { return this.status; }
 	public int getTicketLevel() { return this.ticketLevel; }
@@ -54,6 +59,7 @@ public class Request {
 	public String getReference() { return this.reference; }
 	public Timestamp getSubmissionDate() { return this.submissionDate; }
 	public Timestamp getResolutionDate() { return this.resolutionDate; }
+	public String getResolvedBy() { return this.resolvedBy; }
 	
 	public boolean setRequestId(int requestId) {
 		
@@ -128,6 +134,14 @@ public class Request {
 	public boolean setResolutionDate(Timestamp resolutionDate) {
 		
 		this.resolutionDate = resolutionDate;
+		return true;
+	}
+	
+	public boolean setResolvedBy(String username) {
+		
+		if(!StringUtil.isValidUsername(username)) return false;
+		
+		this.resolvedBy = username;
 		return true;
 	}
 	
