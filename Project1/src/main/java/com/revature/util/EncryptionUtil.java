@@ -14,11 +14,17 @@ public class EncryptionUtil {
     private static SecretKeySpec secretKey;
     private static byte[] key;
     
+    private final static String AES_KEY = System.getenv("AES_KEY");
+    
     private EncryptionUtil() {
     	
     	throw new IllegalStateException("Utility Class.");
     }
  
+    /**
+     * Creates a schedule of 16 round-keys and sub-bytes table using the key provided
+     * @param myKey - AES 256 key
+     */
     public static void setKey(String myKey) {
     	
         MessageDigest sha = null;
@@ -34,20 +40,25 @@ public class EncryptionUtil {
         
         catch (NoSuchAlgorithmException e) {
         	
-        	LoggerUtil.log.warn(e.getMessage());
+        	LoggerUtil.log.error(e.getStackTrace());
         }
         
         catch (UnsupportedEncodingException e) {
         	
-        	LoggerUtil.log.warn(e.getMessage());
+        	LoggerUtil.log.error(e.getStackTrace());
         }
     }
  
-    public static String encrypt(String strToEncrypt, String key) {
+    /**
+     * Encrypts a string using the AES key provided with the system variables
+     * @param strToEncrypt
+     * @return AES 256 encrypted string
+     */
+    public static String encrypt(String strToEncrypt) {
     	
         try {
         	
-            setKey(key);
+            setKey(AES_KEY);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             
@@ -56,17 +67,22 @@ public class EncryptionUtil {
         
         catch (Exception e) {
         	
-        	LoggerUtil.log.warn(e.toString());
+        	LoggerUtil.log.error(e.getStackTrace());
         }
         
         return null;
     }
  
-    public static String decrypt(String strToDecrypt, String key) {
+    /**
+     * Decrypts a string using the AES key provided with the system variables
+     * @param strToDecrypt
+     * @return decrypted String
+     */
+    public static String decrypt(String strToDecrypt) {
     	
         try {
         	
-            setKey(key);
+            setKey(AES_KEY);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             
@@ -75,7 +91,7 @@ public class EncryptionUtil {
         
         catch (Exception e) {
         	
-        	LoggerUtil.log.warn(e.getMessage());
+        	LoggerUtil.log.error(e.getStackTrace());
         }
         
         return null;

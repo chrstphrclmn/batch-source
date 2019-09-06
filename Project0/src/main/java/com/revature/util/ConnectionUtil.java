@@ -15,7 +15,11 @@ public class ConnectionUtil {
 	private ConnectionUtil() {
 		throw new IllegalStateException("Utility Class.");
 	}
-
+	
+	/**
+	 * Establishes a connection with the RDB using JDBC
+	 * @return Connection Object representing database connection
+	 */
 	public static Connection getConnection() {
 		
 		Connection conn = null;

@@ -12,5 +12,4 @@ public class LoggerUtil {
 		
 		throw new IllegalStateException("Utility Class");
 	}
-	
 }

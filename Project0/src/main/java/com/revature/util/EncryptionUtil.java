@@ -18,7 +18,11 @@ public class EncryptionUtil {
     	
     	throw new IllegalStateException("Utility Class.");
     }
- 
+    
+    /**
+     * Creates a schedule of 16 round-keys and sub-bytes table using the key provided
+     * @param myKey - AES 256 key
+     */
     public static void setKey(String myKey) {
     	
         MessageDigest sha = null;
