@@ -4,9 +4,13 @@ document.getElementById("submit-btn").addEventListener("click", searchWeather);
 
 let baseUrl = "http://api-cdn.apixu.com/v1/current.json?key=4f9095e1ed93462689a193305182003&q=";
 
+// this is the method which is invoked when we click on our submit button 
 function searchWeather(){
+
     removeError();
+
     let zipInput = document.getElementById("zip-input").value;
+
     // validate zipInput
     if(zipInput.length === 5){
         sendAjaxGet(baseUrl+zipInput, displayWeather, displayError);
@@ -16,6 +20,8 @@ function searchWeather(){
 
 }
 
+// define the ajax workflow for a get request, including a callback function 
+    // for a successful request and also an unsuccessful request
 function sendAjaxGet(url, callback, errorCallback){
     let xhr = new XMLHttpRequest();
 
@@ -36,6 +42,7 @@ function sendAjaxGet(url, callback, errorCallback){
 
 }
 
+// this is the function we provide as a callback if the request is successful 
 function displayWeather(weatherInfo){
     // console.log(weatherInfo);
 
@@ -47,6 +54,7 @@ function displayWeather(weatherInfo){
 
 }
 
+// this is the function we provide as a callback if the request is unsuccessful 
 function displayError(){
     document.getElementById("error").innerHTML = "invalid input";
     document.getElementById("result").hidden = true;
