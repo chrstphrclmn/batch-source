@@ -1,7 +1,7 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -268,12 +268,8 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			int arrIndex = 0;
-			List<T> binSearch = new ArrayList<T>();
-			if(binSearch.contains(t)) {
-				arrIndex = binSearch.indexOf(t);
-			} 
-			return arrIndex;
+		
+			return Collections.binarySearch(sortedList,t,Collections.reverseOrder(Collections.reverseOrder()));
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -310,44 +306,44 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		string = string.toLowerCase();
-		String arrStr= string;
-		String firstLetter;
-		String firstArrLetter;
+		String firstLetter = "";
 		String str = "";
-		String secStr = "";
 		boolean loop = false;
-		boolean secondLoop = false;
+		String secString = "";
 		
 	while(loop == false) {
-			if(string.substring(0,1).equals("a")||string.substring(0,1).equals("e")||string.substring(0,1).equals("i")||string.substring(0,1).equals("o")||string.substring(0,1).equals("u")) {
+		if(!string.contains(" ")) {
+			if(string.substring(0,1).equals("a")||string.substring(0,1).equals("e")||string.substring(0,1).equals("i")||string.substring(0,1).equals("o")) {
 				str = string + "ay";
 				loop = true;
 			} else {
 				firstLetter = string.substring(0,1);
 				string = string.replaceFirst(firstLetter, "");
 				string = string + firstLetter;
-		}
-	}
-	if(arrStr.contains(" ")) {
-		String[] strArr = arrStr.split(" ");
-		for (int i = 0;i<=strArr.length-1;i++) {
-			while(secondLoop == false) {
-				if(strArr[i].substring(0,1).equals("a")||strArr[i].substring(0,1).equals("e")||strArr[i].substring(0,1).equals("i")||strArr[i].substring(0,1).equals("o")||strArr[i].substring(0,1).equals("u")) {
+		}}else if(string.contains(" ")) {
+			firstLetter = "";
+			str = "";
+			String[] strArr = string.split(" ");
+			
+			for(int i = 0;i<=strArr.length-1;i++) {
+				if(strArr[i].substring(0,1).equals("a")||strArr[i].substring(0,1).equals("e")||strArr[i].substring(0,1).equals("i")||strArr[i].substring(0,1).equals("o")) {
 					strArr[i] = strArr[i] + "ay";
-					secStr += strArr[i];
-					if(i==strArr.length-1) {
-						secondLoop = true;
-					}
 				} else {
-					firstArrLetter = strArr[i].substring(0,1);
-					strArr[i] = strArr[i].replaceFirst(firstArrLetter,"");
-					secStr = secStr + firstArrLetter;				
-				}
+					firstLetter = strArr[i].substring(0,1);
+					strArr[i] = strArr[i].replaceFirst(firstLetter, "");
+					strArr[i] = strArr[i] + firstLetter;
+					strArr[i] = strArr[i] + "ay";
 			}
-			str = secStr;
 		}
+			for(int i=0;i<=strArr.length-1;i++) {
+				secString = secString +" "+ strArr[i];
+			}
+			str = secString.trim();
+			loop = true;
 	}
-		return str;
+	}
+	
+	return str;
 	}
 
 	/**
@@ -432,8 +428,26 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			int tempKey = key;
+			int num =0;
+			String[] letter = string.split("");
+			String str = "";
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String[] alphabetArr = alphabet.split("");
+			
+			for(int i=0;i<string.length();i++) {
+				num = alphabet.indexOf(letter[i]);
+				if((num+1)+tempKey>26) {
+					tempKey = ((num+1)+(tempKey))- alphabetArr.length;
+					str = str + alphabetArr[tempKey-1];
+					tempKey = key;
+				} else {
+					tempKey = ((num+1)+(tempKey));
+					str = str + alphabetArr[tempKey-1];	
+					tempKey = key;
+				}
+			}
+			return str.toUpperCase();
 		}
 
 	}
@@ -488,8 +502,14 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String backAlpha = "zyxwvutsrqponmlkjihgfedcba";
+			String[] letter = string.split("");
+			String str = "";
+			for (int i=0;i<string.length();i++) {
+				str = str + backAlpha.indexOf(alphabet.indexOf(letter[i]));
+			}
+			return str;
 		}
 
 		/**
@@ -527,9 +547,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		string = string.replaceAll("-", "");
+		boolean isValid = false;
+		int num = 0;
+		if(string.contains("A")||string.contains("K")) {
+			isValid = false;
+			string = null;
+		} else if (string.substring(9,10).equals("X")) {
+			String[] strArr = string.split("");
+			string = string.substring(0,9);
+			strArr = string.split("");
+			for(int i = 0;i<=strArr.length-1;i++) {
+				int mult = 10 - i;
+				num = num + (Integer.parseInt(strArr[i])*mult);
+			}
+			num +=10;
+			if(num%11==0) {
+				isValid = true;
+			}
+		} else {
+			String[] strArr = string.split("");
+			for(int i = 0;i<=strArr.length-1;i++) {
+				int mult = 10 - i;
+				num = num + (Integer.parseInt(strArr[i])*mult);
+			}
+			if(num%11==0) {
+				isValid = true;
+			}
+		}
+		return isValid;
 	}
+		
 
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
@@ -626,8 +674,37 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		boolean isLuhn = true;
+		Integer num = 0;
+		Integer secondNum = 0;
+		String luhnNum = "";
+		
+		if (string.matches(".*[a-zA-Z]+.*")||string.contains("-")) {
+			isLuhn = false;
+		} else if(string.contains(" ")) {
+			 string = string.replaceAll(" ", "");
+			 String[] strNum = string.split("");
+			 for(int i=strNum.length-2;i>=0;i-=2) {
+				 num = (Integer.parseInt(strNum[i]))*2;
+				 if(num>9) {
+					 num = num -9;
+				 }
+				 strNum[i] = num.toString();
+			 }
+			 for (int i=0;i<=strNum.length-1;i++) {
+				 luhnNum = luhnNum + strNum[i];
+			 }
+			 String luhnArr[] = luhnNum.split("");
+			 for(int i=0;i<=luhnNum.length()-1;i++) {
+				 secondNum = secondNum + Integer.parseInt(luhnArr[i]);
+			 }
+			 if((secondNum%10)==0) {
+				 isLuhn = true;
+			 } else {
+				 isLuhn = false;
+			 }
+		} 
+		return isLuhn;
 	}
 
 	/**
@@ -658,8 +735,42 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int result = 0;
+		if(string.contains("plus")&&!string.contains("-")) {
+			string = string.replaceAll("[^\\d-]", "");
+			string = string.replaceAll("", " ").trim();
+			String[] addMethod = string.split(" ");
+			result = Integer.parseInt(addMethod[0]) + Integer.parseInt(addMethod[1]);
+		} else if(string.contains("plus")&&string.contains("-")) {
+			string = string.replaceAll("[^\\d-]", "");
+			String[] addMethod = string.split("-");
+			for (int i = 1;i<=addMethod.length-1;i++) {
+				addMethod[i] = "-"+ addMethod[i];
+			}
+			result = Integer.parseInt(addMethod[1]) + Integer.parseInt(addMethod[2]);
+		} 
+		if(string.contains("minus")) {
+			string = string.replaceAll("[^\\d-]", "");
+			String[] subMethod = string.split("-");
+			for (int i = 1;i<=subMethod.length-1;i++) {
+				subMethod[i] = "-"+ subMethod[i];
+			}
+			result = Integer.parseInt(subMethod[1]) + Integer.parseInt(subMethod[2]);
+		}
+		if(string.contains("multiplied")) {
+			string = string.replaceAll("[^\\d-]", "");
+			String[] multMethod = string.split("");
+			multMethod[1] = "-" + multMethod[1];
+			String secNum = multMethod[2]+multMethod[3];
+			result = Integer.parseInt(multMethod[1]) * Integer.parseInt(secNum);
+		}
+		if(string.contains("divided")) {
+			string = string.replaceAll("[^\\d-]", "");
+			String[] divMethod = string.split("-");
+			divMethod[1] = "-"+divMethod[1];
+			result = Integer.parseInt(divMethod[0]) / Integer.parseInt(divMethod[1]);
+		}
+		return result;
 	}
 
 }
