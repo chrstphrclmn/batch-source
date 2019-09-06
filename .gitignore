@@ -95,4 +95,6 @@ Servers/
 
 */.vscode
 
+.sts4-cache
+
 Week1-CoreJava/TheGame/src/main/resources/Associates.txt
