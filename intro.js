@@ -139,3 +139,23 @@ function rotate(array, n){
     return array;
     }
 
+function balanced(string){
+    let matching;
+    let ch;
+    let stack = []
+    let openBrackets = ['[', '{', '(']
+    let closBrackets = [']', '}', ')']
+    for (let i = 0; i < string.length; i++) {
+        ch = string[i]
+        if (closBrackets.indexOf(ch) > -1) {
+          matching = openBrackets[closBrackets.indexOf(ch)]
+          if (stack.length == 0 || (stack.pop() != matching)) {
+            return false
+          }
+        } else {
+          stack.push(ch)
+        }
+      }
+    
+      return (stack.length == 0)
+    }
