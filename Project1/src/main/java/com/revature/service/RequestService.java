@@ -1,9 +1,19 @@
 package com.revature.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.revature.dao.RequestDao;
 import com.revature.dao.impl.RequestDaoImpl;
+import com.revature.model.Employee;
+import com.revature.model.Request;
 
 public class RequestService {
 
 	private RequestDao dao = new RequestDaoImpl();
+	
+	public List<Request> getRequestsByApplicant(Employee employee){
+		
+		return dao.getRequestsByApplicant(employee.getUsername());
+	}
 }

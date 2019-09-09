@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Project 1</title>
+
+    <script type="text/javascript" src="./js/jquery.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/project1.css">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-0">
+                <div class="jumbotron min-vh-100 text-center m-0 bg-dark d-flex flex-column justify-content-center">
+
+                    <div class = "login-header">
+                        <h1 class = "Display-3 text-light">Project 1 Demo</h1>
+                    </div>
+
+                    <div class = "login-error">
+                        <span id = "login-error-message" class = "text-danger" hidden>Test</span>
+                    </div>
+                    
+                    <div class = "login-form">
+                        <input id = "username-input" type = "text" placeholder = "Username" class = "col-2 offset-5 form-control">
+                        <input id = "password-input" type = "password" placeholder = "Password" class = "col-2 offset-5 form-control">
+                    </div>
+                    <button onclick = "onLoginClick()" id = "login-button" type = "button" class = "btn btn-warning col-2 offset-5">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./js/loginPage.js"></script>
+</body>

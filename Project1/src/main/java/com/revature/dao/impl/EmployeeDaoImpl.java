@@ -183,6 +183,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			statement.setString(4, employee.getLastname());
 			statement.setString(5, employee.getEmail());
 			statement.setInt(6,  employee.getAuthority());
+			statement.setString(7, employee.getUsername());
 			
 			ret = statement.executeUpdate();
 			

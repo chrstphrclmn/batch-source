@@ -25,8 +25,27 @@ public class Employee {
 		this.lastname = lastname.toUpperCase();
 		this.email = email.toLowerCase();
 		this.authority = authority;
+	}
+	
+	public boolean login(String unencryptedPassword) {
 		
-		encryptPassword();
+		return this.password.equals(EncryptionUtil.encrypt(unencryptedPassword));
+	}
+	
+	public boolean logout() {
+		
+		this.clean();
+		return true;
+	}
+	
+	private void clean() {
+		
+		this.username = null;
+		this.password = null;
+		this.firstname = null;
+		this.lastname = null;
+		this.email = null;
+		this.authority = -1;
 	}
 	
 	public String getUsername() { return this.username;}
@@ -76,10 +95,5 @@ public class Employee {
 		
 		this.authority = authority;
 		return true;
-	}
-	
-	private void encryptPassword() {
-		
-		EncryptionUtil.encrypt(this.password);
 	}
 }

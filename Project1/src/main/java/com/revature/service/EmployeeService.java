@@ -32,14 +32,31 @@ public class EmployeeService {
 		}
 		
 		
-		if(ret.getPassword().equals(EncryptionUtil.encrypt(unencryptedPassword))) {
+		if(ret != null && ret.login(unencryptedPassword)) {
 			
 			LoggerUtil.log.info(String.format("Successfully logged in with credentials:%nusername: %s%npassword: %s%n", username, EncryptionUtil.encrypt(unencryptedPassword)));
 			return ret;
 		}
 		
 		
-		LoggerUtil.log.info(String.format("Invalid credentials provided:%nusername: %s%npassword: %s%n", username, unencryptedPassword));
+		LoggerUtil.log.info(String.format("Invalid credentials provided:%nusername: %s%npassword: %s%n%s", username, unencryptedPassword));
 		return null;
 	}
+	
+	public void logoutEmployee(Employee employee) {
+		
+		employee.logout();
+	}
+	
+	public boolean changePassword(Employee employee, String oldPassword, String newPassword) {
+		
+		if(!employee.getPassword().equals(EncryptionUtil.encrypt(oldPassword))){
+			
+			return false;
+		}
+		
+		employee.setPassword(EncryptionUtil.encrypt(newPassword));
+		return dao.updateEmployee(employee) > 0;
+	}
+	
 }
