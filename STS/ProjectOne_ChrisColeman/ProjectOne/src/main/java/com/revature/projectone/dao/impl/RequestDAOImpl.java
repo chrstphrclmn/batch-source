@@ -22,4 +22,10 @@ public class RequestDAOImpl implements RequestDAO {
 		return 0;
 	}
 
+	@Override
+	public int highestRequestId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

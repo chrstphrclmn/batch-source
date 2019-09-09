@@ -3,30 +3,34 @@ package com.revature.projectone.service.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.h2.tools.RunScript;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import com.revature.projectone.dao.impl.RequestDAOImpl;
 import com.revature.projectone.service.RequestService;
-import com.revature.projectone.util.ConnectionUtil;
 
 public class RequestServiceImplTest {
 	
+	@InjectMocks
 	RequestService test = new RequestServiceImpl();
 	
+	@Mock
+	RequestDAOImpl requestDAO;
+	
 	@Before
-	public void setup() throws FileNotFoundException, SQLException {
-		try(Connection c = ConnectionUtil.getConnection();){
-			RunScript.execute(c, new FileReader("setup.sql"));
-		}
+	public void setup() throws FileNotFoundException, SQLException {		
+		MockitoAnnotations.initMocks(this);
 	}
+	
+	
 	
 	@Test
 	public void testValidAmmount() {
@@ -40,14 +44,11 @@ public class RequestServiceImplTest {
 	
 	@Test
 	public void getCorrectNextValue() {
+		
+		when(requestDAO.highestRequestId()).thenReturn(10);
 		assertEquals(11,test.nextRequestId());
 	}
 	
-	@After
-	public void tearDown() throws SQLException, FileNotFoundException {
-		try( Connection c = ConnectionUtil.getConnection();){
-			RunScript.execute(c, new FileReader("teardown.sql"));
-		}
-	}
+	
 
 }
