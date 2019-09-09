@@ -50,6 +50,19 @@ public class Request {
 		this.resolvedBy = resolvedBy;
 	}
 	
+	public Request(Employee employee, int requestId, double amount, String description, String reference) {
+		
+		this.requestId = requestId;
+		this.applicant = employee.getUsername();
+		this.status = 0;
+		this.ticketLevel = employee.getAuthority() + 1;
+		this.amount = amount;
+		this.description = description;
+		this.reference = reference;
+		
+		this.setSubmissionDate();
+	}
+	
 	public int getRequestId() { return this.requestId; }
 	public String getApplicant() { return this.applicant; }
 	public int getStatus() { return this.status; }

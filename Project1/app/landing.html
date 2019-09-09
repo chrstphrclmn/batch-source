@@ -6,14 +6,70 @@
 
     <title>Project 1</title>
 
-    <script type="text/javascript" src="./js/jquery.js"></script>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/project1.css">
+
+    <link rel="icon" href="C:\Users\micha\Downloads\3.0">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </head>
 <body>
 
-    <p>Landing</p>
+    <div class="container-fluid bg-dark min-vh-100">
+        <div class = "row">
+            <nav class="navbar navbar-dark bg-dark col-2">
+                
+                <a class="navbar-brand" href="#">Navigation</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#home" onclick = "onNavbarEntryClick(this); loadHome();" id = "navbar-home">Home <span class="sr-only">(current)</span></a>
+                        </li>
+
+                        <li class = "navbar-item">
+                            <span class="navbar-text">
+                            Employee
+                            </span>
+                        </li>
+                        <ul style = "list-style-type: none;">
+                            <li class="nav-item">
+                            <a class="nav-link" href="#myAccount" onclick = "onNavbarEntryClick(this); loadMyAccount();" id = "navbar-my-account">My Account</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="#">Placeholder #1</a>
+                            </li>
+                        </ul>
+                    </ul>
+                <span class="navbar-text">
+                Navbar text with an inline element
+                </span>
+                </div>
+            </nav>
+
+
+            <div class = "col-10">
+                <div class = "landing-div" id = landing-home-div>
+                    <div class="text-center m-0 bg-dark d-flex flex-column justify-content-center">
+                        <h1 class = "text-light"> 100% Home Page</p>
+                    </div>
+                </div>
+
+                <div class = "landing-div" id = landing-my-account-div hidden>
+                    <div class="text-center m-0 bg-dark d-flex flex-column justify-content-center">
+                        <h1 class = "text-light"> 100% Account Page</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <script type="text/javascript" src = "./js/landingPage.js"></script>
+
 </body>

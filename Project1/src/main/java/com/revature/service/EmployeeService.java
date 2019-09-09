@@ -39,7 +39,7 @@ public class EmployeeService {
 		}
 		
 		
-		LoggerUtil.log.info(String.format("Invalid credentials provided:%nusername: %s%npassword: %s%n%s", username, unencryptedPassword));
+		LoggerUtil.log.info(String.format("Invalid credentials provided:%nusername: %s%npassword: %s%n", username, unencryptedPassword));
 		return null;
 	}
 	

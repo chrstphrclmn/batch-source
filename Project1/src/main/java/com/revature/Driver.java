@@ -12,6 +12,7 @@ import com.revature.model.Request;
 import com.revature.service.EmployeeService;
 import com.revature.service.RequestService;
 import com.revature.util.EncryptionUtil;
+import com.revature.util.StringUtil;
 
 public class Driver {
 	
@@ -223,6 +224,18 @@ public class Driver {
 			case 1:
 				consoleViewAllRequests();
 				break;
+			
+			case 2:
+				consoleViewAllPendingRequests();
+				break;
+			
+			case 3:
+				consoleViewAllResolvedRequests();
+				break;
+				
+			case 4:
+				consoleSubmitNewRequest();
+				break;
 				
 			case 5:
 				return;
@@ -235,9 +248,81 @@ public class Driver {
 		
 		List<Request> requests = rservice.getRequestsByApplicant(user);
 		
+		System.out.println();
+		
 		for(Request r : requests) {
 			
 			System.out.printf("%3d - %s: $%.2f%n", r.getRequestId(), statusEnum[r.getStatus()], r.getAmount());
 		}
+		
+		System.out.println();
+	}
+	
+	public static void consoleViewAllPendingRequests() {
+		
+		List<Request> requests = rservice.getRequestsByApplicant(user);
+		
+		System.out.println();
+		
+		for(Request r : requests) {
+			
+			if(r.getStatus() != 2) System.out.printf("%3d - %s: $%.2f%n", r.getRequestId(), statusEnum[r.getStatus()], r.getAmount());
+		}
+		
+		System.out.println();
+	}
+	
+	public static void consoleViewAllResolvedRequests() {
+		
+		List<Request> requests = rservice.getRequestsByApplicant(user);
+		
+		System.out.println();
+		
+		for(Request r : requests) {
+			
+			if(r.getStatus() == 2) System.out.printf("%3d - %s: $%.2f%n", r.getRequestId(), statusEnum[r.getStatus()], r.getAmount());
+		}
+		
+		System.out.println();
+	}
+	
+	public static void consoleSubmitNewRequest() {
+		
+		double amount = 0;
+		String description;
+		String reference;
+		
+		while(true) {
+			
+			System.out.printf("Enter a valid monetary amount to be reimbursed.%n");
+			
+			try {
+				
+				amount = scan.nextDouble();
+				scan.nextLine();
+			}
+			
+			catch(InputMismatchException e) {
+				
+				System.out.printf("Invalid input.%n");
+				scan.next();
+			}
+			
+			if(StringUtil.isValidAmount(amount)) break;
+		}
+		
+		System.out.printf("Enter a description for your reimbursement.%n");
+		description = scan.nextLine();
+		
+		System.out.printf("Submit an additional reference for your reimbursement.%n");
+		reference = scan.nextLine();
+		
+		if(rservice.createRequest(new Request(user, rservice.getNextRequestId(), amount, description, reference))) {
+			
+			System.out.printf("Request successfully created.%n");
+			return;
+		}
+		
+		System.out.printf("Request creation failed.%n");
 	}
 }

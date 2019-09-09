@@ -12,8 +12,18 @@ public class RequestService {
 
 	private RequestDao dao = new RequestDaoImpl();
 	
+	public int getNextRequestId() {
+		
+		return dao.getNextRequestId();
+	}
+	
 	public List<Request> getRequestsByApplicant(Employee employee){
 		
 		return dao.getRequestsByApplicant(employee.getUsername());
+	}
+	
+	public boolean createRequest(Request request) {
+		
+		return dao.createRequest(request) > 0;
 	}
 }
