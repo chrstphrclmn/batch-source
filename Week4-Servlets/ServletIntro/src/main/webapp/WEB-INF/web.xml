@@ -21,5 +21,22 @@
 		<url-pattern>/calculator</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>AnswerServlet</servlet-name>
+		<servlet-class>com.revature.servlets.AnswerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AnswerServlet</servlet-name>
+		<url-pattern>/answer</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>PizzaServlet</servlet-name>
+		<servlet-class>com.revature.servlets.PizzaServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PizzaServlet</servlet-name>
+		<url-pattern>/pizzas</url-pattern>
+	</servlet-mapping>
 
 </web-app>
