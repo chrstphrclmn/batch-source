@@ -21,4 +21,8 @@ public class PizzaService {
 		return new ArrayList<Pizza>(pizzas);
 	}
 	
+	public boolean addPizza(Pizza p) {
+		return pizzas.add(p);
+	}
+	
 }

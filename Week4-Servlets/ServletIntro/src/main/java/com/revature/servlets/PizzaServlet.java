@@ -29,5 +29,28 @@ public class PizzaServlet extends HttpServlet {
 			pw.print(pizzaJSON);
 		}
 	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		// get request body from my HTTP request
+		String newPizzaJSON = request.getReader().readLine();
+		
+		System.out.println(newPizzaJSON);
+		
+		ObjectMapper om = new ObjectMapper();
+		Pizza p = om.readValue(newPizzaJSON, Pizza.class);
+		
+		System.out.println(p);
+		
+		boolean success = ps.addPizza(p);
+		if(success) {
+			response.setStatus(201);
+		} else {
+			response.sendError(400);
+		}
+		
+	
+	}
+	
+	
 
 }
