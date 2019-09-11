@@ -61,7 +61,8 @@ public class EmployeeServlet extends HttpServlet {
 		e.setDepartment(d);
 		
 		es.create(e);
-		response.setStatus(201);
+//		response.setStatus(201);
+		response.sendRedirect("directory");
 		
 	}
 

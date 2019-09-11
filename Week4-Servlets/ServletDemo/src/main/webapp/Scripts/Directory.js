@@ -29,7 +29,11 @@ function displayEmployees(employeeJSON){
 	
 	for(let employee of employees){
 		let newRow = document.createElement("tr");
-		newRow.innerHTML = `<td>${employee.name}</td><td>${employee.department.name}</td>`;
+		let deptName = employee.department.name;
+		if(!deptName){
+			deptName = "n/a";
+		}
+		newRow.innerHTML = `<td>${employee.name}</td><td>${deptName}</td>`;
 		table.appendChild(newRow);
 		
 	}
