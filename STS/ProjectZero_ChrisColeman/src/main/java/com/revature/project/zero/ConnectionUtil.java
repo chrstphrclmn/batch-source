@@ -8,7 +8,7 @@ public class ConnectionUtil {
 	
 	private static Connection connection;
 	
-	private static boolean isTest = false;
+	private static boolean isTest = true;
 	
 	public static Connection getConnection() throws SQLException {
 		

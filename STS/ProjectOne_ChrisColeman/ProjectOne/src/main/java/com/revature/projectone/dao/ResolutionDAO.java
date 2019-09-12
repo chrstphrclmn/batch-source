@@ -7,7 +7,7 @@ import com.revature.projectone.model.Resolution;
 public interface ResolutionDAO {
 
 	public List<Resolution> getResolutions();
-	public Resolution getResolutionById();
+	public Resolution getResolutionById(int id);
 	public int createResolution(Resolution res);
 	public int updateResolution(Resolution res);
 	
