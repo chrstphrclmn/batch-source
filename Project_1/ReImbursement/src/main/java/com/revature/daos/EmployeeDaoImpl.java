@@ -111,6 +111,64 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return users;
 	}
 
+	@Override
+	public int login(String username, String password) {
+		// TODO Auto-generated method stub
+		
+		Integer id = 0;
+		
+		String sql = "select employee_id, reports_to from employees where user_name = ? and password = ?";
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, username);
+			ps.setString(2, password);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				 id = rs.getInt("employee_id");
+			}
+			
+			rs.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+
+	@Override
+	public boolean checkIfManager(String username) {
+		// TODO Auto-generated method stub
+		boolean isManager = false;
+		int reports_to = 0;
+		
+		String sql = "select reports_to from employees where user_name = ?";
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				reports_to = rs.getInt("reports_to");
+			}
+			
+			if(reports_to == 0) {
+				isManager = true;
+			}
+			rs.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return isManager;
+	}
+
 //	@Override
 //	public int createEmployee(Employee e) {
 //		// TODO Auto-generated method stub

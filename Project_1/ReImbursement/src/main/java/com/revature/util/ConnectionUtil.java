@@ -13,7 +13,10 @@ public class ConnectionUtil {
 		
 		try {
 			Class.forName("org.postgresql.Driver");
+			
+			
 		}catch (ClassNotFoundException e) {
+			System.out.println("error connectiong to db");
 			e.printStackTrace();
 		}
 		

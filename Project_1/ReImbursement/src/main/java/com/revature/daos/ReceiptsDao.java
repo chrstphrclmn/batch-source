@@ -10,5 +10,6 @@ public interface ReceiptsDao {
 	public List<Receipts> getReceipts();
 	public Receipts getReceiptById(int id);
 	public int deleteReceiptById(int id);
-	public int updateReceipt(Receipts r);
+	public int approveReceipt(int id);
+	public List<Receipts> getReceiptsByEmployeeId(int id);
 }

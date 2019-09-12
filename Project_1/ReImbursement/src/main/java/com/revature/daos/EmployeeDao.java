@@ -12,5 +12,7 @@ public interface EmployeeDao {
 //	public int createEmployee(Employee e);
 	public int updateEmployee(Employee old, Employee updated);
 	public List<String> getUsernames();
+	public int login(String username, String password); 
+	public boolean checkIfManager(String username);
 	
 }
