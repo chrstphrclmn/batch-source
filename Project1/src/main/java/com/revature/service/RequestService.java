@@ -1,6 +1,5 @@
 package com.revature.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.dao.RequestDao;
@@ -25,5 +24,10 @@ public class RequestService {
 	public boolean createRequest(Request request) {
 		
 		return dao.createRequest(request) > 0;
+	}
+	
+	public boolean updateRequest(Request request) {
+		
+		return dao.updateRequest(request) > 0;
 	}
 }

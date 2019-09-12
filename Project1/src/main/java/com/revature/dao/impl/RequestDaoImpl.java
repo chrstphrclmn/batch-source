@@ -119,8 +119,8 @@ public class RequestDaoImpl implements RequestDao {
 		
 		List<Request> ret = new ArrayList<Request>();
 		
-		String sql = String.format("select * from \"%s\" where \"%s\" = ?",
-									TABLE_NAME, COLUMN_2);
+		String sql = String.format("select * from \"%s\" where \"%s\" = ? order by \"%s\"",
+									TABLE_NAME, COLUMN_2,COLUMN_8);
 		
 		Connection conn = ConnectionUtil.getConnection();
 		
@@ -206,7 +206,7 @@ public class RequestDaoImpl implements RequestDao {
 		
 		int ret = 0;
 		
-		String sql = String.format("update \"%s\" set \"%s\" = ?, \"%s\" = ?, \"%s\" = ?, \"%s\" = ?"
+		String sql = String.format("update \"%s\" set \"%s\" = ?, \"%s\" = ?, \"%s\" = ?, \"%s\" = ?,"
 								 + "\"%s\" = ?, \"%s\" = ?, \"%s\" = ?, \"%s\" = ?, \"%s\" = ?"
 								 + "where \"%s\" = ?",
 								 	TABLE_NAME, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, 

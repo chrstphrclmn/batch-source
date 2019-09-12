@@ -116,6 +116,7 @@ public class Request {
 	
 	public boolean setDescription(String description) {
 		
+		
 		this.description = description;
 		return true;
 	}
@@ -151,6 +152,11 @@ public class Request {
 	}
 	
 	public boolean setResolvedBy(String username) {
+		
+		if(username == null) {
+			this.resolvedBy = null;
+			return true;
+		}
 		
 		if(!StringUtil.isValidUsername(username)) return false;
 		

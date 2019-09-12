@@ -48,12 +48,7 @@ public class EmployeeService {
 		employee.logout();
 	}
 	
-	public boolean changePassword(Employee employee, String oldPassword, String newPassword) {
-		
-		if(!employee.getPassword().equals(EncryptionUtil.encrypt(oldPassword))){
-			
-			return false;
-		}
+	public boolean changePassword(Employee employee, String newPassword) {
 		
 		employee.setPassword(EncryptionUtil.encrypt(newPassword));
 		return dao.updateEmployee(employee) > 0;
