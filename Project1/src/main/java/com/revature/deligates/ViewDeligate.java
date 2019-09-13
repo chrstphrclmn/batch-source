@@ -33,7 +33,7 @@ public class ViewDeligate {
 			break;
 			
 		default:
-			response.setStatus(400);
+			request.getRequestDispatcher(LOGIN_VIEW).forward(request, response);
 			break;
 		}
 	}

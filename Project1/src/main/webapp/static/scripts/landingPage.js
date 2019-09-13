@@ -57,7 +57,32 @@ const approvalEnum = ["REJECTED", "APPROVED"];
 
 const authEnumReverse = {"Employee" : 0, "Manager" : 1, "General Manager" : 2};
 
-build(window.sessionStorage.getItem("user"));
+
+validate(build, logout);
+
+function validate(callback, redirectCallback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", url + "/auth");
+
+    xhr.setRequestHeader("token", sessionStorage.getItem("token"));
+
+    xhr.onreadystatechange = function() {
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback(window.sessionStorage.getItem("user"));
+        }
+
+        else if(xhr.readyState === 4){
+
+            redirectCallback();
+        }
+    }
+
+    xhr.send();
+}
 
 function getUserRequests(callback){
 
@@ -115,6 +140,8 @@ function logout(){
 }
 
 function build(user){
+
+    document.getElementById("landing-body").hidden = false;
 
     loggedInUser = JSON.parse(user.trim());
 
@@ -565,6 +592,7 @@ function onNewRequestClick(){
     if(!amount){
 
         raiseNewRequestError("Please enter a valid amount.");
+        return;
     }
 
     let user = sessionStorage.getItem("user");

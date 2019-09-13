@@ -31,6 +31,7 @@ public class LoginDeligate {
 		}
 		
 		String rawToken = StringUtil.getRandomString() + "." + StringUtil.getRandomString() + "." + StringUtil.getRandomString();
+		
 		LoggerUtil.log.info(rawToken);
 		
 		response.setHeader("Login", "Success");
@@ -38,5 +39,17 @@ public class LoginDeligate {
 		response.setHeader("URL", "landing");
 		response.setHeader("Token", EncryptionUtil.encrypt(rawToken));
 		
+	}
+	
+	public void validateToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String token = request.getHeader("token");
+		
+		if(StringUtil.isValidToken(token)) {
+			
+			return;
+		}
+		
+		response.setStatus(400);
 	}
 }

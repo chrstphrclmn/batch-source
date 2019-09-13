@@ -1,6 +1,5 @@
 package com.revature.util;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class StringUtil {
@@ -8,6 +7,7 @@ public class StringUtil {
 	private static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 	private static final String USERNAME_REGEX = "^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
 	private static final String MONEY_REGEX = "[^.0-9]";
+	private static final String TOKEN_REGEX = "^[A-Za-z0-9-_=]{10}[.]{1}[A-Za-z0-9-_=]{10}[.]{1}[A-Za-z0-9-_.+/=]{10}$";
 	
 	private StringUtil() {
 		
@@ -35,16 +35,26 @@ public class StringUtil {
 	public static boolean isValidToken(String token) {  
 		
 		if(token == null) return false;
-		String[] s = token.split(".");
-		
-		return s.length == 3;
+
+		return EncryptionUtil.decrypt(token).matches(TOKEN_REGEX);
 	}
 	
 	public static String getRandomString() {
 		
-		byte[] array = new byte[8];
-		new Random().nextBytes(array);
+		int leftLimit = 97;
+	    int rightLimit = 122;
+	    int targetStringLength = 10;
+	    
+	    Random random = new Random();
+	    
+	    StringBuilder buffer = new StringBuilder(targetStringLength);
+	    
+	    for (int i = 0; i < targetStringLength; i++) {
+	    	
+	        int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
+	        buffer.append((char) randomLimitedInt);
+	    }
 		
-		return new String(array,StandardCharsets.UTF_8);
+		return buffer.toString();
 	}
 }
