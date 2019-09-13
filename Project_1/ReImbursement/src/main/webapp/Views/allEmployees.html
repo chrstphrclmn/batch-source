@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="./style.css" />
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+<meta charset="UTF-8">
+	<title>All Employees</title>
+</head>
+
+<body>
+
+<div class="container">
+	<table class="table table-dark m-5" id="employees-table" hidden=true>
+		<thead>
+			<tr>
+				<th scope="col">Employee ID</th>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+			</tr>
+		</thead>
+	</table>
+</div>
+
+	<script>
+		console.log('hi');
+		
+		let requestUrl = "http://localhost:8080/Reimbursement/api/employees";
+		
+		function sendAjaxGet(url, callback){
+			let xhr = new XMLHttpRequest();
+			
+			xhr.open("GET", url);
+			
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState===4 && xhr.status===200){
+					callback(xhr.response);
+					console.log(this.response);
+				}
+				
+				
+			}
+				xhr.send();		
+		}
+		
+		function displayEmployees(employeesJSON){
+			console.log(employeesJSON);
+			
+			let empls = JSON.parse(employeesJSON);
+			let table = document.getElementById("employees-table");
+			
+			table.hidden = false;
+	
+			for(let emp of empls){
+				let newRow = document.createElement("tr");
+				let employeeId = emp.employee_id;
+				let firstName = emp.first_name;
+				let lastName = emp.last_name;
+				
+				newRow.innerHTML = `<td>${employeeId}</td><td>${firstName}</td><td>${lastName}</td>`;
+				table.appendChild(newRow);
+
+			}
+		}
+		
+		sendAjaxGet(requestUrl, displayEmployees);
+
+		
+
+	</script>
+</body>
+</html>

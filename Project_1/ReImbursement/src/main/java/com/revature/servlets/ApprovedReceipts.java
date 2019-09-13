@@ -1,6 +1,9 @@
 package com.revature.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.daos.EmployeeDao;
 import com.revature.daos.EmployeeDaoImpl;
 import com.revature.daos.ReceiptDaoImpl;
@@ -15,16 +19,16 @@ import com.revature.daos.ReceiptsDao;
 import com.revature.models.Receipts;
 
 /**
- * Servlet implementation class CreateReceiptServlet
+ * Servlet implementation class ApprovedReceipts
  */
-@WebServlet("/CreateReceiptServlet")
-public class CreateReceiptServlet extends HttpServlet {
+//@WebServlet("/ApprovedReceipts")
+public class ApprovedReceipts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateReceiptServlet() {
+    public ApprovedReceipts() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +38,31 @@ public class CreateReceiptServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("Views/NewReceipt.html").forward(request, response);
+		
+		EmployeeDao e = new EmployeeDaoImpl();
+		
+		HttpSession session = request.getSession(false);
+		String username = (String) session.getAttribute("user_name");
+		String password = (String) session.getAttribute("password");
+		
+		int emp_id = e.login(username, password);
+		
+		ReceiptsDao rd = new ReceiptDaoImpl();
+		
+		List<Receipts> receipts = rd.getApprovedReceipts(emp_id);
+		
+		System.out.println(receipts);
+		
+		ObjectMapper om = new ObjectMapper();
+		String receiptsJSON = om.writeValueAsString(receipts);
+		System.out.println(receiptsJSON);
+		
+		try(PrintWriter pw = response.getWriter()){
+			
+			pw.write(receiptsJSON);
+		}
+		
+		
 	}
 
 	/**
@@ -42,32 +70,7 @@ public class CreateReceiptServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		ReceiptsDao rd = new ReceiptDaoImpl();
-		EmployeeDao ed = new EmployeeDaoImpl();
-		Receipts rr = new Receipts();
-		
-		HttpSession session = request.getSession(false);
-		
-		String username = (String) session.getAttribute("user_name");
-		String password = (String) session.getAttribute("password");
-		
-		
-		int emp_id = ed.login(username, password);
-		
-		
-
-		Double amount = Double.parseDouble(request.getParameter("amount"));
-     
-		String note = request.getParameter("note");
-		
-		rr.setAmount(amount);
-		rr.setNote(note);
-		rr.setEmployee_id(emp_id);
-		
-		rd.createReceipt(rr);
-		
-		response.sendRedirect("/Reimbursement/viewreceipts");
-		
+		doGet(request, response);
 	}
 
 }

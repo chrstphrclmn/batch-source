@@ -12,20 +12,57 @@
             crossorigin="anonymous"
         />
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Employee Home</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="/Reimbursement/viewemployees">View Employees <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Reimbursement/new">Submit</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/Reimbursement/approved">View Approved</a>
+      </li>
+     <li class="nav-item">
+        <a class="nav-link" href="#">Edit Info</a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/Reimbursement/login" id="logout">LogOut</a>
+     </li>
+      
+      
+    </ul>
+    
+  </div>
+</nav>
 	
-	<a href="/Reimbursement/viewreceipts">View Re-imbursements</a>
-	<a href="/Reimbursement/new">Submit New Re-imbursement request</a>
-	<a href="#">Edit Personal Information</a>
-	<a href="#">LogOut</a>
+	<!--  <a href="/Reimbursement/viewreceipts">View Re-imbursements</a>-->
+	<!-- <a href="/Reimbursement/new">Submit New Re-imbursement request</a> -->
+	<!-- <a href="/Reimbursement/approved">View approved requests</a> -->
+	<!--  <a href="#">Edit Personal Information</a> -->
+	<!-- <a href="/Reimbursement/login" id="logout">LogOut</a>  -->
 	
 	
 	
 	
 	 <!--  -->
         <script src="Scripts/script.js"></script>
+        <script>
+        	function clear(){
+        		
+        		sessionStorage.clear();
+        	}
+        	document.getElementById("logout").addEventListener("click", clear);
+        	
+        </script>
         <!-- jQuery, popper and bootstrap scripts from Bootstrap -->
         <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

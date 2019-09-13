@@ -30,9 +30,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				Integer emp_id = rs.getInt("employee_id");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
+				String user_name = rs.getString("user_name");
+				String password = rs.getString("password");
 				Integer reports_to = rs.getInt("reports_to");
 				
-				Employee em = new Employee(emp_id, first_name, last_name, reports_to);
+				Employee em = new Employee(emp_id, first_name, last_name, reports_to, user_name, password);
 				
 				employees.add(em);
 			}
@@ -63,9 +65,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				Integer employee_id = rs.getInt("user_id");
 				String first_name = rs.getString("first_name");
 				String last_name = rs.getString("last_name");
+				String user_name = rs.getString("user_name");
+				String password = rs.getString("password");
 				Integer reports_to = rs.getInt("reports_to");
 
-				em = new Employee(employee_id, first_name, last_name, reports_to);
+				em = new Employee(employee_id, first_name, last_name, reports_to, user_name, password);
 			}
 			
 			// close the statement connection

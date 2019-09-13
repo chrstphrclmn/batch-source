@@ -25,14 +25,44 @@
     <servlet-name>ReceiptServlet</servlet-name>
     <url-pattern>/api/receipts</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
-  	<servlet-name>CreateReceiptServlet</servlet-name>
-  	<servlet-class>com.revature.servlets.CreateReceiptServlet</servlet-class>
+    <servlet-name>CreateReceiptServlet</servlet-name>
+    <servlet-class>com.revature.servlets.CreateReceiptServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>CreateReceiptServlet</servlet-name>
-  	<url-pattern>/new</url-pattern>
+    <servlet-name>CreateReceiptServlet</servlet-name>
+    <url-pattern>/new</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ApprovedReceipts</servlet-name>
+    <servlet-class>com.revature.servlets.ApprovedReceipts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ApprovedReceipts</servlet-name>
+    <url-pattern>/api/approved</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ViewApprovedServlet</servlet-name>
+    <servlet-class>com.revature.servlets.ViewApprovedServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewApprovedServlet</servlet-name>
+    <url-pattern>/approved</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ViewEmployees</servlet-name>
+    <servlet-class>com.revature.servlets.ViewEmployees</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewEmployees</servlet-name>
+    <url-pattern>/viewemployees</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetAllEmployees</servlet-name>
+    <servlet-class>com.revature.servlets.GetAllEmployees</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllEmployees</servlet-name>
+    <url-pattern>/api/employees</url-pattern>
   </servlet-mapping>
 </web-app>
