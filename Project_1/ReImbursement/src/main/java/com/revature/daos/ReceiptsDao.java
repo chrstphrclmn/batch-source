@@ -13,4 +13,5 @@ public interface ReceiptsDao {
 	public int approveReceipt(int id);
 	public List<Receipts> getReceiptsByEmployeeId(int id);
 	public List<Receipts> getApprovedReceipts(int id);
+	public List<Receipts> getAllPendingReceipts();
 }

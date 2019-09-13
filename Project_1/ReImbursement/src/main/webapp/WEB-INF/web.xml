@@ -65,4 +65,30 @@
     <servlet-name>GetAllEmployees</servlet-name>
     <url-pattern>/api/employees</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>AllPendingRequests</servlet-name>
+    <servlet-class>com.revature.servlets.AllPendingRequests</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllPendingRequests</servlet-name>
+    <url-pattern>/allpending</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>GetAllPendingReceipts</servlet-name>
+    <servlet-class>com.revature.servlets.GetAllPendingReceipts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllPendingReceipts</servlet-name>
+    <url-pattern>/api/allpending</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ActionApprovePending</servlet-name>
+    <servlet-class>com.revature.servlets.ActionApprovePending</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActionApprovePending</servlet-name>
+    <url-pattern>/approve</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

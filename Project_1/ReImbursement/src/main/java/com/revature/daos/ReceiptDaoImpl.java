@@ -26,7 +26,7 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 			ps.setDouble(2, r.getAmount());
 			ps.setInt(3, r.getEmployee_id());
 			
-			ps.executeUpdate();
+			receiptsCreated =  ps.executeUpdate();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -114,10 +114,24 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 	public int approveReceipt(int id) {
 		// TODO Auto-generated method stub
 		
-		String sql = "Update receipts set approved = true where receipt_id = ?";
+		int receiptsUpdated = 0;
 		
+		String sql = "Update receipts set approved = ? where receipt_id = ?";
 		
-		return 0;
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			
+			ps.setBoolean(1, true);
+			ps.setInt(2, id);
+			
+			receiptsUpdated = ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return receiptsUpdated;
 	}
 	
 	@Override
@@ -185,6 +199,40 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 			e.printStackTrace();
 		}
 		return approvedReceipts;
+	}
+
+	@Override
+	public List<Receipts> getAllPendingReceipts() {
+		// TODO Auto-generated method stub
+		
+		String sql = "Select * from receipts where approved = ?";
+		
+		List<Receipts> pendingReceipts = new ArrayList<Receipts>();
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setBoolean(1, false);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Integer receipt_id = rs.getInt("receipt_id");
+				Double amount = rs.getDouble("receipt_amount");
+				String note = rs.getString("receipt_note");
+				Integer employee_id = rs.getInt("employee_id");
+				boolean approved = rs.getBoolean("approved");
+				
+				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, approved);
+				
+				pendingReceipts.add(rc);
+			}
+			
+			rs.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return pendingReceipts;
 	}
 	
 	

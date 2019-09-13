@@ -15,4 +15,5 @@ public interface EmployeeDao {
 	public int login(String username, String password); 
 	public boolean checkIfManager(String username);
 	
+	
 }
