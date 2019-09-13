@@ -36,8 +36,9 @@ public class RequestHelper {
 				
 				String command = record.substring(8);
 				
-				if (command.contentEquals("requests")) new LandingDeligate().getRequests(request, response);
-				else if (command.contentEquals("users")) new LandingDeligate().getUsers(request, response);
+				if (command.contentEquals("request/employee")) new LandingDeligate().getRequestsByEmployee(request, response);
+				else if (command.contentEquals("request/authority")) new LandingDeligate().getRequestsByAuthority(request, response);
+				else if (command.contentEquals("employee/authority")) new LandingDeligate().getEmployeesByAuthority(request, response);
 			}
 			
 			else {
@@ -73,6 +74,7 @@ public class RequestHelper {
 				else if(command.contentEquals("employee/setPassword")) new LandingDeligate().postNewPassword(request, response);
 				else if(command.contentEquals("request/update")) new LandingDeligate().postUpdateRequest(request, response);	
 				else if(command.contentEquals("request/new")) new LandingDeligate().postNewRequest(request, response);	
+				else if(command.contentEquals("request/final")) new LandingDeligate().postFinalRequest(request, response);
 			}
 			
 			else {

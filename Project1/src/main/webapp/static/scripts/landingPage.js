@@ -28,10 +28,26 @@ $('#request-new-modal').keypress(function(e){
     }
 });
 
+$(document).ready(function(){
+  $("#management-filter-username").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#management-requests-table-body tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+$('#management-filter-username').keypress(function(e){
+    if (e.which == 13){
+        e.preventDefault();
+    }
+});
+
 const url = "http://localhost:8080/Project1";
 let loggedInUser;
 const authEnum = ["Employee", "Manager", "General Manager"];
 const statEnum = ["Unopened", "Pending", "Resolved"];
+const approvalEnum = ["REJECTED", "APPROVED"];
 
 const authEnumReverse = {"Employee" : 0, "Manager" : 1, "General Manager" : 2};
 
@@ -40,7 +56,7 @@ build(window.sessionStorage.getItem("user"));
 function getUserRequests(callback){
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", url + "/api/landing/requests");
+    xhr.open("GET", url + "/api/landing/request/employee");
 
     xhr.setRequestHeader("token", window.sessionStorage.getItem("token"));
     xhr.setRequestHeader("User", window.sessionStorage.getItem("user"));
@@ -104,6 +120,8 @@ function build(user){
     if(loggedInUser.authority > 0){
 
         document.getElementById("landing-management").hidden = false;
+
+        getManagementRequests(applyManagementRequestsTable);
         getManagementEmployees(applyEmployeeTable);
         fillNewEmployeeAuthority(loggedInUser.authority);
     }
@@ -128,6 +146,7 @@ function applyHeaders(){
     document.getElementById("landing-account-user").textContent = "View and Change Details For " + loggedInUser.firstname + " " + loggedInUser.lastname;
     document.getElementById("landing-requests-user").textContent = "View Requests Made by " + loggedInUser.firstname + " " + loggedInUser.lastname;
     document.getElementById("management-employee-directory-subheader").textContent = "All Employees With Lower Authorization than " + loggedInUser.firstname + " " + loggedInUser.lastname; 
+    document.getElementById("management-requests-subheader").textContent = "All Requests Made By Employees WIth Lower Authorization than " + loggedInUser.firstname + " " + loggedInUser.lastname;
 }
 
 function applyAccountInformation(){
@@ -311,6 +330,12 @@ function loadManagementEmployees(){
     document.getElementById("landing-management-employees").hidden = false;
 }
 
+function loadManagementRequests(){
+
+    hideAll();
+    document.getElementById("landing-management-requests").hidden = false;
+}
+
 function onFilterClick(e){
 
     document.getElementById("landing-filter-nav").getElementsByClassName("active")[0].classList.remove("active");
@@ -391,6 +416,25 @@ function onRequestModalExpand(e){
 
     document.getElementById("request-modal-description").value = request.description || "";
     document.getElementById("request-modal-reference").value = request.reference || "";
+    document.getElementById("request-modal-resolution-description").value = request.resolutionDescription || "";
+
+    if(request.status == 2){
+
+        document.getElementById("request-modal-description").disabled = true;
+        document.getElementById("request-modal-reference").disabled = true;
+        document.getElementById("request-update-button").disabled = true;
+        document.getElementById("request-update-button").setAttribute("onclick", "");
+        document.getElementById("request-modal-approved").textContent = approvalEnum[request.approved ? 1 : 0];
+    }
+
+    else{
+
+        document.getElementById("request-modal-description").disabled = false;
+        document.getElementById("request-modal-reference").disabled = false;
+        document.getElementById("request-update-button").disabled = false;
+        document.getElementById("request-update-button").setAttribute("onclick", "onUpdateRequestClick();");
+        document.getElementById("request-modal-approved").textContent = "";
+    }
 }
 
 function searchCurrentRequests(id){
@@ -408,8 +452,6 @@ function searchCurrentRequests(id){
 
 function reassignSessionRequests(request){
 
-    console.log(request)
-
     requests = JSON.parse(window.sessionStorage.getItem("requests"));
 
     for(let r of requests){
@@ -421,7 +463,6 @@ function reassignSessionRequests(request){
         }
     }
 
-    console.log(requests);
     window.sessionStorage.setItem("requests", JSON.stringify(requests));
 }
 
@@ -468,6 +509,12 @@ function postRequestUpdate(request, callback, errorCallback){
 function postRequestSuccess(request){
 
     document.getElementById("landing-update-request-success").hidden = false;
+
+    document.getElementById("request-modal-description").disabled = true;
+    document.getElementById("request-modal-reference").disabled = true;
+    document.getElementById("request-update-button").disabled = true;
+    document.getElementById("request-update-button").setAttribute("onclick", "");
+
     reassignSessionRequests(request);
 }
 
@@ -573,7 +620,7 @@ function getManagementEmployees(callback){
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open("GET", url + "/api/landing/users");
+    xhr.open("GET", url + "/api/landing/employee/authority");
 
     xhr.setRequestHeader("authority", loggedInUser.authority);
 
@@ -678,7 +725,6 @@ function onNewEmployeeClick(){
     }
 
     postNewEmployee(JSON.stringify(user), onNewEmployeeSuccess, onNewEmployeeError);
-
 }
 
 function postNewEmployee(user, callback, errorCallback){
@@ -699,6 +745,334 @@ function postNewEmployee(user, callback, errorCallback){
         else if(xhr.readyState === 4){
 
             errorCallback("There was an error creating an employee");
+        }
+    }
+
+    xhr.send();
+}
+
+function getManagementRequests(callback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", url + "/api/landing/request/authority");
+
+    xhr.setRequestHeader("authority", loggedInUser.authority);
+
+    xhr.onreadystatechange = function(){
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            window.sessionStorage.setItem("userRequests", xhr.response);
+            callback(JSON.parse(xhr.response));
+        }
+    }
+
+    xhr.send();
+}
+
+function applyManagementRequestsTable(list){
+
+    destroyManagementRequestsTable();
+
+    let table = document.getElementById("management-requests-table-body");
+    let row;
+    let atag;
+    let ptag;
+
+    let temp
+
+    for(let e of list){
+
+        row = table.insertRow();
+
+        row.insertCell(0).appendChild(document.createTextNode(e.requestId));
+        row.insertCell(1).appendChild(document.createTextNode(e.applicant));
+        row.insertCell(2).appendChild(document.createTextNode(statEnum[e.status]));
+        row.insertCell(3).appendChild(document.createTextNode(authEnum[e.ticketLevel]));
+        row.insertCell(4).appendChild(document.createTextNode("$" + e.amount));
+        row.insertCell(5).appendChild(document.createTextNode(e.submissionDate));
+
+        row.insertCell(6).appendChild(document.createTextNode(e.resolutionDate || ""));
+        row.insertCell(7).appendChild(document.createTextNode(e.resolvedBy || ""));
+        
+        atag = document.createElement('a');
+        atag.setAttribute('href', "#");
+        atag.setAttribute('class', 'management-anchor-glyph');
+        atag.setAttribute('data-toggle', 'modal');
+        atag.setAttribute('data-target', '#management-requests-modal');
+        atag.setAttribute('onclick', 'onManagementRequestsModalExpand(this)');
+
+        row.insertCell(8).appendChild(atag);
+    }
+
+    $('.management-anchor-glyph').prepend("<span class = 'fas fa-caret-square-down'></span>");
+}
+
+function applyManagementRequestsTableWithParams(list, status, str){
+
+    destroyManagementRequestsTable();
+
+    let table = document.getElementById("management-requests-table-body");
+    let row;
+    let atag;
+    let ptag;
+
+    let temp
+
+    for(let e of list){
+
+        if(e.status != status){
+
+            continue;
+        }
+
+        row = table.insertRow();
+
+        row.insertCell(0).appendChild(document.createTextNode(e.requestId));
+        row.insertCell(1).appendChild(document.createTextNode(e.applicant));
+        row.insertCell(2).appendChild(document.createTextNode(statEnum[e.status]));
+        row.insertCell(3).appendChild(document.createTextNode(authEnum[e.ticketLevel]));
+        row.insertCell(4).appendChild(document.createTextNode("$" + e.amount));
+        row.insertCell(5).appendChild(document.createTextNode(e.submissionDate));
+
+        row.insertCell(6).appendChild(document.createTextNode(e.resolutionDate || ""));
+        row.insertCell(7).appendChild(document.createTextNode(e.resolvedBy || ""));
+        
+        atag = document.createElement('a');
+        atag.setAttribute('href', "#");
+        atag.setAttribute('class', 'management-anchor-glyph');
+        atag.setAttribute('data-toggle', 'modal');
+        atag.setAttribute('data-target', '#management-requests-modal');
+        atag.setAttribute('onclick', 'onManagementRequestsModalExpand(this)');
+
+        row.insertCell(8).appendChild(atag);
+    }
+
+    $('.management-anchor-glyph').prepend("<span class = 'fas fa-caret-square-down'></span>");
+}
+
+function destroyManagementRequestsTable(){
+
+    const table = document.getElementById("management-requests-table-body");
+
+    while(table.firstChild){
+
+        table.removeChild(table.firstChild);
+    }
+}
+
+function onManagementFilterClick(e){
+
+    document.getElementById("management-filter-nav").getElementsByClassName("active")[0].classList.remove("active");
+    e.classList.add("active");
+}
+
+function filterManagementAllRequests(e){
+
+    if(e == document.getElementById("management-filter-nav").getElementsByClassName("active")[0]){
+
+        return;
+    }
+
+    applyManagementRequestsTable(JSON.parse(window.sessionStorage.getItem("userRequests")));
+}
+
+function filterManagementUnopenedRequests(e){
+
+    if(e == document.getElementById("management-filter-nav").getElementsByClassName("active")[0]){
+
+        return;
+    }
+
+    applyManagementRequestsTableWithParams(JSON.parse(window.sessionStorage.getItem("userRequests")), 0);
+}
+
+function filterManagementPendingRequests(e){
+
+    if(e == document.getElementById("management-filter-nav").getElementsByClassName("active")[0]){
+
+        return;
+    }
+
+    applyManagementRequestsTableWithParams(JSON.parse(window.sessionStorage.getItem("userRequests")), 1);
+}
+
+function filterManagementResolvedRequests(e){
+
+    if(e == document.getElementById("management-filter-nav").getElementsByClassName("active")[0]){
+
+        return;
+    }
+
+    applyManagementRequestsTableWithParams(JSON.parse(window.sessionStorage.getItem("userRequests")), 2);
+}
+
+function onManagementRequestsModalExpand(e){
+
+    let row = e.parentNode.parentNode.childNodes;
+    let request = searchCurrentEmployeeRequests(row[0].textContent);
+
+    document.getElementById("management-requests-modal-id").textContent = row[0].textContent;
+    document.getElementById("management-requests-modal-applicant").textContent = row[1].textContent;
+    document.getElementById("management-requests-modal-status").textContent = row[2].textContent;
+    document.getElementById("management-requests-modal-authority").textContent = row[3].textContent;
+    document.getElementById("management-requests-modal-amount").textContent = row[4].textContent;
+    document.getElementById("management-requests-modal-submission-date").textContent = row[5].textContent;
+    document.getElementById("management-requests-modal-resolution-date").textContent = row[6].textContent;
+    document.getElementById("management-requests-modal-resolved-by").textContent = row[7].textContent;
+
+    document.getElementById("management-requests-modal-description").value = request.description || "";
+    document.getElementById("management-requests-modal-reference").value = request.reference || "";
+    document.getElementById("management-requests-modal-resolution-description").value = request.resolutionDescription || "";
+
+    if(request.status == 2){
+
+        document.getElementById("management-requests-modal-reject-button").disabled = true;
+        document.getElementById("management-requests-modal-approved-button").disabled = true;
+        document.getElementById("management-requests-modal-resolution-description").disabled = true;
+    }
+
+    else{
+
+        document.getElementById("management-requests-modal-reject-button").disabled = false;
+        document.getElementById("management-requests-modal-approved-button").disabled = false;
+        document.getElementById("management-requests-modal-resolution-description").disabled = false;
+    }
+
+    checkStatus(request);
+}
+
+function searchCurrentEmployeeRequests(id){
+
+    requests = JSON.parse(window.sessionStorage.getItem("userRequests"));
+
+    for(let r of requests){
+
+        if(r.requestId == id){
+
+            return r;
+        }
+    }
+}
+
+function reassignSessionEmployeeRequests(request){
+
+    requests = JSON.parse(window.sessionStorage.getItem("userRequests"));
+
+    for(let r of requests){
+
+        if(r.requestId == request.requestId){
+
+            r.status = request.status;
+            r.resolutionDescription = request.resolutionDescription;
+            r.resolvedBy = request.resolvedBy;
+            r.resolutionDate = request.resolutionDate;
+        }
+    }
+
+    window.sessionStorage.setItem("userRequests", JSON.stringify(requests));
+}
+
+function checkStatus(request){
+
+    if(request.status == 0){
+
+        request.status = 1;
+
+        postRequestUpdate(JSON.stringify(request), managementTableUpdateRequest, managementTableUpdateRequestError);
+    }
+}
+
+function managementTableUpdateRequest(request){
+
+    reassignSessionEmployeeRequests(request)
+
+    let str = document.getElementById("management-filter-nav").getElementsByClassName("active")[0].textContent;
+
+    if(str.includes("All")){
+
+        filterManagementAllRequests();
+    }
+
+    else if(str.includes("Unopened")){
+
+        filterManagementUnopenedRequests();
+    }
+
+    else if(str.includes("Pending")){
+
+        filterManagementPendingRequests();
+    }
+
+    else{
+
+        filterManagementResolvedRequests();
+    }
+
+}
+
+function managementTableUpdateRequestError(){
+
+
+}
+
+function onManagementUpdateRequestClick(approved){
+
+    hideUpdateManagementRequestMessages();
+
+    let resolutionDescription = document.getElementById("management-requests-modal-resolution-description").value;
+
+    let request = searchCurrentEmployeeRequests(document.getElementById("management-requests-modal-id").textContent);
+
+    request.status = 2;
+    request.resolutionDescription = resolutionDescription;
+    request.approved = approved
+
+    postRequestFinalize(JSON.stringify(request), JSON.stringify(loggedInUser), showManagementRequestSuccess, showManagementRequestError);
+}
+
+function showManagementRequestSuccess(request){
+
+    document.getElementById("management-requests-modal-success").hidden = false;
+    managementTableUpdateRequest(request);
+
+    document.getElementById("management-requests-modal-reject-button").disabled = true;
+    document.getElementById("management-requests-modal-approved-button").disabled = true;
+    document.getElementById("management-requests-modal-resolution-description").disabled = true;
+}
+
+function showManagementRequestError(){
+
+    document.getElementById("management-requests-modal-error-message").hidden = false;
+}
+
+function hideUpdateManagementRequestMessages(){
+
+    document.getElementById("management-requests-modal-success").hidden = true;
+    document.getElementById("management-requests-modal-error-message").hidden = true;
+}
+
+function postRequestFinalize(request, user, callback, errorCallback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url + "/api/landing/request/final");
+
+    xhr.setRequestHeader("request", request);
+    xhr.setRequestHeader("user", user);
+    xhr.setRequestHeader("token", window.sessionStorage.getItem("token"));
+
+    xhr.onreadystatechange = function(){
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback(JSON.parse(xhr.response));
+        }
+
+        else if(xhr.readyState === 4){
+
+            errorCallback();
         }
     }
 
