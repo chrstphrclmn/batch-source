@@ -36,7 +36,14 @@
     background-color: #F8F9FA;
 }
 
-.table {
-   margin: auto;
-   width: 80% !important; 
+.table-scrollbar{
+    position: relative;
+    height: 600px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    margin: auto!important;
+    width: 80% !important; 
 }

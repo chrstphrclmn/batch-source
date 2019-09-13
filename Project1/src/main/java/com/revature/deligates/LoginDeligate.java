@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.model.Employee;
 import com.revature.service.EmployeeService;
+import com.revature.util.EncryptionUtil;
+import com.revature.util.StringUtil;
 
 public class LoginDeligate {
 
@@ -28,9 +30,13 @@ public class LoginDeligate {
 			return;
 		}
 		
+		String rawToken = StringUtil.getRandomString() + "." + StringUtil.getRandomString() + "." + StringUtil.getRandomString();
+		System.out.println(rawToken);
+		
 		response.setHeader("Login", "Success");
 		response.setHeader("User", om.writeValueAsString(user));
 		response.setHeader("URL", "landing");
+		response.setHeader("Token", EncryptionUtil.encrypt(rawToken));
 		
 	}
 }

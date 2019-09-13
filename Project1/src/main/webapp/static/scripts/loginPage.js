@@ -42,7 +42,7 @@ function sendCredentials(username, password, callback){
 
         if(xhr.readyState === 4 && xhr.status === 200){
 
-            callback(xhr.getResponseHeader("Login"), xhr.getResponseHeader("User"), xhr.getResponseHeader("URL"));
+            callback(xhr.getResponseHeader("Login"), xhr.getResponseHeader("User"), xhr.getResponseHeader("Token"), xhr.getResponseHeader("URL"));
         }
     }
 
@@ -62,7 +62,7 @@ function resetErrorMessage(){
     document.getElementById("login-error-message").hidden = true;
 }
 
-function loginCallback(login, user, url){
+function loginCallback(login, user, token, url){
 
     if(login == "failed"){
 
@@ -72,6 +72,7 @@ function loginCallback(login, user, url){
     else{
 
         window.sessionStorage.setItem("user", user);
+        window.sessionStorage.setItem("token", token)
         window.location.href = baseUrl + url;
     }
 }

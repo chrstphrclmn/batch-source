@@ -119,8 +119,8 @@ public class RequestDaoImpl implements RequestDao {
 		
 		List<Request> ret = new ArrayList<Request>();
 		
-		String sql = String.format("select * from \"%s\" where \"%s\" = ? order by \"%s\"",
-									TABLE_NAME, COLUMN_2,COLUMN_8);
+		String sql = String.format("select * from \"%s\" where \"%s\" = ? order by \"%s\" desc",
+									TABLE_NAME, COLUMN_2, COLUMN_8);
 		
 		Connection conn = ConnectionUtil.getConnection();
 		

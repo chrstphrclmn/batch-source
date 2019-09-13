@@ -1,5 +1,8 @@
 package com.revature.util;
 
+import java.nio.charset.Charset;
+import java.util.Random;
+
 public class StringUtil {
 	
 	private static final String EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
@@ -27,5 +30,21 @@ public class StringUtil {
 		
 		return(amount.substring(idx).length() <= 3);
 		
+	}
+	
+	public static boolean isValidToken(String token) {  
+		
+		if(token == null) return false;
+		String[] s = token.split(".");
+		
+		return s.length == 3;
+	}
+	
+	public static String getRandomString() {
+		
+		byte[] array = new byte[8];
+		new Random().nextBytes(array);
+		
+		return new String(array, Charset.forName("UTF-8"));
 	}
 }

@@ -55,7 +55,7 @@ public class Employee {
 	public String getEmail() 	{ return this.email;}
 	public int getAuthority() 	{ return this.authority;}
 	
-	public boolean setUsername(String username) { 
+	public boolean setUsername(String username) {
 		
 		if(!StringUtil.isValidUsername(username)) return false;
 		

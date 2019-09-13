@@ -13,6 +13,7 @@ import com.revature.model.Employee;
 import com.revature.model.Request;
 import com.revature.service.EmployeeService;
 import com.revature.service.RequestService;
+import com.revature.util.EncryptionUtil;
 
 public class LandingDeligate {
 
@@ -24,10 +25,36 @@ public class LandingDeligate {
 		
 		List<Request> employeeRequests = rservice.getRequestsByApplicant(om.readValue(request.getHeader("User"), Employee.class));
 		response.setContentType("application/json;charset=UTF-8");
+		
 		try(PrintWriter pw = response.getWriter()){
 			
 			pw.write(om.writeValueAsString(employeeRequests));
 		}
+	}
+	
+	public void getUsers(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		List<Employee> employees = eservice.getEmployeesByAuthority(Integer.parseInt(request.getHeader("authority")));
+		response.setContentType("application/json;charset=UTF-8");
+		
+		try(PrintWriter pw = response.getWriter()){
+			
+			pw.write(om.writeValueAsString(employees));
+		}
+	}
+	
+	public void postNewEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		Employee user = om.readValue(request.getHeader("user"), Employee.class);
+		
+		user.setPassword(EncryptionUtil.encrypt(user.getPassword()));
+		
+		if(eservice.createEmployee(user)) {
+			
+			return;
+		}
+		
+		response.setStatus(403);
 	}
 	
 	public void postNewPassword(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -50,6 +77,20 @@ public class LandingDeligate {
 		Request reiRequest = om.readValue(request.getHeader("request"), Request.class);
 		
 		if(rservice.updateRequest(reiRequest)) {
+			
+			return;
+		}
+		
+		response.setStatus(403);
+	}
+	
+	public void postNewRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		Employee user = om.readValue(request.getHeader("user"), Employee.class);
+		
+		Request reiRequest = new Request(user, rservice.getNextRequestId(), Double.valueOf(request.getHeader("amount")), request.getHeader("description"), request.getHeader("reference"));
+		
+		if(rservice.createRequest(reiRequest)) {
 			
 			return;
 		}

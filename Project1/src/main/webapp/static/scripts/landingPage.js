@@ -16,10 +16,24 @@ $('#passwordChangeModal').keypress(function(e){
     }
 });
 
+$('#request-info-modal').keypress(function(e){
+    if (e.which == 13){
+        $("#request-update-button").click();
+    }
+});
+
+$('#request-new-modal').keypress(function(e){
+    if (e.which == 13){
+        $("#request-new-button").click();
+    }
+});
+
 const url = "http://localhost:8080/Project1";
 let loggedInUser;
 const authEnum = ["Employee", "Manager", "General Manager"];
 const statEnum = ["Unopened", "Pending", "Resolved"];
+
+const authEnumReverse = {"Employee" : 0, "Manager" : 1, "General Manager" : 2};
 
 build(window.sessionStorage.getItem("user"));
 
@@ -28,6 +42,7 @@ function getUserRequests(callback){
     let xhr = new XMLHttpRequest();
     xhr.open("GET", url + "/api/landing/requests");
 
+    xhr.setRequestHeader("token", window.sessionStorage.getItem("token"));
     xhr.setRequestHeader("User", window.sessionStorage.getItem("user"));
 
     xhr.onreadystatechange = function(){
@@ -43,6 +58,40 @@ function getUserRequests(callback){
     xhr.send();
 }
 
+function submitNewPasswordRequest(curPassword, newPassword, callback, errorCallBack){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url + "/api/landing/employee/setPassword");
+
+    xhr.setRequestHeader("Username", loggedInUser.username);
+    xhr.setRequestHeader("Password", curPassword);
+    xhr.setRequestHeader("NewPassword", newPassword);
+
+    xhr.setRequestHeader("token", window.sessionStorage.getItem("token"));
+
+    xhr.onreadystatechange = function(){
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback(xhr.getResponseHeader("NewPassword"));
+        }
+
+        else if(xhr.readyState === 4 && xhr.status === 403){
+
+            errorCallBack(403);
+        }
+    }
+
+    xhr.send();
+}
+
+function logout(){
+
+    sessionStorage.clear();
+    window.location.href = url;
+}
+
 function build(user){
 
     loggedInUser = JSON.parse(user.trim());
@@ -51,6 +100,26 @@ function build(user){
 
     applyHeaders();
     applyAccountInformation();
+
+    if(loggedInUser.authority > 0){
+
+        document.getElementById("landing-management").hidden = false;
+        getManagementEmployees(applyEmployeeTable);
+        fillNewEmployeeAuthority(loggedInUser.authority);
+    }
+}
+
+function fillNewEmployeeAuthority(auth){
+
+    let list = document.getElementById("new-employee-modal-authority");
+    let node;
+
+    for(let i = 0 ; i < auth ; i++){
+
+        node = document.createElement("option");
+        node.textContent = authEnum[i];
+        list.appendChild(node);
+    }
 }
 
 function applyHeaders(){
@@ -58,6 +127,7 @@ function applyHeaders(){
     document.getElementById("landing-welcome-user").textContent = "Welcome: " + loggedInUser.firstname + " " + loggedInUser.lastname;
     document.getElementById("landing-account-user").textContent = "View and Change Details For " + loggedInUser.firstname + " " + loggedInUser.lastname;
     document.getElementById("landing-requests-user").textContent = "View Requests Made by " + loggedInUser.firstname + " " + loggedInUser.lastname;
+    document.getElementById("management-employee-directory-subheader").textContent = "All Employees With Lower Authorization than " + loggedInUser.firstname + " " + loggedInUser.lastname; 
 }
 
 function applyAccountInformation(){
@@ -106,7 +176,6 @@ function applyRequestTable(list){
     }
 
     $('.landing-anchor-glyph').prepend("<span class = 'fas fa-caret-square-down'></span>");
-
 }
 
 function applyRequestTableWithParam(list, status){
@@ -146,9 +215,7 @@ function applyRequestTableWithParam(list, status){
     }
 
     $('.landing-anchor-glyph').prepend("<span class = 'fas fa-caret-square-down'></span>");
-
 }
-
 
 function onNavbarEntryClick(e){
 
@@ -165,33 +232,6 @@ function onNavbarEntryClickGetMyAccount(){
 
     document.getElementById("navbar-my-account").classList.add("active");
 }
-
-function submitNewPasswordRequest(curPassword, newPassword, callback, errorCallBack){
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open("POST", url + "/api/landing/changePassword");
-
-    xhr.setRequestHeader("Username", loggedInUser.username);
-    xhr.setRequestHeader("Password", curPassword);
-    xhr.setRequestHeader("NewPassword", newPassword);
-
-    xhr.onreadystatechange = function(){
-
-        if(xhr.readyState === 4 && xhr.status === 200){
-
-            callback(xhr.getResponseHeader("NewPassword"));
-        }
-
-        else if(xhr.readyState === 4 && xhr.status === 403){
-
-            errorCallBack(403);
-        }
-    }
-
-    xhr.send();
-}
-
 
 function onPasswordChangeClick(){
 
@@ -213,7 +253,6 @@ function onPasswordChangeClick(){
 
         submitNewPasswordRequest(curPassword, newPassword, passwordChangeCallback, passwordChangeErrorCallback);
     }
-
 }
 
 function passwordChangeCallback(newPassword){
@@ -230,9 +269,6 @@ function passwordChangeErrorCallback(status){
         updateNewPasswordError("Current password does not match.");
     }
 }
-
-
-
 
 function updateNewPasswordError(str){
 
@@ -267,6 +303,12 @@ function loadMyRequests(){
 
     hideAll();
     document.getElementById("landing-my-requests-div").hidden = false;
+}
+
+function loadManagementEmployees(){
+
+    hideAll();
+    document.getElementById("landing-management-employees").hidden = false;
 }
 
 function onFilterClick(e){
@@ -349,7 +391,6 @@ function onRequestModalExpand(e){
 
     document.getElementById("request-modal-description").value = request.description || "";
     document.getElementById("request-modal-reference").value = request.reference || "";
-
 }
 
 function searchCurrentRequests(id){
@@ -403,9 +444,10 @@ function postRequestUpdate(request, callback, errorCallback){
 
     let xhr = new XMLHttpRequest();
 
-    xhr.open("POST", url + "/api/landing/updateRequest");
+    xhr.open("POST", url + "/api/landing/request/update");
 
     xhr.setRequestHeader("request", request);
+    xhr.setRequestHeader("token", window.sessionStorage.getItem("token"));
 
     xhr.onreadystatechange = function(){
 
@@ -438,4 +480,227 @@ function hideUpdateRequestMessages(){
 
     document.getElementById("landing-update-request-error-message").hidden = true;
     document.getElementById("landing-update-request-success").hidden = true;
+}
+
+function onNavbarEntryClickGetMyRequests(){
+
+    let element = document.getElementById("landing-side-nav").getElementsByClassName("active")[0];
+    element.classList.remove("active");
+
+    document.getElementById("navbar-my-requests").classList.add("active");
+
+    document.getElementById("landing-request-new-amount").value = "";
+    document.getElementById("request-new-description").value = "";
+    document.getElementById("request-new-reference").value = "";
+
+    document.getElementById("request-new-button").setAttribute("onclick", "onNewRequestClick();")
+    document.getElementById("request-new-button").disabled = false;
+
+    hideNewRequestMessages();
+}
+
+function onNewRequestClick(){
+
+    hideNewRequestMessages();
+
+    let amount = document.getElementById("landing-request-new-amount").value;
+    let description = document.getElementById("request-new-description").value;
+    let reference = document.getElementById("request-new-reference").value;
+
+    if(!amount){
+
+        raiseNewRequestError("Please enter a valid amount.");
+    }
+
+    let user = sessionStorage.getItem("user");
+
+    postNewRequest(user, amount, description, reference, raiseNewRequestSuccess, raiseNewRequestError)
+}
+
+function postNewRequest(user, amount, description, reference, callback, errorCallback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url + "/api/landing/request/new");
+
+    xhr.setRequestHeader("user", user);
+    xhr.setRequestHeader("amount", amount);
+    xhr.setRequestHeader("description", description);
+    xhr.setRequestHeader("reference", reference);
+
+    xhr.onreadystatechange = function() {
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback();
+        }
+
+        else if(xhr.readyState === 4){
+
+            errorCallback("There was an error adding the request.");
+        }
+    }
+
+    xhr.send();
+}
+
+function hideNewRequestMessages(){
+
+    document.getElementById("landing-request-new-success").hidden = true;
+    document.getElementById("landing-request-new-error-message").hidden = true;
+}
+
+function raiseNewRequestSuccess(){
+
+    document.getElementById("landing-request-new-success").hidden = false;
+
+    document.getElementById("request-new-button").setAttribute("onclick", "");
+    document.getElementById("request-new-button").disabled = true;
+
+    destroyTable();
+    getUserRequests(applyRequestTable);
+
+    onFilterClick(document.getElementById("filter-all"));
+}
+
+function raiseNewRequestError(str){
+
+    document.getElementById("landing-request-new-error-message").textContent = str;
+    document.getElementById("landing-request-new-error-message").hidden = false;
+}
+
+function getManagementEmployees(callback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", url + "/api/landing/users");
+
+    xhr.setRequestHeader("authority", loggedInUser.authority);
+
+    xhr.onreadystatechange = function() {
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback(JSON.parse(xhr.response));
+        }
+    }
+
+    xhr.send();
+}
+
+function onNavbarEntryClickGetManagementEmployees(){
+
+    let element = document.getElementById("landing-side-nav").getElementsByClassName("active")[0];
+    element.classList.remove("active");
+
+    document.getElementById("navbar-management-employees").classList.add("active");
+
+    document.getElementById("new-employee-modal-firstname").value = "";
+    document.getElementById("new-employee-modal-lastname").value = "";
+    document.getElementById("new-employee-modal-username").value = "";
+    document.getElementById("new-employee-modal-password").value = "";
+    document.getElementById("new-employee-modal-email").value = "";
+    document.getElementById("new-employee-modal-authority").value = "Employee";
+
+    document.getElementById("new-employee-modal-button").setAttribute("onclick", "onNewEmployeeClick();")
+    document.getElementById("new-employee-modal-button").disabled = false;
+
+    hideNewEmployeeMessages();
+}
+
+function hideNewEmployeeMessages(){
+
+    document.getElementById("new-employee-modal-error-message").hidden = true;
+    document.getElementById("new-employee-modal-success").hidden = true;
+}
+
+function onNewEmployeeSuccess(){
+
+    document.getElementById("new-employee-modal-success").hidden = false;
+    document.getElementById("new-employee-modal-button").setAttribute("onclick", "")
+    document.getElementById("new-employee-modal-button").disabled = true;
+
+    getManagementEmployees(applyEmployeeTable);
+}
+
+function onNewEmployeeError(str){
+
+    document.getElementById("new-employee-modal-error-message").textContent = str;
+    document.getElementById("new-employee-modal-error-message").hidden = false;
+}
+
+function applyEmployeeTable(list){
+
+    destroyEmployeeTable();
+
+    let table = document.getElementById("employee-table-body");
+
+    let row
+
+    for(let e of list){
+
+        row = table.insertRow();
+        row.insertCell(0).appendChild(document.createTextNode(e.firstname));
+        row.insertCell(1).appendChild(document.createTextNode(e.lastname));
+        row.insertCell(2).appendChild(document.createTextNode(e.email));
+        row.insertCell(3).appendChild(document.createTextNode(authEnum[e.authority]));
+        row.insertCell(4).appendChild(document.createTextNode(e.username));
+    }
+}
+
+function destroyEmployeeTable(){
+
+    const table = document.getElementById("employee-table-body");
+
+    while(table.firstChild){
+
+        table.removeChild(table.firstChild);
+    }
+}
+
+function onNewEmployeeClick(){
+
+    hideNewEmployeeMessages();
+
+    let user = {};
+
+    user.username = document.getElementById("new-employee-modal-username").value;
+    user.password = document.getElementById("new-employee-modal-password").value;
+    user.firstname = document.getElementById("new-employee-modal-firstname").value;
+    user.lastname = document.getElementById("new-employee-modal-lastname").value;
+    user.email = document.getElementById("new-employee-modal-email").value;
+    user.authority = authEnumReverse[document.getElementById("new-employee-modal-authority").value];
+
+    if(!(user.username && user.password && user.firstname && user.lastname && user.email)){
+
+        onNewEmployeeError("Please fill in all fields");
+        return;
+    }
+
+    postNewEmployee(JSON.stringify(user), onNewEmployeeSuccess, onNewEmployeeError);
+
+}
+
+function postNewEmployee(user, callback, errorCallback){
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url + "/api/landing/employee/new")
+
+    xhr.setRequestHeader("user", user);
+
+    xhr.onreadystatechange = function(){
+
+        if(xhr.readyState === 4 && xhr.status === 200){
+
+            callback();
+        }
+
+        else if(xhr.readyState === 4){
+
+            errorCallback("There was an error creating an employee");
+        }
+    }
+
+    xhr.send();
 }
