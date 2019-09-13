@@ -9,6 +9,12 @@ img {
     background-color: white;
 }
 
+figcaption {
+    padding-left: 30px;
+    margin-left: 50px;
+    margin-top: -50px;
+}
+
 h3, h4 {
     text-decoration: underline;
     text-decoration-color: blue;
