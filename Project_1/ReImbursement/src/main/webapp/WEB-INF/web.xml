@@ -9,4 +9,30 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>EmployeeViewReceipts</servlet-name>
+    <servlet-class>com.revature.servlets.EmployeeViewReceipts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeViewReceipts</servlet-name>
+    <url-pattern>/viewreceipts</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ReceiptServlet</servlet-name>
+    <servlet-class>com.revature.servlets.ReceiptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReceiptServlet</servlet-name>
+    <url-pattern>/api/receipts</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>CreateReceiptServlet</servlet-name>
+  	<servlet-class>com.revature.servlets.CreateReceiptServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CreateReceiptServlet</servlet-name>
+  	<url-pattern>/new</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -1,16 +1,28 @@
 package com.revature.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.daos.EmployeeDao;
+import com.revature.daos.EmployeeDaoImpl;
+import com.revature.daos.ReceiptDaoImpl;
+import com.revature.daos.ReceiptsDao;
+import com.revature.models.Receipts;
 
 /**
  * Servlet implementation class EmployeeViewReceipts
  */
-@WebServlet("/EmployeeViewReceipts")
+//@WebServlet("/EmployeeViewReceipts")
+
 public class EmployeeViewReceipts extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +39,16 @@ public class EmployeeViewReceipts extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
+		
+//		response.setHeader("receiptsJSON", receiptsJSON);	
+		
+		request.getRequestDispatcher("/Views/employeeViewReceipts.html").forward(request, response);
+
+		
+		
+		
 	}
 
 	/**

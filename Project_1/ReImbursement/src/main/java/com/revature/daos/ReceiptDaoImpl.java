@@ -16,9 +16,23 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 	@Override
 	public int createReceipt(Receipts r) {
 		// TODO Auto-generated method stub
+		int receiptsCreated = 0;
+		String sql = "Insert into receipts (receipt_note, receipt_amount, employee_id) values(?, ?, ?)";
 		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, r.getNote());
+			ps.setDouble(2, r.getAmount());
+			ps.setInt(3, r.getEmployee_id());
+			
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		
-		return 0;
+		return receiptsCreated;
 	}
 
 	@Override

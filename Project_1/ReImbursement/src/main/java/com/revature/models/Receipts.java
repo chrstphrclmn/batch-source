@@ -24,6 +24,12 @@ public class Receipts {
 		this.approved = approved;
 	}
 
+	public Receipts(double amount, String note, int employee_id) {
+		super();
+		this.amount = amount;
+		this.note = note;
+		this.employee_id = employee_id;
+	}
 
 	public int getReceipt_id() {
 		return receipt_id;
