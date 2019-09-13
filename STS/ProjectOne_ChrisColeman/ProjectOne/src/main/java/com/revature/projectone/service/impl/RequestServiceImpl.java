@@ -16,33 +16,36 @@ public class RequestServiceImpl implements RequestService {
 	}
 
 	public boolean isValidAmmount(double ammount) {
-		// TODO Auto-generated method stub
-		return false;
+
+		if(ammount>0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
 	public List<Request> getRequests() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return reqDAO.getRequests();
+		
 	}
 
 	@Override
 	public Request getRequestById(int requestId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return reqDAO.getRequestById(requestId);
+		
 	}
 
 	@Override
 	public int createRequest(Request request) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return reqDAO.createRequest(request);
 	}
 
-	@Override
-	public int highestRequestId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 	
 	
 

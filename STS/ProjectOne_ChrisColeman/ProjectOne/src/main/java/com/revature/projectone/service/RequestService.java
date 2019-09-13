@@ -11,6 +11,6 @@ public interface RequestService {
 	public List<Request> getRequests();
 	public Request getRequestById(int requestId);
 	public int createRequest(Request request);
-	public int highestRequestId();
+	
 
 }

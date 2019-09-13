@@ -5,10 +5,14 @@
   <groupId>ProjectOne</groupId>
   <artifactId>ProjectOne</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>ProjectOne</name>
   <url>http://maven.apache.org</url>
+  
+  	<build>
+		<finalName>ERS</finalName>
+	</build>
 
   <properties>
   	<maven.compiler.source>1.8</maven.compiler.source>
@@ -44,5 +48,23 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+        
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.9.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-catalina</artifactId>
+			<version>9.0.2</version>
+		</dependency>
   </dependencies>
 </project>

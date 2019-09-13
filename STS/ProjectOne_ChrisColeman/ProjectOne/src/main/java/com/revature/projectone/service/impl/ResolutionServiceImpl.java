@@ -2,33 +2,35 @@ package com.revature.projectone.service.impl;
 
 import java.util.List;
 
+import com.revature.projectone.dao.impl.ResolutionDAOImpl;
 import com.revature.projectone.model.Resolution;
 import com.revature.projectone.service.ResolutionService;
 
 public class ResolutionServiceImpl implements ResolutionService {
+	
+	ResolutionDAOImpl resolutionDAO = new ResolutionDAOImpl();
 
 	@Override
 	public List<Resolution> getResolutions() {
-		// TODO Auto-generated method stub
-		return null;
+		return resolutionDAO.getResolutions();
 	}
 
 	@Override
 	public Resolution getResolutionById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return resolutionDAO.getResolutionById(id);
 	}
 
 	@Override
 	public int createResolution(Resolution res) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return resolutionDAO.createResolution(res);
 	}
 
 	@Override
 	public int updateResolution(Resolution res) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return resolutionDAO.updateResolution(res);
 	}
 
 }
