@@ -1,0 +1,98 @@
+*{
+  background-color: whitesmoke;
+}
+
+#empSideNav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f05411;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+#manSideNav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f05411;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.nav{
+	background-color: #f05411;
+}
+
+
+#empSideNav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+}
+
+#empSideNav a:hover {
+  color: #f1f1f1;
+}
+
+#manSideNav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+}
+
+#manSideNav a:hover {
+  color: #f1f1f1;
+}
+
+#emp-home {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+#reimb-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#approved-reimb-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#denied-reimb-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#emp-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#managerEmp-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#reimb-table-w-name{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#man-approved-reimb-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
+
+#man-denied-reimb-table{
+	font-family: "Helvetica";
+	width: 60%;
+}
