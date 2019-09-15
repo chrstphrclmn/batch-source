@@ -44,7 +44,7 @@
 
 <div class = "container">
 	<table class="table table-dark m-5" id="receipt-table" hidden = true>
-	<thead>
+	<thead id="rec-table">
 		<tr>
 			<th scope="col">Receipt ID</th>
 			<th scope="col">Amount</th>
@@ -98,7 +98,7 @@
 		for(let [index,rec] of recs.entries()){
 			console.log(index);
 			let newRow = document.createElement("tr");
-			document.getElementsByTagName("tr")[index].setAttribute("id", "rec-"+index);
+			document.getElementsByTagName("tr")[index].setAttribute("id", index);
 			
 			let receiptId = rec.receipt_id;
 			let amount = rec.amount;
@@ -106,9 +106,12 @@
 			let employeeId = rec.employee_id;
 			
 			let approveBtn = `<button type="button" class="btn btn-success" >Approve</button>`
-			let denyBtn = `<button class="btn btn-danger">Deny</button>`
+			let denyBtn = `<button type="button" class="btn btn-danger">Deny</button>`
 			
-			newRow.innerHTML = `<td>${receiptId}</td><td>${amount}</td><td>${note}</td><td>${employeeId}</td><td id=btn-${receiptId} onclick = sendPostAjax(this.id)>${approveBtn}</td><td>${denyBtn}</td>`;
+			newRow.innerHTML = `<td>${receiptId}</td><td>${amount}</td><td>${note}</td><td>${employeeId}</td>
+			<td id=btn-${receiptId} 
+			onclick = sendPostAjax(this.id)>${approveBtn}</td><td id=btnD-${receiptId}
+								onclick = sendDenyAjax(this.id)>${denyBtn}</td>`;
 			table.appendChild(newRow);
 		}
 	}
@@ -116,16 +119,12 @@
 		sendAjaxGet(requestUrl, displayReceipts);
 		
 		//alert(this.id.substr(4))
+	
 		
-		function putIntoForm(args){
-			//alert(this.id)
-			document.getElementById("rec-id").innerText = parseInt(args.substr(4));
-			alert(args.substr(4))
-		}
 		
 		//let postUrl = "http://localhost:8080/Reimbursement/approve";
 		
-		function sendPostAjax(args, callback){
+		function sendPostAjax(args){
 			let xhr = new XMLHttpRequest();
 	
 			xhr.open("POST", "http://localhost:8080/Reimbursement/approve");
@@ -139,16 +138,40 @@
 				
 				
 			}
-				xhr.send();	
-
-			
+				xhr.send();		
 		}
+		
+		function sendDenyAjax(args) {
+            let xhr = new XMLHttpRequest();
+
+            xhr.open("POST", "http://localhost:8080/Reimbursement/deny");
+
+            xhr.setRequestHeader("receipt_id", args.substr(5));
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    callback(xhr.response);
+                    console.log(this.response);
+                }
+                
+            }
+            
+            xhr.send();
+     	}
+		 
 		
 		function randomCall(response){
-			document.getElementById
+			console.log("Ajax sent!")
 		}
 		
-		sendPostAjax(randomCall);
+		function denyCall(response){
+			console.log("Deny Ajax sent!");
+		}
+		
+		
+		//sendPostAjax(randomCall);
+		
+		//sendDenyAjax(denyCall);
 		
 		
 		

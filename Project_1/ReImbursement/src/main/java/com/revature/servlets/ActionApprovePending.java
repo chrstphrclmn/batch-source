@@ -1,6 +1,7 @@
 package com.revature.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,7 @@ import com.revature.daos.ReceiptsDao;
 /**
  * Servlet implementation class ActionApprovePending
  */
-@WebServlet("/ActionApprovePending")
+//@WebServlet("/ActionApprovePending")
 public class ActionApprovePending extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

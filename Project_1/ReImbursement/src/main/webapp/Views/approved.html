@@ -11,38 +11,57 @@
             crossorigin="anonymous"
         />
 <meta charset="UTF-8">
-<title>Approved Receipts</title>
+<title>Employee Approved Receipts</title>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item ">
-        <a class="nav-link" href="/Reimbursement/viewreceipts">View Re-imbursements <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Reimbursement/new">Submit</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/Reimbursement/approved">View Approved</a>
-      </li>
-     <li class="nav-item">
-        <a class="nav-link" href="#">Edit Info</a>
-     </li>
-     <li class="nav-item">
-        <a class="nav-link" href="/Reimbursement/login" id="logout">LogOut</a>
-     </li>
- 
-      
-    </ul>
-    
-  </div>
-</nav>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/Reimbursement/viewreceipts"
+                        >View All Receipts
+                        <span class="sr-only">(current)</span></a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Reimbursement/approved"
+                        >View Approved</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Reimbursement/denied"
+                        >View Denied</a
+                    >
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Reimbursement/new">Submit New</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Edit Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Reimbursement/login" id="logout"
+                        >LogOut</a
+                    >
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 <div class="container">
 
 
@@ -51,7 +70,7 @@
 		<tr>
 			<th scope="col">Amount</th>
 			<th scope="col">Note</th>
-			<th scope="col">Approved</th>
+			<th scope="col">Status</th>
 		</tr>
 	</thead>
 </table>
@@ -98,7 +117,7 @@ document.getElementById("logout").addEventListener("click", clear);
 			let newRow = document.createElement("tr");
 			let amount = rec.amount;
 			let note = rec.note;
-			let approved = rec.approved;
+			let approved = rec.status;
 			
 			newRow.innerHTML = `<td>${amount}</td><td>${note}</td><td>${approved}</td>`;
 			table.appendChild(newRow);

@@ -22,6 +22,8 @@
     <servlet-class>com.revature.servlets.ReceiptServlet</servlet-class>
   </servlet>
   <servlet-mapping>
+  
+  
     <servlet-name>ReceiptServlet</servlet-name>
     <url-pattern>/api/receipts</url-pattern>
   </servlet-mapping>
@@ -34,6 +36,8 @@
     <url-pattern>/new</url-pattern>
   </servlet-mapping>
   <servlet>
+  
+  <!-- Create an api of approved receipts for a single employee -->
     <servlet-name>ApprovedReceipts</servlet-name>
     <servlet-class>com.revature.servlets.ApprovedReceipts</servlet-class>
   </servlet>
@@ -41,6 +45,8 @@
     <servlet-name>ApprovedReceipts</servlet-name>
     <url-pattern>/api/approved</url-pattern>
   </servlet-mapping>
+  
+  <!-- View approved receipts for a single employee. Pulled from above api -->
   <servlet>
     <servlet-name>ViewApprovedServlet</servlet-name>
     <servlet-class>com.revature.servlets.ViewApprovedServlet</servlet-class>
@@ -49,14 +55,36 @@
     <servlet-name>ViewApprovedServlet</servlet-name>
     <url-pattern>/approved</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>ViewEmployees</servlet-name>
-    <servlet-class>com.revature.servlets.ViewEmployees</servlet-class>
+  
+    <!-- Create an api of denied receipts for a single employee -->
+  
+    <servlet>
+    <servlet-name>EmployeeDeniedReceipts</servlet-name>
+    <servlet-class>com.revature.servlets.EmployeeDeniedReceipts</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ViewEmployees</servlet-name>
-    <url-pattern>/viewemployees</url-pattern>
+    <servlet-name>EmployeeDeniedReceipts</servlet-name>
+    <url-pattern>/api/denied</url-pattern>
   </servlet-mapping>
+  
+    <!-- View denied receipts for a single employee. Pulled from above api -->
+  
+  <servlet>
+    <servlet-name>EmployeeViewDeniedReceipts</servlet-name>
+    <servlet-class>com.revature.servlets.EmployeeViewDeniedReceipts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeViewDeniedReceipts</servlet-name>
+    <url-pattern>/denied</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  
+  
+  
+  
+  <!-- Create an api of all employees for the manager -->
   <servlet>
     <servlet-name>GetAllEmployees</servlet-name>
     <servlet-class>com.revature.servlets.GetAllEmployees</servlet-class>
@@ -65,14 +93,18 @@
     <servlet-name>GetAllEmployees</servlet-name>
     <url-pattern>/api/employees</url-pattern>
   </servlet-mapping>
+  
+  <!-- View all employees for the manager. Pulled from above api -->
   <servlet>
-    <servlet-name>AllPendingRequests</servlet-name>
-    <servlet-class>com.revature.servlets.AllPendingRequests</servlet-class>
+    <servlet-name>ViewEmployees</servlet-name>
+    <servlet-class>com.revature.servlets.ViewEmployees</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AllPendingRequests</servlet-name>
-    <url-pattern>/allpending</url-pattern>
+    <servlet-name>ViewEmployees</servlet-name>
+    <url-pattern>/viewemployees</url-pattern>
   </servlet-mapping>
+  
+  <!--  Create an api of all pending receipts for the manager-->
   <servlet>
     <servlet-name>GetAllPendingReceipts</servlet-name>
     <servlet-class>com.revature.servlets.GetAllPendingReceipts</servlet-class>
@@ -82,6 +114,17 @@
     <url-pattern>/api/allpending</url-pattern>
   </servlet-mapping>
   
+  <!-- View all pending receipts for the manager. Pulled from above api -->
+  <servlet>
+    <servlet-name>AllPendingRequests</servlet-name>
+    <servlet-class>com.revature.servlets.AllPendingRequests</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AllPendingRequests</servlet-name>
+    <url-pattern>/allpending</url-pattern>
+  </servlet-mapping>
+  
+  <!--  Action for manager to approve a receipt-->
   <servlet>
     <servlet-name>ActionApprovePending</servlet-name>
     <servlet-class>com.revature.servlets.ActionApprovePending</servlet-class>
@@ -91,4 +134,13 @@
     <url-pattern>/approve</url-pattern>
   </servlet-mapping>
   
+  <!--  Action for manager to deny a receipt-->
+  <servlet>
+    <servlet-name>ActionDenyPending</servlet-name>
+    <servlet-class>com.revature.servlets.ActionDenyPending</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActionDenyPending</servlet-name>
+    <url-pattern>/deny</url-pattern>
+  </servlet-mapping>
 </web-app>

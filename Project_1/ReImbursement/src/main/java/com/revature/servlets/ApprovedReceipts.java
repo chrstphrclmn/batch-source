@@ -1,6 +1,7 @@
 package com.revature.servlets;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.daos.EmployeeDao;
 import com.revature.daos.EmployeeDaoImpl;
@@ -49,11 +53,13 @@ public class ApprovedReceipts extends HttpServlet {
 		
 		ReceiptsDao rd = new ReceiptDaoImpl();
 		
-		List<Receipts> receipts = rd.getApprovedReceipts(emp_id);
+		List<Receipts> receipts = rd.getApprovedReceiptsByEmployeeId(emp_id);
 		
 		System.out.println(receipts);
 		
 		ObjectMapper om = new ObjectMapper();
+		  om.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+		  om.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
 		String receiptsJSON = om.writeValueAsString(receipts);
 		System.out.println(receiptsJSON);
 		

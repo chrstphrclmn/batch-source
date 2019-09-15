@@ -52,9 +52,9 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 				Double amount = rs.getDouble("receipt_amount");
 				String note = rs.getString("receipt_note");
 				Integer employee_id = rs.getInt("employee_id");
-				boolean approved = rs.getBoolean("approved");
+				String status = rs.getString("status");
 				
-				Receipts rm = new Receipts(receipt_id, amount, note, employee_id, approved);
+				Receipts rm = new Receipts(receipt_id, amount, note, employee_id, status);
 				
 				receipts.add(rm);
 			}
@@ -88,9 +88,9 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 				Double amount = rs.getDouble("receipt_amount");
 				String note = rs.getString("receipt_note");
 				Integer employee_id = rs.getInt("employee_id");
-				boolean approved = rs.getBoolean("approved");
+				String status = rs.getString("status");
 				
-				rc = new Receipts(receipt_id, amount, note, employee_id, approved);
+				rc = new Receipts(receipt_id, amount, note, employee_id, status);
 			}
 			
 			rs.close();
@@ -116,13 +116,13 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 		
 		int receiptsUpdated = 0;
 		
-		String sql = "Update receipts set approved = ? where receipt_id = ?";
+		String sql = "Update receipts set status = ? where receipt_id = ?";
 		
 		try(Connection c = ConnectionUtil.getConnection();
 				PreparedStatement ps = c.prepareStatement(sql)){
 			
 			
-			ps.setBoolean(1, true);
+			ps.setString(1, "Approved");
 			ps.setInt(2, id);
 			
 			receiptsUpdated = ps.executeUpdate();
@@ -132,6 +132,31 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 		}
 		
 		return receiptsUpdated;
+	}
+	
+	@Override
+	public int denyReceipt(int id) {
+		// TODO Auto-generated method stub
+		
+		int receiptsDenied = 0;
+		
+		String sql = "Update receipts set status = ? where receipt_id = ?";
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			
+			ps.setString(1, "Denied");
+			ps.setInt(2, id);
+			
+			receiptsDenied = ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return receiptsDenied;
+		
 	}
 	
 	@Override
@@ -146,15 +171,16 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 			
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
+			System.out.println(rs.getMetaData());
 			
 			while(rs.next()) {
 				Integer receipt_id = rs.getInt("receipt_id");
 				Double amount = rs.getDouble("receipt_amount");
 				String note = rs.getString("receipt_note");
 				Integer employee_id = rs.getInt("employee_id");
-				boolean approved = rs.getBoolean("approved");
+				String status = rs.getString("status");
 				
-				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, approved);
+				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, status);
 				
 				receipts.add(rc);
 			}
@@ -168,17 +194,17 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 	}
 
 	@Override
-	public List<Receipts> getApprovedReceipts(int id) {
+	public List<Receipts> getApprovedReceiptsByEmployeeId(int emp_id) {
 		// TODO Auto-generated method stub
-		String sql = "Select * from receipts where approved = ? and employee_id = ?";
+		String sql = "Select * from receipts where status = ? and employee_id = ?";
 		
 		List<Receipts> approvedReceipts = new ArrayList<Receipts>();
 		
 		try(Connection c = ConnectionUtil.getConnection();
 				PreparedStatement ps = c.prepareStatement(sql)){
 			
-			ps.setBoolean(1, true);
-			ps.setInt(2, id);
+			ps.setString(1, "Approved");
+			ps.setInt(2, emp_id);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -186,9 +212,9 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 				Double amount = rs.getDouble("receipt_amount");
 				String note = rs.getString("receipt_note");
 				Integer employee_id = rs.getInt("employee_id");
-				boolean approved = rs.getBoolean("approved");
+				String status = rs.getString("status");
 				
-				Receipts rc = new Receipts(receipt_id, amount, note, employee_id,approved);
+				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, status);
 				
 				approvedReceipts.add(rc);
 			}
@@ -200,19 +226,20 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 		}
 		return approvedReceipts;
 	}
-
+	
+	
 	@Override
-	public List<Receipts> getAllPendingReceipts() {
+	public List<Receipts> getDeniedReceiptsByEmployeeId(int emp_id) {
 		// TODO Auto-generated method stub
+		String sql = "Select * from receipts where status = ? and employee_id = ?";
 		
-		String sql = "Select * from receipts where approved = ?";
-		
-		List<Receipts> pendingReceipts = new ArrayList<Receipts>();
+		List<Receipts> deniedReceipts = new ArrayList<Receipts>();
 		
 		try(Connection c = ConnectionUtil.getConnection();
 				PreparedStatement ps = c.prepareStatement(sql)){
 			
-			ps.setBoolean(1, false);
+			ps.setString(1, "Denied");
+			ps.setInt(2, emp_id);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -220,9 +247,47 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 				Double amount = rs.getDouble("receipt_amount");
 				String note = rs.getString("receipt_note");
 				Integer employee_id = rs.getInt("employee_id");
-				boolean approved = rs.getBoolean("approved");
+				String status = rs.getString("status");
 				
-				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, approved);
+				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, status);
+				
+				deniedReceipts.add(rc);
+			}
+			
+			rs.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		
+		return deniedReceipts;
+	}
+
+//	Get all pending receipts for the manager to view
+	@Override
+	public List<Receipts> getAllPendingReceipts() {
+		// TODO Auto-generated method stub
+		
+		String sql = "Select * from receipts where status = ?";
+		
+		List<Receipts> pendingReceipts = new ArrayList<Receipts>();
+		
+		try(Connection c = ConnectionUtil.getConnection();
+				PreparedStatement ps = c.prepareStatement(sql)){
+			
+			ps.setString(1, "pending");
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Integer receipt_id = rs.getInt("receipt_id");
+				Double amount = rs.getDouble("receipt_amount");
+				String note = rs.getString("receipt_note");
+				Integer employee_id = rs.getInt("employee_id");
+				String status = rs.getString("status");
+				
+				Receipts rc = new Receipts(receipt_id, amount, note, employee_id, status);
 				
 				pendingReceipts.add(rc);
 			}
@@ -234,6 +299,10 @@ public class ReceiptDaoImpl implements ReceiptsDao {
 		}
 		return pendingReceipts;
 	}
+
+	
+
+	
 	
 	
 }
