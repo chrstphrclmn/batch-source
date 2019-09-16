@@ -11,6 +11,10 @@ public class Login {
 	private String email;
 	private String phone;
 	
+	public Login() {
+		super();
+	}
+	
 	public Login(String username, String password, boolean manager) {
 		super();
 		this.username = username;
@@ -48,6 +52,10 @@ public class Login {
 	}
 
 	public boolean isManager() {
+		return manager;
+	}
+	
+	public boolean getManager() {
 		return manager;
 	}
 

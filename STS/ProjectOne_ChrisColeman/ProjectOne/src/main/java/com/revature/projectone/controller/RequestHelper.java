@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.revature.projectone.delegate.LoginDelegate;
+import com.revature.projectone.delegate.RequestDelegate;
+import com.revature.projectone.delegate.ResolutionDelegate;
 import com.revature.projectone.delegate.ViewDelegate;
 
 public class RequestHelper {
 	
 	private ViewDelegate vd = new ViewDelegate();
 	private LoginDelegate ld = new LoginDelegate();
+	private RequestDelegate rd = new RequestDelegate();
+	private ResolutionDelegate rsd = new ResolutionDelegate();
 
 	public void processGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// TODO Auto-generated method stub
@@ -25,6 +29,18 @@ public class RequestHelper {
 			
 			case "logins":{
 				ld.getLogins(request, response);
+				break;
+			}
+			case "requests":{
+				rd.getRequests(request, response);
+				break;
+			}
+			case "resolutions":{
+				rsd.getResolutions(request, response);
+				break;
+			}
+			case "combined":{
+				rsd.getCombinedReqsAndReses(request, response);
 				break;
 			}
 
@@ -49,6 +65,22 @@ public class RequestHelper {
 		
 		case "/createlogin":{
 			ld.createLogin(request, response);
+			break;
+		}
+		case "/login":{
+			ld.login(request, response);
+			break;
+		}
+		case "/request":{
+			rd.createRequest(request, response);
+			break;
+		}
+		case "/loginupdate":{
+			ld.updateLogin(request, response);
+			break;
+		}
+		case "/resolve":{
+			rsd.createResolution(request, response);
 			break;
 		}
 		

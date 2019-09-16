@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.projectone.model.Login;
-import com.revature.projectone.service.LoginService;
 import com.revature.projectone.service.impl.LoginServiceImpl;
 
 public class LoginDelegate {
 	
-	private LoginService ls = new LoginServiceImpl();
+	private LoginServiceImpl ls = new LoginServiceImpl();
 	
 	
 	public void getLogins(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
@@ -26,6 +25,62 @@ public class LoginDelegate {
 		}
 		
 		
+	}
+	
+	public void updateLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		
+		String updateData = request.getReader().readLine();
+		
+		ObjectMapper om = new ObjectMapper();
+		
+		Login p = om.readValue(updateData, Login.class);
+		
+		Login old = ls.getLoginByUsername(p.getUsername());
+		
+		old.setFirstName(p.getFirstName());
+		old.setLastName(p.getLastName());
+		old.setTitle(p.getTitle());
+		old.setEmail(p.getEmail());
+		old.setPhone(p.getPhone());
+		
+		ls.updateLogin(old);
+		
+	}
+	
+	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+		
+		String loginData = request.getReader().readLine();
+		
+		System.out.println(loginData);
+		
+		ObjectMapper om = new ObjectMapper();
+		
+		Login p = om.readValue(loginData, Login.class);
+		
+		
+		System.out.println(p);
+		
+		if(ls.validLogin(p)) {
+			response.setHeader("authorized", p.getUsername()+":"+p.isManager());
+			
+			if(ls.isAManager(p.getUsername()) && p.isManager()) {
+				response.setHeader("manager", "true");
+			}
+			else {
+				response.setHeader("manager", "");
+			}
+		}
+		else {
+			response.setHeader("authorized", "");
+		}
+	/*	
+		boolean success = ps.addPizza(p);
+		if(success) {
+			response.setStatus(201);
+		} else {
+			response.sendError(400);
+		}
+		*/
 	}
 	
 	public void createLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
