@@ -15,6 +15,10 @@ public class Resolution {
 		this.decision = decision;
 		this.reason = reason;
 	}
+	
+	public Resolution() {
+		super();
+	}
 
 
 	public int getRequestId() {

@@ -23,6 +23,19 @@ public class LoginServiceImpl implements LoginService {
 		return true;
 		
 	}
+	
+	public Login getLoginByUsername(String uname) {
+		
+		List<Login> logList = this.logins();
+		
+		for(Login temp: logList) {
+			if(uname.equals(temp.getUsername())) {
+				return temp;
+			}
+		}
+		
+		return null;
+	}
 
 
 	@Override
@@ -57,6 +70,19 @@ public class LoginServiceImpl implements LoginService {
 		
 		return check.isManager();
 		
+	}
+	
+	public boolean validLogin(Login login) {
+		
+		List<Login> logList = this.logins();
+		
+		for(Login temp: logList) {
+			if(login.getUsername().equals(temp.getUsername()) && login.getPassword().equals(temp.getPassword())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }

@@ -8,6 +8,10 @@ public class Request {
 	private String username;
 	private double ammount;
 	
+	public Request() {
+		super();
+	}
+	
 	public Request(int requestId, String username, double ammount) {
 		super();
 		this.requestId = requestId;
