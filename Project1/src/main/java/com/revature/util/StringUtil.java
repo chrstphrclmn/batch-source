@@ -14,8 +14,22 @@ public class StringUtil {
 		throw new IllegalStateException("Utility Class");
 	}
 	
+	/**
+	 * @param username
+	 * @return boolean
+	 */
 	public static boolean isValidUsername(String username) { return username.matches(USERNAME_REGEX);}
+	
+	/**
+	 * @param email
+	 * @return boolean
+	 */
 	public static boolean isValidEmail(String email) { return email.matches(EMAIL_REGEX);}
+	
+	/**
+	 * @param num
+	 * @return boolean
+	 */
 	public static boolean isValidAmount(double num) {
 		
 		String amount = Double.toString(num);
@@ -32,6 +46,10 @@ public class StringUtil {
 		
 	}
 	
+	/**
+	 * @param token
+	 * @return boolean
+	 */
 	public static boolean isValidToken(String token) {  
 		
 		if(token == null) return false;
@@ -39,6 +57,9 @@ public class StringUtil {
 		return EncryptionUtil.decrypt(token).matches(TOKEN_REGEX);
 	}
 	
+	/**
+	 * @return String
+	 */
 	public static String getRandomString() {
 		
 		int leftLimit = 97;

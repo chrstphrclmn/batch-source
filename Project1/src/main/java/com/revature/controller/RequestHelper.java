@@ -14,6 +14,12 @@ public class RequestHelper {
 	
 	private static ViewDeligate viewDeligate = new ViewDeligate();
 	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String uri = request.getServletPath();
@@ -54,6 +60,12 @@ public class RequestHelper {
 		}
 	}
 	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	public void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String uri = request.getServletPath();

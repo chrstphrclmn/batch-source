@@ -17,6 +17,11 @@ public class LoginDeligate {
 	private EmployeeService eservice = new EmployeeService();
 	private ObjectMapper om = new ObjectMapper();
 	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		String username = request.getHeader("username");
@@ -41,6 +46,11 @@ public class LoginDeligate {
 		
 	}
 	
+	/**
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	public void validateToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		String token = request.getHeader("token");

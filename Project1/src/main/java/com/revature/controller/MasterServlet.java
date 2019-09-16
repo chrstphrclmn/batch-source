@@ -17,6 +17,9 @@ public class MasterServlet extends DefaultServlet{
 	private static final long serialVersionUID = 1L;
 	private static final RequestHelper requestHelper = new RequestHelper();
 	
+	/* (non-Javadoc)
+	 * @see org.apache.catalina.servlets.DefaultServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
@@ -45,6 +48,9 @@ public class MasterServlet extends DefaultServlet{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.apache.catalina.servlets.DefaultServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		LoggerUtil.log.info(request.getMethod() + " : " + request.getRequestURI());
